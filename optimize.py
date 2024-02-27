@@ -43,7 +43,6 @@ mid_constraint= [(player, 1) for player in mid_in_position]
 fwd_constraint = [(player, 1) for player in fwd_in_position]
 gk_constraint = [(player, 1) for player in gk_in_position]
 
-print(def_constraint)
 # print(constraint_dict)
 bqm.add_linear_equality_constraint(
     def_constraint,
@@ -81,17 +80,17 @@ bqm.add_linear_inequality_constraint(
 api_token = 'DEV-257ed80ce0a221025ddaa4b7acb440d9978e1f42'
 sampler = EmbeddingComposite(DWaveSampler(token= api_token))
 results = sampler.sample(bqm)
-#print(results.first.sample)
 selected_players = [player for player in results.first.sample if results.first.sample[player] == 1]
 #positions = list(data[data["name"].isin(selected_players)]["position"])
 position_list = []
 for i in range(len(selected_players)):
-    position_use = data[data["name"]==selected_players[i]]["position"]
-    print(selected_players[i], position_use)
-    position_list.append(position_use)
+    position_use = str(data[data["name"]==selected_players[i]]["position"][0])
+    if (position_use == "DEF") or (position_use == "MID") or (position_use == "FWD") or (position_use == "GK"):
+        print(selected_players[i], position_use)
+        position_list.append(position_use)
 
 from collections import Counter
-# print(Counter(position_list))
+print(Counter(position_list))
 #print("Selected Players:", selected_players)
 #print("Total Points:", -results.first.energy)
 
