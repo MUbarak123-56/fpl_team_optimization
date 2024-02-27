@@ -20,7 +20,7 @@ num_forwards = 3
 
 
 #max_points = 800 
-max_budget = 700 
+max_budget = 550
 
 def get_players_in_position(dataframe, position_key):
     position_filter = dataframe['position'] == position_key
@@ -31,49 +31,51 @@ def get_players_in_position(dataframe, position_key):
 
     return player_names
 
-for position in ['DEF', 'MID', 'FWD', 'GK']:
     
-    players_in_position = get_players_in_position(data, position)
-    
-    
-    if position == 'DEF':
-        constant_value = -num_defenders
-    elif position == 'MID':
-        constant_value = -num_midfielders
-    elif position == 'FWD':
-        constant_value = -num_forwards
-    elif position == 'GK':
-        constant_value = -num_keeper
-    else:
-        
-        raise ValueError(f"Unexpected position value: {position}")
+def_in_position = get_players_in_position(data, 'DEF')
+mid_in_position = get_players_in_position(data, 'MID')
+fwd_in_position = get_players_in_position(data, 'FWD')
+gk_in_position = get_players_in_position(data, 'GK')
 
-    # constraint_dict = {player: 1 for player in players_in_position}
-    constraint_dict = [(player, 1) for player in players_in_position]
 
-    # print(constraint_dict)
-    bqm.add_linear_equality_constraint(
-        constraint_dict,
-        constant=constant_value,
-        lagrange_multiplier=5  
-    )
-"""
-Add constraints for total team value(points)
-"""
-#bqm.add_linear_inequality_constraint(
-    # {player['name']: player['value'] for index, player in data.iterrows()}
- #   [(player['name'], player['total_points']) for index, player in data.iterrows()],
-  
-  #  lagrange_multiplier=10, 
-   # label='points_constraint'
-#)
+def_constraint = [(player, 1) for player in def_in_position]
+mid_constraint= [(player, 1) for player in mid_in_position]
+fwd_constraint = [(player, 1) for player in fwd_in_position]
+gk_constraint = [(player, 1) for player in gk_in_position]
+
+print(def_constraint)
+# print(constraint_dict)
+bqm.add_linear_equality_constraint(
+    def_constraint,
+    constant= -4,
+    lagrange_multiplier=4
+)
+
+bqm.add_linear_equality_constraint(
+    mid_constraint,
+    constant= -3,
+    lagrange_multiplier=3 
+)
+
+bqm.add_linear_equality_constraint(
+    fwd_constraint,
+    constant= -3,
+    lagrange_multiplier=3
+)
+bqm.add_linear_equality_constraint(
+    gk_constraint,
+    constant= -1,
+    lagrange_multiplier=1
+)
+
+
 
 # Add budget constraint
 player_values = [(player['name'], player['value']) for index, player in data.iterrows()]  # Create a dictionary of player values
 bqm.add_linear_inequality_constraint(
     player_values,  # Use player values for the constraint
     constant=-max_budget,
-    lagrange_multiplier=10, 
+    lagrange_multiplier=750, 
     label='budget_constraint'
 )
 api_token = 'DEV-257ed80ce0a221025ddaa4b7acb440d9978e1f42'
@@ -81,10 +83,18 @@ sampler = EmbeddingComposite(DWaveSampler(token= api_token))
 results = sampler.sample(bqm)
 #print(results.first.sample)
 selected_players = [player for player in results.first.sample if results.first.sample[player] == 1]
-positions = list(data[data["name"].isin(selected_players)]["position"])
+#positions = list(data[data["name"].isin(selected_players)]["position"])
+position_list = []
 for i in range(len(selected_players)):
     position_use = data[data["name"]==selected_players[i]]["position"]
     print(selected_players[i], position_use)
-print("Selected Players:", selected_players)
+    position_list.append(position_use)
+
+from collections import Counter
+# print(Counter(position_list))
+#print("Selected Players:", selected_players)
 #print("Total Points:", -results.first.energy)
+
+#add an objective function
+#troubleshoot multiple keeper problem
 
