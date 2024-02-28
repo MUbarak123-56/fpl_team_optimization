@@ -19,7 +19,7 @@ import pandas as pd
 
 from pyqubo import Constraint, Array
 import neal
-from dwave.system import DWaveSampler, EmbeddingComposite
+from dwave.system import DWaveSampler, EmbeddingComposite, LeapHybridSampler
 
 
 # Read players rating from CSV
