@@ -1,5 +1,5 @@
 
-from dwave.system import DWaveSampler, EmbeddingComposite
+from dwave.system import DWaveSampler, EmbeddingComposite, LeapHybridBQMSampler, LeapHybridSampler
 import dimod
 import pandas as pd
 
@@ -78,7 +78,7 @@ bqm.add_linear_inequality_constraint(
     label='budget_constraint'
 )
 api_token = 'DEV-257ed80ce0a221025ddaa4b7acb440d9978e1f42'
-sampler = EmbeddingComposite(DWaveSampler(token= api_token))
+sampler = LeapHybridSampler(token= api_token)
 results = sampler.sample(bqm)
 selected_players = [player for player in results.first.sample if results.first.sample[player] == 1]
 #positions = list(data[data["name"].isin(selected_players)]["position"])
