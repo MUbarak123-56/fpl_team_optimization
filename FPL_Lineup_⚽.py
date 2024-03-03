@@ -33,6 +33,11 @@ data["value"] = data["value"]/10
 df_use = data.sort_values("position").reset_index(drop=True)
 for i in range(len(df_use)):
     df_use.loc[i, "variable"] = "x[" + str(i) + "]"
+
+defense_list_index = list(df_use[df_use["position"]=="DEF"].index)
+forward_list_index = list(df_use[df_use["position"]=="FWD"].index)
+gk_list_index = list(df_use[df_use["position"]=="GK"].index)
+midfield_list_index = list(df_use[df_use["position"]=="MID"].index)
     
 columns = ["variable","name", "position", "value", "total_points"]
 total_points = df_use["total_points"].to_list()
@@ -43,12 +48,14 @@ lagrange_budget = 1551
 num_var = 38
 slack_num = 1
 
+st.markdown("<h4 style='text-align: left; color: white;'>Formation Selection</h4>", unsafe_allow_html=True)
+st.write("Toggle with the following widgets to set your formation. You can play around with the defense and midfield but not attack because your formation must have exactly 11 players (including the goalkeeper).")
+
 defense = st.number_input("How many defenders do you want?", min_value=3, max_value=5, value = 4)
 mid_use = (10 - defense) - 1
 midfield = st.number_input("How many midfielders do you want?", min_value=2, max_value=mid_use, value = 4)
 forward_use = 10 - (defense + midfield)
 forward = st.number_input("How many forwards do you want?", min_value=forward_use, max_value=forward_use)
-selection = defense + midfield + forward
 
 st.write("Team configuration: ", defense, "-", midfield, "-", forward)
 
@@ -73,13 +80,13 @@ else:
                             h = sum(n * x for x, n in zip(x, total_points))
                             C1 = lagrange * Constraint((sum(x[n] for n in range(0, num_var)) - 11)**2,
                                                 label='11 players team')
-                            C2 = lagrange * Constraint((sum(x[n] for n in range(0, 10))-defense)**2,
+                            C2 = lagrange * Constraint((sum(x[n] for n in range(min(defense_list_index), max(defense_list_index)+1))-defense)**2,
                                                 label=str(defense) + " defenders")
-                            C3 = lagrange * Constraint((sum(x[n] for n in range(10, 21))-forward)**2,
+                            C3 = lagrange * Constraint((sum(x[n] for n in range(min(forward_list_index), max(forward_list_index)+1))-forward)**2,
                                                 label=str(forward) + " forwards")
-                            C4 = lagrange * Constraint((sum(x[n] for n in range(21, 28))-1)**2,
+                            C4 = lagrange * Constraint((sum(x[n] for n in range(min(gk_list_index), max(gk_list_index)+1))-1)**2,
                                                 label= "1 keeper")
-                            C5 = lagrange * Constraint((sum(x[n] for n in range(28,  38))-midfield)**2,
+                            C5 = lagrange * Constraint((sum(x[n] for n in range(min(midfield_list_index), max(midfield_list_index)+1))-midfield)**2,
                                                 label=str(midfield) + " midfielders")
                             C6 = lagrange_budget * Constraint((sum(n * x for x, n in zip(x, value)) + s[0] -70)**2,
                                                               label="budget")
