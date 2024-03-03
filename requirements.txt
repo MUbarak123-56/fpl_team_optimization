@@ -6,6 +6,6 @@ dwave_samplers
 dwave_system
 pandas
 python-dotenv
-neal
+dwave-neal
 streamlit
 pyqubo
