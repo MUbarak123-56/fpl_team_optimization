@@ -10,7 +10,7 @@ import time
 
 st.set_page_config(layout='wide', page_title = "FPL Line Up Selector", page_icon="⚽")
 
-st.sidebar.header("FPL Line Up Selector ⚽")
+st.header("FPL Line Up Selector ⚽")
 
 # loading in the D-Wave Token
 load_dotenv()
