@@ -84,7 +84,7 @@ else:
                                                 label=str(defense) + " defenders")
                             C3 = lagrange * Constraint((sum(x[n] for n in range(min(forward_list_index), max(forward_list_index)+1))-forward)**2,
                                                 label=str(forward) + " forwards")
-                            C4 = lagrange * Constraint((sum(x[n] for n in range(min(gk_list_index), max(gk_list_index)+1)-1)**2,
+                            C4 = lagrange * Constraint((sum(x[n] for n in range(min(gk_list_index), max(gk_list_index)+1))-1)**2,
                                                 label= "1 keeper")
                             C5 = lagrange * Constraint((sum(x[n] for n in range(min(midfield_list_index), max(midfield_list_index)+1))-midfield)**2,
                                                 label=str(midfield) + " midfielders")
