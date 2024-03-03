@@ -51,7 +51,11 @@ mid_use = (10 - defense) - 1
 midfield = st.number_input("How many midfielders do you want?", min_value=2, max_value=mid_use, value = 4)
 forward_use = 10 - (defense + midfield)
 forward = st.number_input("How many forwards do you want?", min_value=forward_use, max_value=forward_use)
-selection = defense + midfield + forward
+
+defense_list_index = list(df_use[df_use["position"]=="DEF"].index)
+forward_list_index = list(df_use[df_use["position"]=="FWD"].index)
+gk_list_index = list(df_use[df_use["position"]=="GK"].index)
+midfield_list_index = list(df_use[df_use["position"]=="MID"].index)
 
 st.write("Team configuration: ", defense, "-", midfield, "-", forward)
 
@@ -76,13 +80,13 @@ else:
                             h = sum(n * x for x, n in zip(x, total_points))
                             C1 = lagrange * Constraint((sum(x[n] for n in range(0, num_var)) - 11)**2,
                                                 label='11 players team')
-                            C2 = lagrange * Constraint((sum(x[n] for n in range(0, 10))-defense)**2,
+                            C2 = lagrange * Constraint((sum(x[n] for n in range(min(defense_list_index), max(defense_list_index)+1))-defense)**2,
                                                 label=str(defense) + " defenders")
-                            C3 = lagrange * Constraint((sum(x[n] for n in range(10, 21))-forward)**2,
+                            C3 = lagrange * Constraint((sum(x[n] for n in range(min(forward_list_index), max(forward_list_index)+1))-forward)**2,
                                                 label=str(forward) + " forwards")
-                            C4 = lagrange * Constraint((sum(x[n] for n in range(21, 28))-1)**2,
+                            C4 = lagrange * Constraint((sum(x[n] for n in range(min(gk_list_index), max(gk_list_index)+1)-1)**2,
                                                 label= "1 keeper")
-                            C5 = lagrange * Constraint((sum(x[n] for n in range(28,  38))-midfield)**2,
+                            C5 = lagrange * Constraint((sum(x[n] for n in range(min(midfield_list_index), max(midfield_list_index)+1))-midfield)**2,
                                                 label=str(midfield) + " midfielders")
                             C6 = lagrange_budget * Constraint((sum(n * x for x, n in zip(x, value)) + s[0] -70)**2,
                                                               label="budget")
