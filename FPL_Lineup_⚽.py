@@ -5,6 +5,7 @@ from dwave.system import DWaveSampler, EmbeddingComposite, LeapHybridBQMSampler,
 import dimod
 import os
 from dotenv import load_dotenv
+import pandas as pd
 
 # loading in the D-Wave Token
 load_dotenv()
@@ -17,7 +18,7 @@ data = data[columns]
 df_use = data.sort_values("position").reset_index(drop=True)
 for i in range(len(df_use)):
     df_use.loc[i, "variable"] = "x[" + str(i) + "]"
-df_use
+    
 columns = ["variable","name", "position", "value", "total_points"]
 total_points = df_use["total_points"].to_list()
 value = df_use["value"].to_list()
@@ -27,14 +28,14 @@ lagrange_budget = 1551
 num_var = 38
 slack_num = 1
 
-defense = st.number_input("How many defenders do you want?", min_value=3, max_value=5)
+defense = st.number_input("How many defenders do you want?", min_value=3, max_value=5, value = 4)
 mid_use = (10 - defense) - 1
-midfield = st.number_input("How many midfielders do you want?", min_value=2, max_value=mid_use)
+midfield = st.number_input("How many midfielders do you want?", min_value=2, max_value=mid_use, value = 4)
 forward_use = 10 - (defense + midfield)
 forward = st.number_input("How many forwards do you want?", min_value=forward_use, max_value=forward_use)
 selection = defense + midfield + forward
 
-st.text("Team configuration: ", defense, "-", midfield, "-", forward)
+st.write("Team configuration: ", defense, "-", midfield, "-", forward)
 
 x = Array.create('x', shape=num_var, vartype='BINARY')
 s = Array.create('s', shape=slack_num, vartype='BINARY')
