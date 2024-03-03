@@ -16,7 +16,8 @@ st.subheader("Welcome to the FPL Line Up Selector App")
 st.write("""The purpose of this app is to assist FPL fans to select the optimal starting line-up according to data collected from Gameweek 1 to Gameweek 23 of the 2023/24 season. 
             The data collected reflects the top 39 highest rated players so far this season in terms of FPL points accumulated over 23 game weeks. By leveraging D-Wave's LeapHybridSolver,
             you will be able to view what the optimal starting line-up would be based on your desired formation. This line-up also takes budget into account. The budget for each starting line-up is 
-            expected to be 700. Hence, you will be constrained to a starting line-up whose total value will not exceed 700. 700 was selected because anything beyond 700 typically selects more than 11 players.
+            expected to be 70. Hence, you will be constrained to a starting line-up whose total value will not exceed 70. 70 was selected because anything beyond 700 typically selects more than 11 players.
+            The regular FPL budget is 100 which selects the starting 11 players including 4 substitutes.
             """)
 # loading in the D-Wave Token
 load_dotenv()
@@ -26,6 +27,7 @@ token_use = os.getenv("API_TOKEN")
 data = pd.read_excel("data.xlsx")
 columns = ["name", "position", "value", "total_points"]
 data = data[columns]
+data["value"] = data["value"]/10
 df_use = data.sort_values("position").reset_index(drop=True)
 for i in range(len(df_use)):
     df_use.loc[i, "variable"] = "x[" + str(i) + "]"
@@ -64,7 +66,7 @@ with st.spinner('Please wait...Line up is being selected'):
                         label= "1 keeper")
     C5 = lagrange * Constraint((sum(x[n] for n in range(28,  38))-midfield)**2,
                         label=str(midfield) + " midfielders")
-    C6 = lagrange_budget * Constraint((sum(n * x for x, n in zip(x, value)) + s[0] -800)**2,
+    C6 = lagrange_budget * Constraint((sum(n * x for x, n in zip(x, value)) + s[0] -70)**2,
                                       label="budget")
     H = -1 * h + C1 + C2 + C3 + C4 + C5 + C6
     model = H.compile()
