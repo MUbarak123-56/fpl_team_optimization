@@ -43,6 +43,9 @@ lagrange_budget = 1551
 num_var = 38
 slack_num = 1
 
+st.markdown("<h4 style='text-align: left; color: white;'>Formation Selection</h4>", unsafe_allow_html=True)
+st.write("Toggle with the following widgets to set your formation, you can play around with the defense and midfield but not attack because your formation must have exactly 11 players")
+
 defense = st.number_input("How many defenders do you want?", min_value=3, max_value=5, value = 4)
 mid_use = (10 - defense) - 1
 midfield = st.number_input("How many midfielders do you want?", min_value=2, max_value=mid_use, value = 4)
