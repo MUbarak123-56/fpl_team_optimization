@@ -119,4 +119,4 @@ with st.spinner('Please wait...Line up is being selected'):
     ordered_lineup_df = ordered_lineup_df[["name", "position", "value", "total_points"]]
     st.dataframe(ordered_lineup_df)
     st.write("Total sum of points: ", ordered_lineup_df['total_points'].sum())
-    st.write("Total budget: ", round(ordered_lineup_df['value'].sum(), 3))
+    st.write("Total budget: ", round(ordered_lineup_df['value'].sum(), 4))
