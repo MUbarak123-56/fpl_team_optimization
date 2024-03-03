@@ -51,7 +51,7 @@ selection = defense + midfield + forward
 
 st.write("Team configuration: ", defense, "-", midfield, "-", forward)
 
-st.title('D-Wave Token Insertion')
+st.write('**D-Wave Token Insertion**')
 st.write("Go to this [webpage](https://cloud.dwavesys.com/leap/) and sign up for D-Wave Leap to obtain your token.")
 if 'API_TOKEN' in st.secrets:
             st.success('API key already provided!', icon='✅')
@@ -92,7 +92,7 @@ with st.spinner('Please wait...Line up is being selected'):
     
     # Solve problem with QPU
     #api_token = 'DEV-257ed80ce0a221025ddaa4b7acb440d9978e1f42'
-    sampler = LeapHybridSampler(token= token_use)
+    sampler = LeapHybridSampler(token= api_key)
     sampleset = sampler.sample(bqm,
                                 label="FPL line-up optimization")
     # Decode samples and select the best one
