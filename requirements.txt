@@ -5,3 +5,7 @@ dwave_preprocessing
 dwave_samplers
 dwave_system
 pandas
+dotenv
+neal
+streamlit
+pyqubo
