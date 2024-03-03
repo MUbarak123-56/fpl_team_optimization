@@ -15,13 +15,14 @@ st.header("FPL Line Up Optimizer ⚽")
 st.subheader("Welcome to the FPL Line Up Optimizer App")
 st.write("""The purpose of this app is to assist FPL fans to select the optimal starting line-up according to data collected from Gameweek 1 to Gameweek 23 of the 2023/24 season. 
             The data collected reflects the top 39 highest rated players so far this season in terms of FPL points accumulated over 23 game weeks. By leveraging D-Wave's LeapHybridSolver,
-            you will be able to view what the optimal starting line-up would be based on your desired formation. You can sign up for D-Wave Leap [here](https://cloud.dwavesys.com/leap/) and obtain your solver API token.
+            you will be able to view what the optimal starting line-up would be based on your desired formation. You can sign up for D-Wave Leap [here](https://cloud.dwavesys.com/leap/) and obtain your solver API token. 
+            Once you have obtained it, insert it into the D-Wave Solver API token in the sidebar.
             This line-up also takes budget into account. The budget for each starting line-up is expected to be 70. Hence, you will be constrained to a starting line-up whose total value will not exceed 70. 70 was selected because anything beyond 700 typically selects more than 11 players.
             The regular FPL budget is 100 which selects the starting 11 players including 4 substitutes.
             """)
 # loading in the D-Wave Token
-load_dotenv()
-token_use = os.getenv("API_TOKEN")
+#load_dotenv()
+#token_use = os.getenv("API_TOKEN")
 
 # Loading in the FPL data set
 data = pd.read_excel("data.xlsx")
@@ -49,6 +50,18 @@ forward = st.number_input("How many forwards do you want?", min_value=forward_us
 selection = defense + midfield + forward
 
 st.write("Team configuration: ", defense, "-", midfield, "-", forward)
+
+st.title('D-Wave Token Insertion')
+st.write("Go to this [webpage](https://cloud.dwavesys.com/leap/) and sign up for D-Wave Leap to obtain your token.")
+if 'API_TOKEN' in st.secrets:
+            st.success('API key already provided!', icon='✅')
+            api_key = st.secrets['API_TOKEN']
+else:
+            api_key = st.text_input('Enter D-Wave Solver API token:', type='password')
+            if not (api_key).startswith('DEV-') or len(openai_api_key) != 44:
+                        st.warning('Please enter your credentials!', icon='⚠️') 
+            else:
+                        st.success('Your API token has been received. Now optimization will be conducted', icon='👉')
 
 with st.spinner('Please wait...Line up is being selected'):
     time.sleep(5)
