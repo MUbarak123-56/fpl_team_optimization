@@ -33,6 +33,11 @@ data["value"] = data["value"]/10
 df_use = data.sort_values("position").reset_index(drop=True)
 for i in range(len(df_use)):
     df_use.loc[i, "variable"] = "x[" + str(i) + "]"
+
+defense_list_index = list(df_use[df_use["position"]=="DEF"].index)
+forward_list_index = list(df_use[df_use["position"]=="FWD"].index)
+gk_list_index = list(df_use[df_use["position"]=="GK"].index)
+midfield_list_index = list(df_use[df_use["position"]=="MID"].index)
     
 columns = ["variable","name", "position", "value", "total_points"]
 total_points = df_use["total_points"].to_list()
@@ -51,11 +56,6 @@ mid_use = (10 - defense) - 1
 midfield = st.number_input("How many midfielders do you want?", min_value=2, max_value=mid_use, value = 4)
 forward_use = 10 - (defense + midfield)
 forward = st.number_input("How many forwards do you want?", min_value=forward_use, max_value=forward_use)
-
-defense_list_index = list(df_use[df_use["position"]=="DEF"].index)
-forward_list_index = list(df_use[df_use["position"]=="FWD"].index)
-gk_list_index = list(df_use[df_use["position"]=="GK"].index)
-midfield_list_index = list(df_use[df_use["position"]=="MID"].index)
 
 st.write("Team configuration: ", defense, "-", midfield, "-", forward)
 
