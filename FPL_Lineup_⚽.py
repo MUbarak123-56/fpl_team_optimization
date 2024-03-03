@@ -6,6 +6,7 @@ import dimod
 import os
 from dotenv import load_dotenv
 import pandas as pd
+import time
 
 # loading in the D-Wave Token
 load_dotenv()
