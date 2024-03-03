@@ -35,7 +35,7 @@ forward_use = 10 - (defense + midfield)
 forward = st.number_input("How many forwards do you want?", min_value=forward_use, max_value=forward_use)
 selection = defense + midfield + forward
 
-st.text("Team configuration: ", defense, "-", midfield, "-", forward)
+st.write("Team configuration: ", defense, "-", midfield, "-", forward)
 
 x = Array.create('x', shape=num_var, vartype='BINARY')
 s = Array.create('s', shape=slack_num, vartype='BINARY')
