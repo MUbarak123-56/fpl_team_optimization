@@ -8,11 +8,11 @@ from dotenv import load_dotenv
 import pandas as pd
 import time
 
-st.set_page_config(page_title = "FPL Line Up Selector", page_icon="⚽")
+st.set_page_config(page_title = "FPL Line Up Optimizer", page_icon="⚽")
 
-st.header("FPL Line Up Selector ⚽")
+st.header("FPL Line Up Optimizer ⚽")
 
-st.subheader("Welcome to the FPL Line Up Selector App")
+st.subheader("Welcome to the FPL Line Up Optimizer App")
 st.write("""The purpose of this app is to assist FPL fans to select the optimal starting line-up according to data collected from Gameweek 1 to Gameweek 23 of the 2023/24 season. 
             The data collected reflects the top 39 highest rated players so far this season in terms of FPL points accumulated over 23 game weeks. By leveraging D-Wave's LeapHybridSolver,
             you will be able to view what the optimal starting line-up would be based on your desired formation. This line-up also takes budget into account. The budget for each starting line-up is 
