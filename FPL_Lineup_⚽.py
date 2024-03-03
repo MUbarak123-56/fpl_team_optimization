@@ -16,7 +16,7 @@ st.subheader("Welcome to the FPL Line Up Selector App")
 st.write("""The purpose of this app is to assist FPL fans to select the optimal starting line-up according to data collected from Gameweek 1 to Gameweek 23 of the 2023/24 season. 
             The data collected reflects the top 39 highest rated players so far this season in terms of FPL points accumulated over 23 game weeks. By leveraging D-Wave's LeapHybridSolver,
             you will be able to view what the optimal starting line-up would be based on your desired formation. This line-up also takes budget into account. The budget for each starting line-up is 
-            expected to be 800, which is the same as what FPL website typically sets its budget as. Hence, you will be constrained to a starting line-up whose value will not exceed 1000.
+            expected to be 800. Hence, you will be constrained to a starting line-up whose total value will not exceed 800.
             """)
 # loading in the D-Wave Token
 load_dotenv()
@@ -64,7 +64,7 @@ with st.spinner('Please wait...Line up is being selected'):
                         label= "1 keeper")
     C5 = lagrange * Constraint((sum(x[n] for n in range(28,  38))-midfield)**2,
                         label=str(midfield) + " midfielders")
-    C6 = lagrange_budget * Constraint((sum(n * x for x, n in zip(x, value)) + s[0] -1000)**2,
+    C6 = lagrange_budget * Constraint((sum(n * x for x, n in zip(x, value)) + s[0] -800)**2,
                                       label="budget")
     H = -1 * h + C1 + C2 + C3 + C4 + C5 + C6
     model = H.compile()
