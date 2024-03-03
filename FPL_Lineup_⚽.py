@@ -1,5 +1,4 @@
-
-import pandas as pd
+import streamlit as st
 from pyqubo import Constraint, Array
 import neal
 from dwave.system import DWaveSampler, EmbeddingComposite, LeapHybridBQMSampler,  LeapHybridSampler
@@ -7,9 +6,11 @@ import dimod
 import os
 from dotenv import load_dotenv
 
+# loading in the D-Wave Token
 load_dotenv()
 token_use = os.getenv("API_TOKEN")
 
+# Loading in the FPL data set
 data = pd.read_excel("data.xlsx")
 columns = ["name", "position", "value", "total_points"]
 data = data[columns]
@@ -25,33 +26,15 @@ lagrange = 1716
 lagrange_budget = 1551
 num_var = 38
 slack_num = 1
-def get_input(prompt, min_val, max_val):
-    while True:
-        try:
-            value = int(input(prompt))
-            if min_val <= value <= max_val:
-                return value
-            else:
-                print(f"Please choose a number between {min_val} and {max_val}.")
-        except ValueError:
-            print("Invalid input. Please enter a number.")
 
-def handle_inputs():
-    defense = get_input("How many defenders do you want? Choose a number between 3 and 5: ", 3, 5)
-    midfield = get_input("How many midfielders do you want? Choose a number between 2 and 5: ", 2, 5)
-    forward = get_input("How many forwards do you want? Choose a number between 1 and 4: ", 1, 4)
+defense = st.number_input("How many defenders do you want?", min_value=3, max_value=5)
+mid_use = (10 - defense) - 1
+midfield = st.number_input("How many midfielders do you want?", min_value=2, max_value=mid_use)
+forward_use = 10 - (defense + midfield)
+forward = st.number_input("How many forwards do you want?", min_value=forward_use, max_value=forward_use)
+selection = defense + midfield + forward
 
-    return defense, midfield, forward
-
-defense, midfield, forward = handle_inputs()
-summation = defense + midfield + forward
-
-while summation != 10:
-    print("The total number of players must be 10. Please try again.")
-    defense, midfield, forward = handle_inputs()
-    summation = defense + midfield + forward
-
-print(f"Team configuration: {defense} Defenders, {midfield} Midfielders, {forward} Forwards")
+st.text("Team configuration: ", defense, "-", midfield, "-", forward)
 
 x = Array.create('x', shape=num_var, vartype='BINARY')
 s = Array.create('s', shape=slack_num, vartype='BINARY')
@@ -73,6 +56,10 @@ H = -1 * h + C1 + C2 + C3 + C4 + C5 + C6
 model = H.compile()
 qubo, offset = model.to_qubo()
 bqm = model.to_bqm()
+
+# Uncomment to solve problem by simulation
+# sa = neal.SimulatedAnnealingSampler()
+# sampleset = sa.sample(bqm, num_reads=10000)
 
 # Solve problem with QPU
 #api_token = 'DEV-257ed80ce0a221025ddaa4b7acb440d9978e1f42'
@@ -99,6 +86,6 @@ midfield_list = lineup_df[lineup_df["position"] == "MID"]
 forward_list = lineup_df[lineup_df["position"] == "FWD"]
 ordered_lineup_df = pd.concat([gk, defense_list, midfield_list, forward_list], axis=0).reset_index(drop=True)
 ordered_lineup_df = ordered_lineup_df[["name", "position", "value", "total_points"]]
-print(ordered_lineup_df)
-print("Total sum of points: ", ordered_lineup_df['total_points'].sum())
-print("Total budget: ", ordered_lineup_df['value'].sum())
+st.dataframe(ordered_lineup_df)
+st.write("Total sum of points: ", ordered_lineup_df['total_points'].sum())
+st.write("Total budget: ", ordered_lineup_df['value'].sum())
