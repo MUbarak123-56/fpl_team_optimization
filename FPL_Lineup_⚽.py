@@ -53,7 +53,7 @@ selection = defense + midfield + forward
 st.write("Team configuration: ", defense, "-", midfield, "-", forward)
 
 #st.write('**D-Wave Token Insertion**')
-st.markdown("<h4 style='text-align: left; color: white;'>D-Wave Token Insertion</h4>", unsafe_allow_html=True
+st.markdown("<h4 style='text-align: left; color: white;'>D-Wave Token Insertion</h4>", unsafe_allow_html=True)
 st.write("Go to this [webpage](https://cloud.dwavesys.com/leap/) and sign up for D-Wave Leap to obtain your token.")
 if 'API_TOKEN' in st.secrets:
             st.success('API key already provided!', icon='✅')
