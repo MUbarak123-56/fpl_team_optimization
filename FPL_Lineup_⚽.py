@@ -5,6 +5,7 @@ from dwave.system import DWaveSampler, EmbeddingComposite, LeapHybridBQMSampler,
 import dimod
 import os
 from dotenv import load_dotenv
+import pandas as pd
 
 # loading in the D-Wave Token
 load_dotenv()
