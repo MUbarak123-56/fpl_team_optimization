@@ -78,7 +78,7 @@ c5 = lagrange * Constraint((sum(x[n] for n in range(min(midfield_list_index), ma
                                                 label=str(midfield) + " midfielders")
 c6 = lagrange_budget * Constraint((sum(n * x for x, n in zip(x, value)) + s[0] -70)**2,
                                                               label="budget")
-H = -1 * h + C1 + C2 + C3 + C4 + C5 + C6
+H = -1 * h + c1 + c2 + c3 + c4 + c5 + c6
 
 model = H.compile()
 qubo, offset = model.to_qubo()
