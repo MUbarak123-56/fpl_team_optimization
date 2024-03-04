@@ -61,6 +61,7 @@ print(f"Team configuration: {defense} Defenders, {midfield} Midfielders, {forwar
 
 x = Array.create('x', shape=num_var, vartype='BINARY')
 s = Array.create('s', shape=slack_num, vartype='BINARY')
+
 # objective function
 h = sum(n * x for x, n in zip(x, total_points))
 
