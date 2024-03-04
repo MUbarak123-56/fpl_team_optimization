@@ -15,8 +15,8 @@ Clone the repository to your local machine:
 
 ## bash
 Copy code
-git clone https://github.com/your-username/quantum-soccer-optimization.git
-cd quantum-soccer-optimization
+git clone https://github.com/your-username/fpl_lineup_optimization.git
+cd fpl_lineup_optimization
 Install the required Python packages:
 
 ## bash
@@ -25,19 +25,18 @@ pip install -r requirements.txt
 This will install D-Wave's Ocean SDK and other necessary libraries.
 
 ## Running the Optimization
-To run the optimization script for each formation:
+To run the optimization script:
 
 Ensure you have set up your D-Wave Leap account and configured your API token.
 
-Execute the script corresponding to the formation you wish to optimize. For example:
+If you are running on LEAP directly, run the code below
+python formation_selection_no_token.py
 
-## bash
-Copy code
-python optimize_433.py
-Replace optimize_433.py with the appropriate script name for each formation.
+If you are running the code locally, run the code below
+python formation_selection.py
 
 ## Results
-The scripts will output the optimal team composition for each formation, showing the selected players and the total points achieved within the value constraint.
+The scripts will output the optimal team composition for each formation you inputed, showing the selected players and the total points achieved within the value constraint.
 
 ## Contributing
 Contributions to improve the optimization model or explore additional formations are welcome. Please feel free to fork the repository, make your changes, and submit a pull request.
