@@ -70,7 +70,7 @@ else:
             if not (api_key).startswith('DEV') or len(api_key) != 44:
                         st.warning('Please enter your credentials!', icon='⚠️') 
             else:
-                        st.success('Your API token has been received. Now optimization will be conducted', icon='👉')
+                        st.success('Your API token has been received. Now optimization will be conducted.', icon='👉')
 
                         with st.spinner('Please wait...Line up is being selected'):
                             time.sleep(5)
