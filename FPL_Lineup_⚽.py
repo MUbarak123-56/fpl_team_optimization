@@ -97,12 +97,6 @@ else:
                             qubo, offset = model.to_qubo()
                             bqm = model.to_bqm()
                             
-                            # Uncomment to solve problem by simulation
-                            # sa = neal.SimulatedAnnealingSampler()
-                            # sampleset = sa.sample(bqm, num_reads=10000)
-                            
-                            # Solve problem with QPU
-                            #api_token = 'DEV-257ed80ce0a221025ddaa4b7acb440d9978e1f42'
                             sampler = LeapHybridSampler(token= api_key)
                             sampleset = sampler.sample(bqm,
                                                         label="FPL line-up optimization")
