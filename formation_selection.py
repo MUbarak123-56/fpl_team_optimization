@@ -57,19 +57,22 @@ x = Array.create('x', shape=num_var, vartype='BINARY')
 s = Array.create('s', shape=slack_num, vartype='BINARY')
 # objective function
 h = sum(n * x for x, n in zip(x, total_points))
+
+# constraints
 C1 = lagrange * Constraint((sum(x[n] for n in range(0, num_var)) - 11)**2,
-                    label='11 players team')
-C2 = lagrange * Constraint((sum(x[n] for n in range(0, 10))-defense)**2,
-                    label=str(defense) + " defenders")
-C3 = lagrange * Constraint((sum(x[n] for n in range(10, 21))-forward)**2,
-                    label=str(forward) + " forwards")
-C4 = lagrange * Constraint((sum(x[n] for n in range(21, 28))-1)**2,
-                    label= "1 keeper")
-C5 = lagrange * Constraint((sum(x[n] for n in range(28,  38))-midfield)**2,
-                    label=str(midfield) + " midfielders")
-C6 = lagrange_budget * Constraint((sum(n * x for x, n in zip(x, value)) + s[0] -700)**2,
-                                  label="budget")
+                                                label='11 players team')
+C2 = lagrange * Constraint((sum(x[n] for n in range(min(defense_list_index), max(defense_list_index)+1))-defense)**2,
+                                                label=str(defense) + " defenders")
+C3 = lagrange * Constraint((sum(x[n] for n in range(min(forward_list_index), max(forward_list_index)+1))-forward)**2,
+                                                label=str(forward) + " forwards")
+C4 = lagrange * Constraint((sum(x[n] for n in range(min(gk_list_index), max(gk_list_index)+1))-1)**2,
+                                                label= "1 keeper")
+C5 = lagrange * Constraint((sum(x[n] for n in range(min(midfield_list_index), max(midfield_list_index)+1))-midfield)**2,
+                                                label=str(midfield) + " midfielders")
+C6 = lagrange_budget * Constraint((sum(n * x for x, n in zip(x, value)) + s[0] -70)**2,
+                                                              label="budget")
 H = -1 * h + C1 + C2 + C3 + C4 + C5 + C6
+
 model = H.compile()
 qubo, offset = model.to_qubo()
 bqm = model.to_bqm()
