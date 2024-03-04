@@ -85,7 +85,7 @@ qubo, offset = model.to_qubo()
 bqm = model.to_bqm()
 
 # Solve problem with QPU
-#api_token = 'DEV-257ed80ce0a221025ddaa4b7acb440d9978e1f42'
+
 sampler = LeapHybridSampler(token= token_use)
 sampleset = sampler.sample(bqm,
                             label="FPL line-up optimization")
