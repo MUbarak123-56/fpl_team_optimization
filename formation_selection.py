@@ -14,6 +14,12 @@ data = pd.read_excel("data.xlsx")
 columns = ["name", "position", "value", "total_points"]
 data = data[columns]
 df_use = data.sort_values("position").reset_index(drop=True)
+
+defense_list_index = list(df_use[df_use["position"]=="DEF"].index)
+forward_list_index = list(df_use[df_use["position"]=="FWD"].index)
+gk_list_index = list(df_use[df_use["position"]=="GK"].index)
+midfield_list_index = list(df_use[df_use["position"]=="MID"].index)
+
 for i in range(len(df_use)):
     df_use.loc[i, "variable"] = "x[" + str(i) + "]"
 df_use
