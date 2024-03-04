@@ -1,7 +1,7 @@
 # FPL Team Optimization
 
 ## Project Overview
-This project leverages D-Wave's quantum computing capabilities to solve an optimization problem for selecting the best soccer team formations within given constraints. The goal is to maximize the total points of players in a team without exceeding a total value limit of 1000 and also ensure that the budget doesn't exceed 1000. The formations considered are 4-3-3, 3-5-2, 3-4-3, and 4-4-2, each with specific requirements for the number of goalkeepers, defenders, midfielders, and strikers.
+This project leverages D-Wave's quantum computing capabilities to solve an optimization problem for selecting the best soccer team formations within given constraints. The goal is to maximize the total points of players in a team without exceeding a total budget doesn't exceed 70 FPL currency. The formations considered are 4-3-3, 3-5-2, 3-4-3, and 4-4-2, each with specific requirements for the number of goalkeepers, defenders, midfielders, and strikers.
 
 ## Data
 The optimization uses player data provided in data.xlsx, which includes positions, performance points, and player values. This data is crucial for formulating the optimization problem.
