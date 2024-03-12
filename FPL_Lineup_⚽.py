@@ -188,7 +188,7 @@ else:
                             forward_list = lineup_df[lineup_df["position"] == "FWD"]
                             ordered_lineup_df = pd.concat([gk, defense_list, midfield_list, forward_list], axis=0).reset_index(drop=True)
                             ordered_lineup_df = ordered_lineup_df[["name", "position", "value", "total_points"]]
-                            st.write("After game week ", gw, ", the optimal ", defense, "-", midfield, "-", forward, "starting line-up is:")
+                            st.write("After game week ", gw, ", the optimal ", defense, "-", midfield, "-", forward, "starting line-up would look like:")
                             st.dataframe(ordered_lineup_df)
                             st.write("Total sum of points: ", ordered_lineup_df['total_points'].sum())
                             st.write("Total budget: ", round(ordered_lineup_df['value'].sum(), 4))
