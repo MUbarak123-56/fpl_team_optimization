@@ -10,3 +10,4 @@ dwave-neal
 streamlit
 pyqubo
 openpyxl
+numpy
