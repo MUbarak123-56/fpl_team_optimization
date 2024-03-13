@@ -24,7 +24,7 @@ jobs:
           
       - name: execute py script
         run: python data_collection.py
-          
+        
       - name: commit files
         run: |
           git config --local user.email "action@github.com"
