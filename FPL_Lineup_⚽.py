@@ -65,9 +65,113 @@ forward = st.number_input("How many forwards do you want?", min_value=forward_us
 
 st.write("Team configuration: ", defense, "-", midfield, "-", forward)
 
+import matplotlib.pyplot as plt
+import matplotlib.patches as patches
+import numpy as np
+
+def draw_soccer_field():
+    """
+    Draws a detailed soccer field with a green background, complete middle circle,
+    and 18-yard boxes.
+    """
+    # Create figure
+    fig, ax = plt.subplots(figsize=(10, 7))
+    ax.set_facecolor('green')  # Set the background color to green
+
+    # Draw the pitch outline
+    plt.plot([0, 0, 200, 200, 0], [0, 100, 100, 0, 0], color="white")
+
+    # Draw the middle line
+    plt.plot([100, 100], [0, 100], color="white")
+
+    # Draw the complete middle circle
+    center_circle = patches.Circle((100, 50), 9.15, edgecolor="white", facecolor="none")
+    #ax.add_patch(center_circle)
+
+    # Draw the D-box arcs
+    left_arc = patches.Arc((100, 50), height=36.6, width=18.3*2, angle=0, theta1=270, theta2=90, color="white")
+    right_arc = patches.Arc((50*2, 25*2), height=18.3*2, width=18.3*2, angle=0, theta1=90, theta2=270, color="white")
+    ax.add_patch(left_arc)
+    ax.add_patch(right_arc)
+
+    # Draw the 18-yard boxes
+    # Left 18-yard box (from the perspective of the viewer)
+    ax.add_patch(patches.Rectangle((0, 15*2), 15*2, 20*2, edgecolor="white", facecolor="none"))
+    # Right 18-yard box
+    ax.add_patch(patches.Rectangle(((100-15)*2, 15*2), 15*2, 20*2, edgecolor="white", facecolor="none"))
+
+    # Set limits and turn off axis
+    plt.xlim(0, 100*2)
+    plt.ylim(0, 50*2)
+    #plt.axis('off')
+    # Remove the tick labels
+    ax.set_xticklabels([])
+    ax.set_yticklabels([])
+
+    # Remove the ticks
+    ax.set_xticks([])
+    ax.set_yticks([])
+
+
+    return fig, ax
+
+def plot_formation(line_up):
+    """
+    Plots the given formation on a detailed soccer field.
+    """
+    fig, ax = draw_soccer_field()
+    
+    gk_names = line_up[line_up["position"]=="GK"]["name"].to_list()
+    def_names = line_up[line_up["position"]=="DEF"]["name"].to_list()
+    mid_names = line_up[line_up["position"]=="MID"]["name"].to_list()
+    fwd_names = line_up[line_up["position"]=="FWD"]["name"].to_list()\
+
+    gk_points = line_up[line_up["position"]=="GK"]["total_points"].to_list()
+    def_points = line_up[line_up["position"]=="DEF"]["total_points"].to_list()
+    mid_points = line_up[line_up["position"]=="MID"]["total_points"].to_list()
+    fwd_points = line_up[line_up["position"]=="FWD"]["total_points"].to_list()
+
+    gk_values = line_up[line_up["position"]=="GK"]["value"].to_list()
+    def_values = line_up[line_up["position"]=="DEF"]["value"].to_list()
+    mid_values = line_up[line_up["position"]=="MID"]["value"].to_list()
+    fwd_values = line_up[line_up["position"]=="FWD"]["value"].to_list()
+    ax.text(5, 95, "Guide = Total Points, Player Value", color="white", fontsize=7, fontweight="bold")
+    
+    ax.plot(15, 50, 'o', markersize=30, color="purple", markeredgecolor="white")  # Player icon
+    ax.text(15, 50 - 5, gk_names[0], ha="center", va="top", color="white", fontsize=7, fontweight="bold")  # Player name
+    info = str(gk_points[0]) + ", " + str(gk_values[0])
+    ax.text(15, 50 - 7, info, ha="center", va="top", color="white", fontsize=7, fontweight="bold")  
+    
+    def_len = len(def_names)
+    def_num = list(np.linspace(0, 100, def_len+2))[1:-1]
+    for i in range(len(def_num)):
+        ax.plot(50, def_num[i], 'o', markersize=30, color="purple", markeredgecolor="white")  # Player icon
+        ax.text(50, def_num[i] - 5, def_names[i], ha="center", va="top", color="white", fontsize=7, fontweight="bold")  # Player name
+        info = str(def_points[i]) + ", " + str(def_values[i])
+        ax.text(50, def_num[i] - 7, info, ha="center", va="top", color="white", fontsize=7, fontweight="bold")  
+        
+    mid_len = len(mid_names)
+    mid_num = list(np.linspace(0, 100, mid_len+2))[1:-1]
+    for i in range(len(mid_num)):
+        ax.plot(100, mid_num[i], 'o', markersize=30, color="purple", markeredgecolor="white")  # Player icon
+        ax.text(100, mid_num[i] - 5, mid_names[i], ha="center", va="top", color="white", fontsize=7, fontweight="bold")  # Player name
+        info = str(mid_points[i]) + ", " + str(mid_values[i])
+        ax.text(100, mid_num[i] - 7, info, ha="center", va="top", color="white", fontsize=7, fontweight="bold") 
+
+    fwd_len = len(fwd_names)
+    fwd_num = list(np.linspace(0, 100, fwd_len+2))[1:-1]
+    for i in range(len(fwd_num)):
+        ax.plot(150, fwd_num[i], 'o', markersize=30, color="purple", markeredgecolor="white")  # Player icon
+        ax.text(150, fwd_num[i] - 5, fwd_names[i], ha="center", va="top", color="white", fontsize=7, fontweight="bold")  # Player name
+        info = str(fwd_points[i]) + ", " + str(fwd_values[i])
+        ax.text(150, fwd_num[i] - 7, info, ha="center", va="top", color="white", fontsize=7, fontweight="bold")  
+
+    st.pyplot(fig)
+
 #st.write('**D-Wave Token Insertion**')
 st.markdown("<h4 style='text-align: left; color: white;'>D-Wave Token Insertion</h4>", unsafe_allow_html=True)
 st.write("Go to this [webpage](https://cloud.dwavesys.com/leap/) and sign up for D-Wave Leap to obtain your token.")
+
 if 'API_TOKEN' in st.secrets:
             st.success('API key already provided!', icon='✅')
             api_key = st.secrets['API_TOKEN']
@@ -126,7 +230,10 @@ else:
                             forward_list = lineup_df[lineup_df["position"] == "FWD"]
                             ordered_lineup_df = pd.concat([gk, defense_list, midfield_list, forward_list], axis=0).reset_index(drop=True)
                             ordered_lineup_df = ordered_lineup_df[["name", "position", "value", "total_points"]]
+
+                                    
                             st.write("After game week ", gw, ", the optimal ", defense, "-", midfield, "-", forward, "starting line-up would look like:")
+                            plot_formation(ordered_lineup_df)
                             st.dataframe(ordered_lineup_df)
                             st.write("Total sum of points: ", ordered_lineup_df['total_points'].sum())
                             st.write("Total budget: ", round(ordered_lineup_df['value'].sum(), 4))
