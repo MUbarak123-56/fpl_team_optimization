@@ -212,10 +212,9 @@ else:
                             ordered_lineup_df = pd.concat([gk, defense_list, midfield_list, forward_list], axis=0).reset_index(drop=True)
                             ordered_lineup_df = ordered_lineup_df[["name", "position", "value", "total_points"]]
 
-                            plot_formation(ordered_lineup_df)
-
                                     
                             st.write("After game week ", gw, ", the optimal ", defense, "-", midfield, "-", forward, "starting line-up would look like:")
-                            st.dataframe(ordered_lineup_df)
+                            plot_formation(ordered_lineup_df)
+                            #st.dataframe(ordered_lineup_df)
                             st.write("Total sum of points: ", ordered_lineup_df['total_points'].sum())
                             st.write("Total budget: ", round(ordered_lineup_df['value'].sum(), 4))
