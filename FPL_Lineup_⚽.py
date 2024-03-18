@@ -140,7 +140,7 @@ def plot_formation(line_up):
     ax.plot(15, 50, 'o', markersize=30, color="purple", markeredgecolor="white")  # Player icon
     ax.text(15, 50 - 5, gk_names[0], ha="center", va="top", color="white", fontsize=8, fontweight="bold")  # Player name
     info = str(gk_points[0]) + ", " + str(gk_values[0])
-    ax.text(15, 50 - 6, info, ha="center", va="top", color="white", fontsize=8, fontweight="bold")  
+    ax.text(15, 50 - 7, info, ha="center", va="top", color="white", fontsize=8, fontweight="bold")  
     
     def_len = len(def_names)
     def_num = list(np.linspace(0, 100, def_len+2))[1:-1]
