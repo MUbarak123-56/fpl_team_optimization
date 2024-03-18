@@ -135,29 +135,36 @@ def plot_formation(line_up):
     def_values = line_up[line_up["position"]=="DEF"]["value"].to_list()
     mid_values = line_up[line_up["position"]=="MID"]["value"].to_list()
     fwd_values = line_up[line_up["position"]=="FWD"]["value"].to_list()
+    ax.text(5, 190, "Guide = Total Points, Player Value", color="white", fontsize=8, fontweight="bold")
     
     ax.plot(15, 50, 'o', markersize=30, color="purple", markeredgecolor="white")  # Player icon
     ax.text(15, 50 - 5, gk_names[0], ha="center", va="top", color="white", fontsize=8, fontweight="bold")  # Player name
     info = str(gk_points[0]) + ", " + str(gk_values[0])
-    ax.text(15, 50 - 10, info, ha="center", va="top", color="white", fontsize=8, fontweight="bold")  # Player name
+    ax.text(15, 50 - 6, info, ha="center", va="top", color="white", fontsize=8, fontweight="bold")  
     
     def_len = len(def_names)
     def_num = list(np.linspace(0, 100, def_len+2))[1:-1]
     for i in range(len(def_num)):
         ax.plot(50, def_num[i], 'o', markersize=30, color="purple", markeredgecolor="white")  # Player icon
-        ax.text(50, def_num[i] - 8, def_names[i], ha="center", va="top", color="white", fontsize=8, fontweight="bold")  # Player name
+        ax.text(50, def_num[i] - 5, def_names[i], ha="center", va="top", color="white", fontsize=8, fontweight="bold")  # Player name
+        info = str(def_points[i]) + ", " + str(def_values[i])
+        ax.text(15, 50 - 6, info, ha="center", va="top", color="white", fontsize=8, fontweight="bold")  
         
     mid_len = len(mid_names)
     mid_num = list(np.linspace(0, 100, mid_len+2))[1:-1]
     for i in range(len(mid_num)):
         ax.plot(100, mid_num[i], 'o', markersize=30, color="purple", markeredgecolor="white")  # Player icon
-        ax.text(100, mid_num[i] - 8, mid_names[i], ha="center", va="top", color="white", fontsize=8, fontweight="bold")  # Player name
+        ax.text(100, mid_num[i] - 5, mid_names[i], ha="center", va="top", color="white", fontsize=8, fontweight="bold")  # Player name
+        info = str(mid_points[i]) + ", " + str(mid_values[i])
+        ax.text(15, 50 - 6, info, ha="center", va="top", color="white", fontsize=8, fontweight="bold") 
 
     fwd_len = len(fwd_names)
     fwd_num = list(np.linspace(0, 100, fwd_len+2))[1:-1]
     for i in range(len(fwd_num)):
         ax.plot(150, fwd_num[i], 'o', markersize=30, color="purple", markeredgecolor="white")  # Player icon
         ax.text(150, fwd_num[i] - 5, fwd_names[i], ha="center", va="top", color="white", fontsize=8, fontweight="bold")  # Player name
+        info = str(fwd_points[i]) + ", " + str(fwd_values[i])
+        ax.text(15, 50 - 6, info, ha="center", va="top", color="white", fontsize=8, fontweight="bold")  
 
     st.pyplot(fig)
 
