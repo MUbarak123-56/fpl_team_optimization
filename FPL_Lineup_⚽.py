@@ -135,7 +135,7 @@ def plot_formation(line_up):
     def_values = line_up[line_up["position"]=="DEF"]["value"].to_list()
     mid_values = line_up[line_up["position"]=="MID"]["value"].to_list()
     fwd_values = line_up[line_up["position"]=="FWD"]["value"].to_list()
-    ax.text(5, 90, "Guide = Total Points, Player Value", color="white", fontsize=8, fontweight="bold")
+    ax.text(5, 95, "Guide = Total Points, Player Value", color="white", fontsize=8, fontweight="bold")
     
     ax.plot(15, 50, 'o', markersize=30, color="purple", markeredgecolor="white")  # Player icon
     ax.text(15, 50 - 5, gk_names[0], ha="center", va="top", color="white", fontsize=8, fontweight="bold")  # Player name
