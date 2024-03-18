@@ -234,6 +234,6 @@ else:
                                     
                             st.write("After game week ", gw, ", the optimal ", defense, "-", midfield, "-", forward, "starting line-up would look like:")
                             plot_formation(ordered_lineup_df)
-                            #st.dataframe(ordered_lineup_df)
+                            st.dataframe(ordered_lineup_df)
                             st.write("Total sum of points: ", ordered_lineup_df['total_points'].sum())
                             st.write("Total budget: ", round(ordered_lineup_df['value'].sum(), 4))
