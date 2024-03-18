@@ -126,6 +126,14 @@ else:
                             forward_list = lineup_df[lineup_df["position"] == "FWD"]
                             ordered_lineup_df = pd.concat([gk, defense_list, midfield_list, forward_list], axis=0).reset_index(drop=True)
                             ordered_lineup_df = ordered_lineup_df[["name", "position", "value", "total_points"]]
+
+                            line_up = ordered_lineup_df
+                            gk_names = line_up[line_up["position"]=="GK"]["name"].to_list()
+                            def_names = line_up[line_up["position"]=="DEF"]["name"].to_list()
+                            mid_names = line_up[line_up["position"]=="MID"]["name"].to_list()
+                            fwd_names = line_up[line_up["position"]=="FWD"]["name"].to_list()
+
+                                    
                             st.write("After game week ", gw, ", the optimal ", defense, "-", midfield, "-", forward, "starting line-up would look like:")
                             st.dataframe(ordered_lineup_df)
                             st.write("Total sum of points: ", ordered_lineup_df['total_points'].sum())
