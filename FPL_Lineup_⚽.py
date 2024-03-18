@@ -146,7 +146,8 @@ def plot_formation(line_up):
     for i in range(len(fwd_num)):
         ax.plot(150, fwd_num[i], 'o', markersize=30, color="purple", markeredgecolor="white")  # Player icon
         ax.text(150, fwd_num[i] - 6, fwd_names[i], ha="center", va="top", color="white", fontsize=8, fontweight="bold")  # Player name
-    plt.show()
+
+    st.pyplot(fig)
 
 #st.write('**D-Wave Token Insertion**')
 st.markdown("<h4 style='text-align: left; color: white;'>D-Wave Token Insertion</h4>", unsafe_allow_html=True)
