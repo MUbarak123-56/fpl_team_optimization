@@ -135,7 +135,7 @@ def plot_formation(line_up):
     def_values = line_up[line_up["position"]=="DEF"]["value"].to_list()
     mid_values = line_up[line_up["position"]=="MID"]["value"].to_list()
     fwd_values = line_up[line_up["position"]=="FWD"]["value"].to_list()
-    ax.text(5, 190, "Guide = Total Points, Player Value", color="white", fontsize=8, fontweight="bold")
+    ax.text(5, 90, "Guide = Total Points, Player Value", color="white", fontsize=8, fontweight="bold")
     
     ax.plot(15, 50, 'o', markersize=30, color="purple", markeredgecolor="white")  # Player icon
     ax.text(15, 50 - 5, gk_names[0], ha="center", va="top", color="white", fontsize=8, fontweight="bold")  # Player name
@@ -148,7 +148,7 @@ def plot_formation(line_up):
         ax.plot(50, def_num[i], 'o', markersize=30, color="purple", markeredgecolor="white")  # Player icon
         ax.text(50, def_num[i] - 5, def_names[i], ha="center", va="top", color="white", fontsize=8, fontweight="bold")  # Player name
         info = str(def_points[i]) + ", " + str(def_values[i])
-        ax.text(50, def_num[i] - 6, info, ha="center", va="top", color="white", fontsize=8, fontweight="bold")  
+        ax.text(50, def_num[i] - 7, info, ha="center", va="top", color="white", fontsize=8, fontweight="bold")  
         
     mid_len = len(mid_names)
     mid_num = list(np.linspace(0, 100, mid_len+2))[1:-1]
@@ -156,7 +156,7 @@ def plot_formation(line_up):
         ax.plot(100, mid_num[i], 'o', markersize=30, color="purple", markeredgecolor="white")  # Player icon
         ax.text(100, mid_num[i] - 5, mid_names[i], ha="center", va="top", color="white", fontsize=8, fontweight="bold")  # Player name
         info = str(mid_points[i]) + ", " + str(mid_values[i])
-        ax.text(100, mid_num[i] - 6, info, ha="center", va="top", color="white", fontsize=8, fontweight="bold") 
+        ax.text(100, mid_num[i] - 7, info, ha="center", va="top", color="white", fontsize=8, fontweight="bold") 
 
     fwd_len = len(fwd_names)
     fwd_num = list(np.linspace(0, 100, fwd_len+2))[1:-1]
@@ -164,7 +164,7 @@ def plot_formation(line_up):
         ax.plot(150, fwd_num[i], 'o', markersize=30, color="purple", markeredgecolor="white")  # Player icon
         ax.text(150, fwd_num[i] - 5, fwd_names[i], ha="center", va="top", color="white", fontsize=8, fontweight="bold")  # Player name
         info = str(fwd_points[i]) + ", " + str(fwd_values[i])
-        ax.text(150, fwd_num[i] - 6, info, ha="center", va="top", color="white", fontsize=8, fontweight="bold")  
+        ax.text(150, fwd_num[i] - 7, info, ha="center", va="top", color="white", fontsize=8, fontweight="bold")  
 
     st.pyplot(fig)
 
