@@ -124,10 +124,21 @@ def plot_formation(line_up):
     gk_names = line_up[line_up["position"]=="GK"]["name"].to_list()
     def_names = line_up[line_up["position"]=="DEF"]["name"].to_list()
     mid_names = line_up[line_up["position"]=="MID"]["name"].to_list()
-    fwd_names = line_up[line_up["position"]=="FWD"]["name"].to_list()
+    fwd_names = line_up[line_up["position"]=="FWD"]["name"].to_list()\
+
+    gk_points = line_up[line_up["position"]=="GK"]["total_points"].to_list()
+    def_points = line_up[line_up["position"]=="DEF"]["total_points"].to_list()
+    mid_points = line_up[line_up["position"]=="MID"]["total_points"].to_list()
+    fwd_points = line_up[line_up["position"]=="FWD"]["total_points"].to_list()
+
+    gk_values = line_up[line_up["position"]=="GK"]["value"].to_list()
+    def_values = line_up[line_up["position"]=="DEF"]["value"].to_list()
+    mid_values = line_up[line_up["position"]=="MID"]["value"].to_list()
+    fwd_values = line_up[line_up["position"]=="FWD"]["value"].to_list()
     
     ax.plot(15, 50, 'o', markersize=30, color="purple", markeredgecolor="white")  # Player icon
-    ax.text(15, 50 - 8, gk_names[0], ha="center", va="top", color="white", fontsize=8, fontweight="bold")  # Player name
+    ax.text(15, 50 - 5, gk_names[0], ha="center", va="top", color="white", fontsize=8, fontweight="bold")  # Player name
+    ax.text(15, 50 - 10, gk_points[0] + ", " + gk_values[0], ha="center", va="top", color="white", fontsize=8, fontweight="bold")  # Player name
     
     def_len = len(def_names)
     def_num = list(np.linspace(0, 100, def_len+2))[1:-1]
@@ -145,7 +156,7 @@ def plot_formation(line_up):
     fwd_num = list(np.linspace(0, 100, fwd_len+2))[1:-1]
     for i in range(len(fwd_num)):
         ax.plot(150, fwd_num[i], 'o', markersize=30, color="purple", markeredgecolor="white")  # Player icon
-        ax.text(150, fwd_num[i] - 6, fwd_names[i], ha="center", va="top", color="white", fontsize=8, fontweight="bold")  # Player name
+        ax.text(150, fwd_num[i] - 5, fwd_names[i], ha="center", va="top", color="white", fontsize=8, fontweight="bold")  # Player name
 
     st.pyplot(fig)
 
