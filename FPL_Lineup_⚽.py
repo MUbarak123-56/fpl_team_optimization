@@ -33,7 +33,7 @@ st.write("""The purpose of this app is to assist FPL fans to select the optimal 
 data = pd.read_excel("data.xlsx")
 gw = max(data["GW"])
 
-columns = ["name", "position", "value", "total_points"]
+columns = ["name", "team", "position", "value", "total_points"]
 data = data[columns]
 data["value"] = data["value"]/10
 df_use = data.sort_values("position").reset_index(drop=True)
@@ -230,7 +230,7 @@ else:
                             midfield_list = lineup_df[lineup_df["position"] == "MID"]
                             forward_list = lineup_df[lineup_df["position"] == "FWD"]
                             ordered_lineup_df = pd.concat([gk, defense_list, midfield_list, forward_list], axis=0).reset_index(drop=True)
-                            ordered_lineup_df = ordered_lineup_df[["name", "position", "value", "total_points"]]
+                            ordered_lineup_df = ordered_lineup_df[["name", "position", "value", "total_points", "team"]]
 
                                     
                             st.write("After game week ", gw, ", the optimal ", defense, "-", midfield, "-", forward, "starting line-up would look like:")
