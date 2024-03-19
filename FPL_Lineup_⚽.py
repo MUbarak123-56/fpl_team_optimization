@@ -138,7 +138,7 @@ def plot_formation(line_up):
     ax.text(5, 95, "Guide = Points, Value", color="white", fontsize=7, fontweight="bold")
     ax.text(40, 95, "Total Points: " + str(line_up['total_points'].sum()) + "; " + "Total Value: " + str(round(line_up['value'].sum(), 4)), color="white", fontsize=7, fontweight="bold")
     
-    ax.plot(15, 50, 'o', markersize=30, color="purple", markeredgecolor="white")  # Player icon
+    ax.plot(15, 50, 'o', markersize=30, color="black", markeredgecolor="white")  # Player icon
     ax.text(15, 50 - 5, gk_names[0], ha="center", va="top", color="white", fontsize=7, fontweight="bold")  # Player name
     info = str(gk_points[0]) + ", " + str(gk_values[0])
     ax.text(15, 50 - 7, info, ha="center", va="top", color="white", fontsize=7, fontweight="bold")  
