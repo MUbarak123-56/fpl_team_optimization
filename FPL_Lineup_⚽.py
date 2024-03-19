@@ -33,7 +33,7 @@ st.write("""The purpose of this app is to assist FPL fans to select the optimal 
 data = pd.read_excel("data.xlsx")
 gw = max(data["GW"])
 
-columns = ["name", "position", "value", "total_points"]
+columns = ["name", "team", "position", "value", "total_points"]
 data = data[columns]
 data["value"] = data["value"]/10
 df_use = data.sort_values("position").reset_index(drop=True)
@@ -45,7 +45,7 @@ forward_list_index = list(df_use[df_use["position"]=="FWD"].index)
 gk_list_index = list(df_use[df_use["position"]=="GK"].index)
 midfield_list_index = list(df_use[df_use["position"]=="MID"].index)
     
-columns = ["variable","name", "position", "value", "total_points"]
+columns = ["variable","name", "team", "position", "value", "total_points"]
 total_points = df_use["total_points"].to_list()
 value = df_use["value"].to_list()
 df_use = df_use[columns]
@@ -135,12 +135,20 @@ def plot_formation(line_up):
     def_values = line_up[line_up["position"]=="DEF"]["value"].to_list()
     mid_values = line_up[line_up["position"]=="MID"]["value"].to_list()
     fwd_values = line_up[line_up["position"]=="FWD"]["value"].to_list()
-    ax.text(5, 95, "Guide = Total Points, Player Value", color="white", fontsize=7, fontweight="bold")
+
+    gk_teams = line_up[line_up["position"]=="GK"]["team"].to_list()
+    def_teams = line_up[line_up["position"]=="DEF"]["team"].to_list()
+    mid_teams = line_up[line_up["position"]=="MID"]["team"].to_list()
+    fwd_teams = line_up[line_up["position"]=="FWD"]["team"].to_list()
     
-    ax.plot(15, 50, 'o', markersize=30, color="purple", markeredgecolor="white")  # Player icon
+    ax.text(5, 95, "Guide = Points, Value", color="white", fontsize=7, fontweight="bold")
+    ax.text(40, 95, "Total Points: " + str(line_up['total_points'].sum()) + "; " + "Total Value: " + str(round(line_up['value'].sum(), 4)), color="white", fontsize=7, fontweight="bold")
+    
+    ax.plot(15, 50, 'o', markersize=30, color="black", markeredgecolor="white")  # Player icon
     ax.text(15, 50 - 5, gk_names[0], ha="center", va="top", color="white", fontsize=7, fontweight="bold")  # Player name
     info = str(gk_points[0]) + ", " + str(gk_values[0])
     ax.text(15, 50 - 7, info, ha="center", va="top", color="white", fontsize=7, fontweight="bold")  
+    ax.text(15, 50 - 9, gk_teams[0], ha="center", va="top", color="white", fontsize=7, fontweight="bold")  
     
     def_len = len(def_names)
     def_num = list(np.linspace(0, 100, def_len+2))[1:-1]
@@ -148,7 +156,8 @@ def plot_formation(line_up):
         ax.plot(50, def_num[i], 'o', markersize=30, color="purple", markeredgecolor="white")  # Player icon
         ax.text(50, def_num[i] - 5, def_names[i], ha="center", va="top", color="white", fontsize=7, fontweight="bold")  # Player name
         info = str(def_points[i]) + ", " + str(def_values[i])
-        ax.text(50, def_num[i] - 7, info, ha="center", va="top", color="white", fontsize=7, fontweight="bold")  
+        ax.text(50, def_num[i] - 7, info, ha="center", va="top", color="white", fontsize=7, fontweight="bold") 
+        ax.text(50, def_num[i] - 9, def_teams[i], ha="center", va="top", color="white", fontsize=7, fontweight="bold")  
         
     mid_len = len(mid_names)
     mid_num = list(np.linspace(0, 100, mid_len+2))[1:-1]
@@ -157,6 +166,7 @@ def plot_formation(line_up):
         ax.text(100, mid_num[i] - 5, mid_names[i], ha="center", va="top", color="white", fontsize=7, fontweight="bold")  # Player name
         info = str(mid_points[i]) + ", " + str(mid_values[i])
         ax.text(100, mid_num[i] - 7, info, ha="center", va="top", color="white", fontsize=7, fontweight="bold") 
+        ax.text(100, mid_num[i] - 9, mid_teams[i], ha="center", va="top", color="white", fontsize=7, fontweight="bold") 
 
     fwd_len = len(fwd_names)
     fwd_num = list(np.linspace(0, 100, fwd_len+2))[1:-1]
@@ -164,7 +174,8 @@ def plot_formation(line_up):
         ax.plot(150, fwd_num[i], 'o', markersize=30, color="purple", markeredgecolor="white")  # Player icon
         ax.text(150, fwd_num[i] - 5, fwd_names[i], ha="center", va="top", color="white", fontsize=7, fontweight="bold")  # Player name
         info = str(fwd_points[i]) + ", " + str(fwd_values[i])
-        ax.text(150, fwd_num[i] - 7, info, ha="center", va="top", color="white", fontsize=7, fontweight="bold")  
+        ax.text(150, fwd_num[i] - 7, info, ha="center", va="top", color="white", fontsize=7, fontweight="bold") 
+        ax.text(150, fwd_num[i] - 9, fwd_teams[i], ha="center", va="top", color="white", fontsize=7, fontweight="bold") 
 
     st.pyplot(fig)
 
@@ -229,11 +240,11 @@ else:
                             midfield_list = lineup_df[lineup_df["position"] == "MID"]
                             forward_list = lineup_df[lineup_df["position"] == "FWD"]
                             ordered_lineup_df = pd.concat([gk, defense_list, midfield_list, forward_list], axis=0).reset_index(drop=True)
-                            ordered_lineup_df = ordered_lineup_df[["name", "position", "value", "total_points"]]
+                            ordered_lineup_df = ordered_lineup_df[["name", "position", "value", "total_points", "team"]]
 
                                     
                             st.write("After game week ", gw, ", the optimal ", defense, "-", midfield, "-", forward, "starting line-up would look like:")
                             plot_formation(ordered_lineup_df)
-                            st.dataframe(ordered_lineup_df)
-                            st.write("Total sum of points: ", ordered_lineup_df['total_points'].sum())
-                            st.write("Total budget: ", round(ordered_lineup_df['value'].sum(), 4))
+                            #st.dataframe(ordered_lineup_df)
+                            #st.write("Total sum of points: ", ordered_lineup_df['total_points'].sum())
+                            #st.write("Total budget: ", round(ordered_lineup_df['value'].sum(), 4))
