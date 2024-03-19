@@ -45,7 +45,7 @@ forward_list_index = list(df_use[df_use["position"]=="FWD"].index)
 gk_list_index = list(df_use[df_use["position"]=="GK"].index)
 midfield_list_index = list(df_use[df_use["position"]=="MID"].index)
     
-columns = ["variable","name", "position", "value", "total_points"]
+columns = ["variable","name", "team", "position", "value", "total_points"]
 total_points = df_use["total_points"].to_list()
 value = df_use["value"].to_list()
 df_use = df_use[columns]
@@ -135,6 +135,12 @@ def plot_formation(line_up):
     def_values = line_up[line_up["position"]=="DEF"]["value"].to_list()
     mid_values = line_up[line_up["position"]=="MID"]["value"].to_list()
     fwd_values = line_up[line_up["position"]=="FWD"]["value"].to_list()
+
+    gk_teams = line_up[line_up["position"]=="GK"]["team"].to_list()
+    def_teams = line_up[line_up["position"]=="DEF"]["team"].to_list()
+    mid_teams = line_up[line_up["position"]=="MID"]["team"].to_list()
+    fwd_teams = line_up[line_up["position"]=="FWD"]["team"].to_list()
+    
     ax.text(5, 95, "Guide = Points, Value", color="white", fontsize=7, fontweight="bold")
     ax.text(40, 95, "Total Points: " + str(line_up['total_points'].sum()) + "; " + "Total Value: " + str(round(line_up['value'].sum(), 4)), color="white", fontsize=7, fontweight="bold")
     
@@ -142,6 +148,7 @@ def plot_formation(line_up):
     ax.text(15, 50 - 5, gk_names[0], ha="center", va="top", color="white", fontsize=7, fontweight="bold")  # Player name
     info = str(gk_points[0]) + ", " + str(gk_values[0])
     ax.text(15, 50 - 7, info, ha="center", va="top", color="white", fontsize=7, fontweight="bold")  
+    ax.text(15, 50 - 9, gk_teams[0], ha="center", va="top", color="white", fontsize=7, fontweight="bold")  
     
     def_len = len(def_names)
     def_num = list(np.linspace(0, 100, def_len+2))[1:-1]
