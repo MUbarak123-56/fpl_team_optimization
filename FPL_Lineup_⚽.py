@@ -157,7 +157,7 @@ def plot_formation(line_up):
         ax.text(50, def_num[i] - 5, def_names[i], ha="center", va="top", color="white", fontsize=7, fontweight="bold")  # Player name
         info = str(def_points[i]) + ", " + str(def_values[i])
         ax.text(50, def_num[i] - 7, info, ha="center", va="top", color="white", fontsize=7, fontweight="bold") 
-        ax.text(50, 50 - 9, def_teams[i], ha="center", va="top", color="white", fontsize=7, fontweight="bold")  
+        ax.text(50, def_num[i] - 9, def_teams[i], ha="center", va="top", color="white", fontsize=7, fontweight="bold")  
         
     mid_len = len(mid_names)
     mid_num = list(np.linspace(0, 100, mid_len+2))[1:-1]
@@ -166,7 +166,7 @@ def plot_formation(line_up):
         ax.text(100, mid_num[i] - 5, mid_names[i], ha="center", va="top", color="white", fontsize=7, fontweight="bold")  # Player name
         info = str(mid_points[i]) + ", " + str(mid_values[i])
         ax.text(100, mid_num[i] - 7, info, ha="center", va="top", color="white", fontsize=7, fontweight="bold") 
-        ax.text(100, 100 - 9, mid_teams[i], ha="center", va="top", color="white", fontsize=7, fontweight="bold") 
+        ax.text(100, mid_num[i] - 9, mid_teams[i], ha="center", va="top", color="white", fontsize=7, fontweight="bold") 
 
     fwd_len = len(fwd_names)
     fwd_num = list(np.linspace(0, 100, fwd_len+2))[1:-1]
@@ -175,7 +175,7 @@ def plot_formation(line_up):
         ax.text(150, fwd_num[i] - 5, fwd_names[i], ha="center", va="top", color="white", fontsize=7, fontweight="bold")  # Player name
         info = str(fwd_points[i]) + ", " + str(fwd_values[i])
         ax.text(150, fwd_num[i] - 7, info, ha="center", va="top", color="white", fontsize=7, fontweight="bold") 
-        ax.text(150, 150 - 9, fwd_teams[i], ha="center", va="top", color="white", fontsize=7, fontweight="bold") 
+        ax.text(150, fwd_num[i] - 9, fwd_teams[i], ha="center", va="top", color="white", fontsize=7, fontweight="bold") 
 
     st.pyplot(fig)
 
