@@ -51,7 +51,7 @@ value = df_use["value"].to_list()
 df_use = df_use[columns]
 lagrange = 1716
 lagrange_budget = 1551
-num_var = 38
+num_var = len(df_use)
 slack_num = 1
 
 st.markdown("<h4 style='text-align: left; color: white;'>Formation Selection</h4>", unsafe_allow_html=True)
