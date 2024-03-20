@@ -59,7 +59,7 @@ st.write("Toggle with the following widgets to set your formation. You can play 
 
 defense = st.number_input("How many defenders do you want?", min_value=3, max_value=5, value = 4)
 mid_use = (10 - defense) - 1
-midfield = st.number_input("How many midfielders do you want?", min_value=2, max_value=mid_use, value = 4)
+midfield = st.number_input("How many midfielders do you want?", min_value=3, max_value=mid_use, value = 4)
 forward_use = 10 - (defense + midfield)
 forward = st.number_input("How many forwards do you want?", min_value=forward_use, max_value=forward_use)
 
