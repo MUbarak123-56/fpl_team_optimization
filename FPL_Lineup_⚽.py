@@ -142,11 +142,11 @@ def plot_formation(line_up, line_up2):
     fwd_teams = line_up[line_up["position"]=="FWD"]["team"].to_list()
     
     ax.text(5, 95, "Guide = Points per 90 mins, Value", color="white", fontsize=7, fontweight="bold")
-    ax.text(50, 95, "Total Points per 90 mins for Starting line up: " + str(line_up["points_per_game"].sum()) + "; " + "Total Squad Budget: " + str(round(line_up2['value'].sum(), 4)), color="white", fontsize=7, fontweight="bold")
+    ax.text(50, 95, "Total Points per 90 mins for Starting line up: " + str(round(line_up["points_per_game"].sum(),2)) + "; " + "Total Squad Budget: " + str(round(line_up2['value'].sum(), 2)), color="white", fontsize=7, fontweight="bold")
     
     ax.plot(15, 50, 'o', markersize=30, color="black", markeredgecolor="white")  # Player icon
     ax.text(15, 50 - 5, gk_names[0], ha="center", va="top", color="white", fontsize=7, fontweight="bold")  # Player name
-    info = str(gk_points[0]) + ", " + str(gk_values[0])
+    info = str(round(gk_points[0],1)) + ", " + str(gk_values[0])
     ax.text(15, 50 - 7, info, ha="center", va="top", color="white", fontsize=7, fontweight="bold")  
     ax.text(15, 50 - 9, gk_teams[0], ha="center", va="top", color="white", fontsize=7, fontweight="bold")  
     
@@ -155,7 +155,7 @@ def plot_formation(line_up, line_up2):
     for i in range(len(def_num)):
         ax.plot(50, def_num[i], 'o', markersize=30, color="purple", markeredgecolor="white")  # Player icon
         ax.text(50, def_num[i] - 5, def_names[i], ha="center", va="top", color="white", fontsize=7, fontweight="bold")  # Player name
-        info = str(def_points[i]) + ", " + str(def_values[i])
+        info = str(round(def_points[i],1)) + ", " + str(def_values[i])
         ax.text(50, def_num[i] - 7, info, ha="center", va="top", color="white", fontsize=7, fontweight="bold") 
         ax.text(50, def_num[i] - 9, def_teams[i], ha="center", va="top", color="white", fontsize=7, fontweight="bold")  
         
@@ -164,7 +164,7 @@ def plot_formation(line_up, line_up2):
     for i in range(len(mid_num)):
         ax.plot(100, mid_num[i], 'o', markersize=30, color="purple", markeredgecolor="white")  # Player icon
         ax.text(100, mid_num[i] - 5, mid_names[i], ha="center", va="top", color="white", fontsize=7, fontweight="bold")  # Player name
-        info = str(mid_points[i]) + ", " + str(mid_values[i])
+        info = str(round(mid_points[i],1)) + ", " + str(mid_values[i])
         ax.text(100, mid_num[i] - 7, info, ha="center", va="top", color="white", fontsize=7, fontweight="bold") 
         ax.text(100, mid_num[i] - 9, mid_teams[i], ha="center", va="top", color="white", fontsize=7, fontweight="bold") 
 
@@ -173,7 +173,7 @@ def plot_formation(line_up, line_up2):
     for i in range(len(fwd_num)):
         ax.plot(150, fwd_num[i], 'o', markersize=30, color="purple", markeredgecolor="white")  # Player icon
         ax.text(150, fwd_num[i] - 5, fwd_names[i], ha="center", va="top", color="white", fontsize=7, fontweight="bold")  # Player name
-        info = str(fwd_points[i]) + ", " + str(fwd_values[i])
+        info = str(round(fwd_points[i],1)) + ", " + str(fwd_values[i])
         ax.text(150, fwd_num[i] - 7, info, ha="center", va="top", color="white", fontsize=7, fontweight="bold") 
         ax.text(150, fwd_num[i] - 9, fwd_teams[i], ha="center", va="top", color="white", fontsize=7, fontweight="bold") 
 
@@ -217,13 +217,13 @@ def plot_bench(bench):
     nums = np.linspace(0, 200, 6)[1:-1]
     ax.plot(nums[0], 12, 'o', markersize=30, color="black", markeredgecolor="white")  # Player icon
     ax.text(nums[0], 10-3, names[0], ha="center", va="top", color="white", fontsize=8, fontweight="bold")
-    info=str(points[0]) + ", " + str(values[0])
+    info=str(round(points[0],1)) + ", " + str(values[0])
     ax.text(nums[0], 10-5, info, ha="center", va="top", color="white", fontsize=8, fontweight="bold")
     ax.text(nums[0], 10-7, teams[0], ha="center", va="top", color="white", fontsize=8, fontweight="bold")
     for i in range(1, len(nums)):
         ax.plot(nums[i], 12, 'o', markersize=30, color="purple", markeredgecolor="white")  # Player icon
         ax.text(nums[i], 10-3, names[i], ha="center", va="top", color="white", fontsize=8, fontweight="bold")
-        info=str(points[i]) + ", " + str(values[i])
+        info=str(round(points[i],1)) + ", " + str(values[i])
         ax.text(nums[i], 10-5, info, ha="center", va="top", color="white", fontsize=8, fontweight="bold")
         ax.text(nums[i], 10-7, teams[i], ha="center", va="top", color="white", fontsize=8, fontweight="bold")
         
