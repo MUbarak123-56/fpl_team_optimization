@@ -243,7 +243,7 @@ else:
             else:
                         st.success('Your API token has been received. Now optimization will be conducted.', icon='👉')
 
-                        with st.spinner('Please wait...Line up is being selected'):
+                        with st.spinner('Please wait..Squad is being selected'):
                             time.sleep(5)
                             x = Array.create('x', shape=num_var, vartype='BINARY')
                             s = Array.create('s', shape=slack_num + len(df_use["team"].unique()), vartype='BINARY')
