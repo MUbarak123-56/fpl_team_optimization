@@ -115,7 +115,7 @@ def draw_soccer_field():
 
     return fig, ax
 
-def plot_formation(line_up):
+def plot_formation(line_up, line_up2):
     """
     Plots the given formation on a detailed soccer field.
     """
@@ -142,7 +142,7 @@ def plot_formation(line_up):
     fwd_teams = line_up[line_up["position"]=="FWD"]["team"].to_list()
     
     ax.text(5, 95, "Guide = Points, Value", color="white", fontsize=7, fontweight="bold")
-    ax.text(40, 95, "Total Points: " + str(line_up['total_points'].sum()) + "; " + "Total Value: " + str(round(line_up['value'].sum(), 4)), color="white", fontsize=7, fontweight="bold")
+    ax.text(40, 95, "Total Points for Starting line up: " + str(line_up['total_points'].sum()) + "; " + "Total Squad Budget: " + str(round(line_up2['value'].sum(), 4)), color="white", fontsize=7, fontweight="bold")
     
     ax.plot(15, 50, 'o', markersize=30, color="black", markeredgecolor="white")  # Player icon
     ax.text(15, 50 - 5, gk_names[0], ha="center", va="top", color="white", fontsize=7, fontweight="bold")  # Player name
@@ -302,7 +302,7 @@ else:
 
                                     
                             st.write("After game week ", gw, ", the optimal ", defense, "-", midfield, "-", forward, "starting line-up would look like:")
-                            plot_formation(start_lineup_df)
+                            plot_formation(start_lineup_df, lineup_df)
                             st.write("And the bench would look like:")
                             plot_formation(bench_lineup_df)
                             #st.dataframe(ordered_lineup_df)
