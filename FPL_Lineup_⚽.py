@@ -20,7 +20,7 @@ st.write("""The purpose of this app is to assist FPL fans to select the optimal 
             The data collected reflects the top 50 highest rated players (5 goalkeepers, 15 defenders, 15 midfielders and 15 forwards) so far this season in terms of FPL points per 90 minutes accumulated over season. 
             For a player to be considered for selection, they must have also played for more than half of the games of the season. 
             By leveraging D-Wave's LeapHybridSampler, you will be able to view what the optimal starting line-up would be based on your desired formation alongside the selected bench. You can sign up for D-Wave Leap [here](https://cloud.dwavesys.com/leap/) and obtain your solver API token. 
-            Once you have obtained it, insert it into the D-Wave Solver API token in the sidebar.
+            Once you have obtained it, insert it into the D-Wave Solver API token password bar below.
             The optimization problem also takes budget into account. The budget for an FPL Squad is expected to be 100. Hence, you will be constrained to a squad whose total value will not exceed 100.
             """)
 # loading in the D-Wave Token
