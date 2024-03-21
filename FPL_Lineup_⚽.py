@@ -141,8 +141,8 @@ def plot_formation(line_up, line_up2):
     mid_teams = line_up[line_up["position"]=="MID"]["team"].to_list()
     fwd_teams = line_up[line_up["position"]=="FWD"]["team"].to_list()
     
-    ax.text(5, 95, "Guide = Points, Value", color="white", fontsize=7, fontweight="bold")
-    ax.text(40, 95, "Total Points for Starting line up: " + str(line_up["points_per_game"].sum()) + "; " + "Total Squad Budget: " + str(round(line_up2['value'].sum(), 4)), color="white", fontsize=7, fontweight="bold")
+    ax.text(5, 95, "Guide = Points per 90 mins, Value", color="white", fontsize=7, fontweight="bold")
+    ax.text(50, 95, "Total Points per 90 mins for Starting line up: " + str(line_up["points_per_game"].sum()) + "; " + "Total Squad Budget: " + str(round(line_up2['value'].sum(), 4)), color="white", fontsize=7, fontweight="bold")
     
     ax.plot(15, 50, 'o', markersize=30, color="black", markeredgecolor="white")  # Player icon
     ax.text(15, 50 - 5, gk_names[0], ha="center", va="top", color="white", fontsize=7, fontweight="bold")  # Player name
