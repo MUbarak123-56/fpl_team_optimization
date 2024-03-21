@@ -75,7 +75,7 @@ def draw_soccer_field():
     and 18-yard boxes.
     """
     # Create figure
-    fig, ax = plt.subplots(figsize=(15, 8))
+    fig, ax = plt.subplots(figsize=(10, 7))
     ax.set_facecolor('green')  # Set the background color to green
 
     # Draw the pitch outline
@@ -180,7 +180,7 @@ def plot_formation(line_up, line_up2):
     st.pyplot(fig)
 
 def draw_bench():
-    fig, ax = plt.subplots(figsize=(15,2))
+    fig, ax = plt.subplots(figsize=(10,2))
     ax.set_facecolor('green')  # Set the background color to green
 
     # Draw the pitch outline
@@ -304,7 +304,7 @@ else:
                             st.write("After game week ", gw, ", the optimal ", defense, "-", midfield, "-", forward, "starting line-up would look like:")
                             plot_formation(start_lineup_df, lineup_df)
                             st.write("And the bench would look like:")
-                            plot_formation(bench_lineup_df)
+                            plot_bench(bench_lineup_df)
                             #st.dataframe(ordered_lineup_df)
                             #st.write("Total sum of points: ", ordered_lineup_df['total_points'].sum())
                             #st.write("Total budget: ", round(ordered_lineup_df['value'].sum(), 4))
