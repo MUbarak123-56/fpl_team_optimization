@@ -30,7 +30,7 @@ st.write("""The purpose of this app is to assist FPL fans to select the optimal 
 
 data = pd.read_excel("data.xlsx")
 gw = max(data["GW"])
-columns = ["name", "position", "value", "total_points", "team"]
+columns = ["name", "position", "value", "total_points", "team", "points_per_game"]
 data = data[columns]
 data["value"] = data["value"]/10
 df_use = data.sort_values("position").reset_index(drop=True)
@@ -42,15 +42,15 @@ forward_list_index = list(df_use[df_use["position"]=="FWD"].index)
 gk_list_index = list(df_use[df_use["position"]=="GK"].index)
 midfield_list_index = list(df_use[df_use["position"]=="MID"].index)
     
-columns = ["variable","name", "position", "value", "total_points", "team"]
+columns = ["variable","name", "position", "value", "total_points", "team", "points_per_game"]
 team_list = list(df_use["team"].unique())
 total_points = df_use["total_points"].to_list()
 value = df_use["value"].to_list()
 df_use = df_use[columns]
 
-lagrange = max(df_use["total_points"])*15
+lagrange = max(df_use["points_per_game"])*15
 lagrange_budget = max(df_use["value"])*15
-lagrange_team = max(df_use["total_points"])*3
+lagrange_team = max(df_use["points_per_game"])*3
 num_var = len(df_use)
 slack_num = 1
 
@@ -126,10 +126,10 @@ def plot_formation(line_up, line_up2):
     mid_names = line_up[line_up["position"]=="MID"]["name"].to_list()
     fwd_names = line_up[line_up["position"]=="FWD"]["name"].to_list()\
 
-    gk_points = line_up[line_up["position"]=="GK"]["total_points"].to_list()
-    def_points = line_up[line_up["position"]=="DEF"]["total_points"].to_list()
-    mid_points = line_up[line_up["position"]=="MID"]["total_points"].to_list()
-    fwd_points = line_up[line_up["position"]=="FWD"]["total_points"].to_list()
+    gk_points = line_up[line_up["position"]=="GK"]["points_per_game"].to_list()
+    def_points = line_up[line_up["position"]=="DEF"]["points_per_game"].to_list()
+    mid_points = line_up[line_up["position"]=="MID"]["points_per_game"].to_list()
+    fwd_points = line_up[line_up["position"]=="FWD"]["points_per_game"].to_list()
 
     gk_values = line_up[line_up["position"]=="GK"]["value"].to_list()
     def_values = line_up[line_up["position"]=="DEF"]["value"].to_list()
@@ -141,12 +141,12 @@ def plot_formation(line_up, line_up2):
     mid_teams = line_up[line_up["position"]=="MID"]["team"].to_list()
     fwd_teams = line_up[line_up["position"]=="FWD"]["team"].to_list()
     
-    ax.text(5, 95, "Guide = Points, Value", color="white", fontsize=7, fontweight="bold")
-    ax.text(40, 95, "Total Points for Starting line up: " + str(line_up['total_points'].sum()) + "; " + "Total Squad Budget: " + str(round(line_up2['value'].sum(), 4)), color="white", fontsize=7, fontweight="bold")
+    ax.text(50, 97.5, "Guide = Points per 90 mins, Value", color="white", fontsize=7, fontweight="bold")
+    ax.text(50, 95, "Total Points per 90 mins for Starting line up: " + str(round(line_up["points_per_game"].sum(),2)) + "; " + "Total Squad Budget: " + str(round(line_up2['value'].sum(), 2)), color="white", fontsize=7, fontweight="bold")
     
     ax.plot(15, 50, 'o', markersize=30, color="black", markeredgecolor="white")  # Player icon
     ax.text(15, 50 - 5, gk_names[0], ha="center", va="top", color="white", fontsize=7, fontweight="bold")  # Player name
-    info = str(gk_points[0]) + ", " + str(gk_values[0])
+    info = str(round(gk_points[0],1)) + ", " + str(gk_values[0])
     ax.text(15, 50 - 7, info, ha="center", va="top", color="white", fontsize=7, fontweight="bold")  
     ax.text(15, 50 - 9, gk_teams[0], ha="center", va="top", color="white", fontsize=7, fontweight="bold")  
     
@@ -155,7 +155,7 @@ def plot_formation(line_up, line_up2):
     for i in range(len(def_num)):
         ax.plot(50, def_num[i], 'o', markersize=30, color="purple", markeredgecolor="white")  # Player icon
         ax.text(50, def_num[i] - 5, def_names[i], ha="center", va="top", color="white", fontsize=7, fontweight="bold")  # Player name
-        info = str(def_points[i]) + ", " + str(def_values[i])
+        info = str(round(def_points[i],1)) + ", " + str(def_values[i])
         ax.text(50, def_num[i] - 7, info, ha="center", va="top", color="white", fontsize=7, fontweight="bold") 
         ax.text(50, def_num[i] - 9, def_teams[i], ha="center", va="top", color="white", fontsize=7, fontweight="bold")  
         
@@ -164,7 +164,7 @@ def plot_formation(line_up, line_up2):
     for i in range(len(mid_num)):
         ax.plot(100, mid_num[i], 'o', markersize=30, color="purple", markeredgecolor="white")  # Player icon
         ax.text(100, mid_num[i] - 5, mid_names[i], ha="center", va="top", color="white", fontsize=7, fontweight="bold")  # Player name
-        info = str(mid_points[i]) + ", " + str(mid_values[i])
+        info = str(round(mid_points[i],1)) + ", " + str(mid_values[i])
         ax.text(100, mid_num[i] - 7, info, ha="center", va="top", color="white", fontsize=7, fontweight="bold") 
         ax.text(100, mid_num[i] - 9, mid_teams[i], ha="center", va="top", color="white", fontsize=7, fontweight="bold") 
 
@@ -173,7 +173,7 @@ def plot_formation(line_up, line_up2):
     for i in range(len(fwd_num)):
         ax.plot(150, fwd_num[i], 'o', markersize=30, color="purple", markeredgecolor="white")  # Player icon
         ax.text(150, fwd_num[i] - 5, fwd_names[i], ha="center", va="top", color="white", fontsize=7, fontweight="bold")  # Player name
-        info = str(fwd_points[i]) + ", " + str(fwd_values[i])
+        info = str(round(fwd_points[i],1)) + ", " + str(fwd_values[i])
         ax.text(150, fwd_num[i] - 7, info, ha="center", va="top", color="white", fontsize=7, fontweight="bold") 
         ax.text(150, fwd_num[i] - 9, fwd_teams[i], ha="center", va="top", color="white", fontsize=7, fontweight="bold") 
 
@@ -205,7 +205,7 @@ def plot_bench(bench):
     fig, ax = draw_bench()
      
     names=bench["name"].tolist()
-    points=bench["total_points"].tolist()
+    points=bench["points_per_game"].tolist()
     values=bench["value"].tolist()
     teams=bench["team"].to_list()
             
@@ -217,13 +217,13 @@ def plot_bench(bench):
     nums = np.linspace(0, 200, 6)[1:-1]
     ax.plot(nums[0], 12, 'o', markersize=30, color="black", markeredgecolor="white")  # Player icon
     ax.text(nums[0], 10-3, names[0], ha="center", va="top", color="white", fontsize=8, fontweight="bold")
-    info=str(points[0]) + ", " + str(values[0])
+    info=str(round(points[0],1)) + ", " + str(values[0])
     ax.text(nums[0], 10-5, info, ha="center", va="top", color="white", fontsize=8, fontweight="bold")
     ax.text(nums[0], 10-7, teams[0], ha="center", va="top", color="white", fontsize=8, fontweight="bold")
     for i in range(1, len(nums)):
         ax.plot(nums[i], 12, 'o', markersize=30, color="purple", markeredgecolor="white")  # Player icon
         ax.text(nums[i], 10-3, names[i], ha="center", va="top", color="white", fontsize=8, fontweight="bold")
-        info=str(points[i]) + ", " + str(values[i])
+        info=str(round(points[i],1)) + ", " + str(values[i])
         ax.text(nums[i], 10-5, info, ha="center", va="top", color="white", fontsize=8, fontweight="bold")
         ax.text(nums[i], 10-7, teams[i], ha="center", va="top", color="white", fontsize=8, fontweight="bold")
         
@@ -243,7 +243,7 @@ else:
             else:
                         st.success('Your API token has been received. Now optimization will be conducted.', icon='👉')
 
-                        with st.spinner('Please wait...Line up is being selected'):
+                        with st.spinner('Please wait..Squad is being selected'):
                             time.sleep(5)
                             x = Array.create('x', shape=num_var, vartype='BINARY')
                             s = Array.create('s', shape=slack_num + len(df_use["team"].unique()), vartype='BINARY')
@@ -290,7 +290,7 @@ else:
                             midfield_list = lineup_df[lineup_df["position"] == "MID"].sort_values("total_points", ascending=False).head(midfield)
                             attack_list = lineup_df[lineup_df["position"] == "FWD"].sort_values("total_points", ascending=False).head(forward)
                             start_lineup_df = pd.concat([gk, defense_list, midfield_list, attack_list], axis=0).reset_index(drop=True)
-                            start_lineup_df = start_lineup_df[["name", "position", "value", "total_points", "team"]]
+                            start_lineup_df = start_lineup_df[["name", "position", "value", "total_points", "team", "points_per_game"]]
                         
                             # Obtain bench players
                             gk = lineup_df[lineup_df["position"] == "GK"].sort_values("total_points", ascending=False).tail(1)
@@ -298,7 +298,7 @@ else:
                             midfield_list = lineup_df[lineup_df["position"] == "MID"].sort_values("total_points", ascending=False).tail(5-midfield)
                             attack_list = lineup_df[lineup_df["position"] == "FWD"].sort_values("total_points", ascending=False).tail(3-forward)
                             bench_lineup_df = pd.concat([gk, defense_list, midfield_list, attack_list], axis=0).reset_index(drop=True)
-                            bench_lineup_df = bench_lineup_df[["name", "position", "value", "total_points", "team"]]
+                            bench_lineup_df = bench_lineup_df[["name", "position", "value", "total_points", "team", "points_per_game"]]
 
                                     
                             st.write("After game week ", gw, ", the optimal ", defense, "-", midfield, "-", forward, "starting line-up would look like:")
