@@ -60,12 +60,15 @@ for combo in list(cumulative_df["name_team"].unique()):
     
     new_df = pd.concat([new_df, new_data_reindexed], axis = 0).reset_index(drop=True)
 
-latest_df = new_df[new_df["date"]==max(new_df["date"])][["name", "team", "total_points", "date", "position", "value", "GW"]].reset_index(drop=True)
+latest_df = new_df[new_df["date"]==max(new_df["date"])][["name", "team", "total_points", "date", "position", "value", "GW", "minutes"]].reset_index(drop=True)
+latest_df["points_per_game"] = (latest_df["total_points"]/latest_df["minutes"])*90
+latest_df = latest_df[latest_df["minutes"]>= max(latest_df["GW"])*(0.5*90)]
 
-gk = latest_df[latest_df["position"]=="GK"].sort_values("total_points", ascending=False).reset_index(drop=True).head(5)
-defenders = latest_df[latest_df["position"]=="DEF"].sort_values("total_points", ascending=False).reset_index(drop=True).head(15)
-midfielders = latest_df[latest_df["position"]=="MID"].sort_values("total_points", ascending=False).reset_index(drop=True).head(15)
-forwards = latest_df[latest_df["position"]=="FWD"].sort_values("total_points", ascending=False).reset_index(drop=True).head(15)
+gk = latest_df[latest_df["position"]=="GK"].sort_values("points_per_game", ascending=False).reset_index(drop=True).head(5)
+defenders = latest_df[latest_df["position"]=="DEF"].sort_values("points_per_game", ascending=False).reset_index(drop=True).head(15)
+midfielders = latest_df[latest_df["position"]=="MID"].sort_values("points_per_game", ascending=False).reset_index(drop=True).head(15)
+forwards = latest_df[latest_df["position"]=="FWD"].sort_values("points_per_game", ascending=False).reset_index(drop=True).head(15)
 
 total_df = pd.concat([gk, defenders, midfielders, forwards], axis = 0).sort_values("position", ascending=False).reset_index(drop=True)
 total_df.to_excel("data.xlsx", index=False)
+
