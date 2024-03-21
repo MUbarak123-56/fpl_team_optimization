@@ -15,7 +15,7 @@ st.set_page_config(page_title = "FPL Squad Optimizer", page_icon="⚽")
 
 st.header("FPL Squad Optimizer ⚽")
 
-st.subheader("Welcome to the FPL Line Up Optimizer App")
+st.subheader("Welcome to the FPL Squad Optimizer App")
 st.write("""The purpose of this app is to assist FPL fans to select the optimal starting line-up according to data collected from Gameweek 1 to the most recent gameweek of the 2023/24 season. 
             The data collected reflects the top 35 highest rated players (5 goalkeepers, 10 defenders, 10 midfielders and 10 forwards) so far this season in terms of FPL points accumulated over all the games. By leveraging D-Wave's LeapHybridSolver,
             you will be able to view what the optimal starting line-up would be based on your desired formation. You can sign up for D-Wave Leap [here](https://cloud.dwavesys.com/leap/) and obtain your solver API token. 
