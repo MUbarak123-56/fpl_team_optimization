@@ -63,9 +63,9 @@ for combo in list(cumulative_df["name_team"].unique()):
 latest_df = new_df[new_df["date"]==max(new_df["date"])][["name", "team", "total_points", "date", "position", "value", "GW"]].reset_index(drop=True)
 
 gk = latest_df[latest_df["position"]=="GK"].sort_values("total_points", ascending=False).reset_index(drop=True).head(5)
-defenders = latest_df[latest_df["position"]=="DEF"].sort_values("total_points", ascending=False).reset_index(drop=True).head(10)
-midfielders = latest_df[latest_df["position"]=="MID"].sort_values("total_points", ascending=False).reset_index(drop=True).head(10)
-forwards = latest_df[latest_df["position"]=="FWD"].sort_values("total_points", ascending=False).reset_index(drop=True).head(10)
+defenders = latest_df[latest_df["position"]=="DEF"].sort_values("total_points", ascending=False).reset_index(drop=True).head(15)
+midfielders = latest_df[latest_df["position"]=="MID"].sort_values("total_points", ascending=False).reset_index(drop=True).head(15)
+forwards = latest_df[latest_df["position"]=="FWD"].sort_values("total_points", ascending=False).reset_index(drop=True).head(15)
 
 total_df = pd.concat([gk, defenders, midfielders, forwards], axis = 0).sort_values("position", ascending=False).reset_index(drop=True)
 total_df.to_excel("data.xlsx", index=False)
