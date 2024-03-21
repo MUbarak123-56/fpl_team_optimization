@@ -215,17 +215,17 @@ def plot_bench(bench):
     #fwd_names = bench[bench["position"]=="FWD"]["name"].to_list()
     
     nums = np.linspace(0, 200, 6)[1:-1]
-    ax.plot(nums[0], 13, 'o', markersize=30, color="black", markeredgecolor="white")  # Player icon
+    ax.plot(nums[0], 12, 'o', markersize=30, color="black", markeredgecolor="white")  # Player icon
     ax.text(nums[0], 10-3, names[0], ha="center", va="top", color="white", fontsize=8, fontweight="bold")
     info=str(points[0]) + ", " + str(values[0])
-    ax.text(nums[0], 10-4, info, ha="center", va="top", color="white", fontsize=8, fontweight="bold")
-    ax.text(nums[0], 10-5, teams[0], ha="center", va="top", color="white", fontsize=8, fontweight="bold")
+    ax.text(nums[0], 10-5, info, ha="center", va="top", color="white", fontsize=8, fontweight="bold")
+    ax.text(nums[0], 10-7, teams[0], ha="center", va="top", color="white", fontsize=8, fontweight="bold")
     for i in range(1, len(nums)):
-        ax.plot(nums[i], 13, 'o', markersize=30, color="purple", markeredgecolor="white")  # Player icon
+        ax.plot(nums[i], 12, 'o', markersize=30, color="purple", markeredgecolor="white")  # Player icon
         ax.text(nums[i], 10-3, names[i], ha="center", va="top", color="white", fontsize=8, fontweight="bold")
         info=str(points[i]) + ", " + str(values[i])
-        ax.text(nums[i], 10-4, info, ha="center", va="top", color="white", fontsize=8, fontweight="bold")
-        ax.text(nums[i], 10-5, teams[i], ha="center", va="top", color="white", fontsize=8, fontweight="bold")
+        ax.text(nums[i], 10-5, info, ha="center", va="top", color="white", fontsize=8, fontweight="bold")
+        ax.text(nums[i], 10-7, teams[i], ha="center", va="top", color="white", fontsize=8, fontweight="bold")
         
     st.pyplot(fig)
 
