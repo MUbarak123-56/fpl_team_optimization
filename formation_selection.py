@@ -139,5 +139,7 @@ print(start_lineup_df)
 print("\n\n")
 print("Bench")
 print(bench_lineup_df)
+
 print("Total starting line up sum of points: ", start_lineup_df['points_per_game'].sum())
 print("Total Squad budget: ", lineup_df['value'].sum())
+
