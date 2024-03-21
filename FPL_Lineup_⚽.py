@@ -75,7 +75,7 @@ def draw_soccer_field():
     and 18-yard boxes.
     """
     # Create figure
-    fig, ax = plt.subplots(figsize=(10, 7))
+    fig, ax = plt.subplots(figsize=(8, 6))
     ax.set_facecolor('green')  # Set the background color to green
 
     # Draw the pitch outline
