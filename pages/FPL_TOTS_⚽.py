@@ -26,10 +26,10 @@ st.write("""Toggle around with the formation widget to see the Team of the Seaso
 tot_df = pd.read_excel("total_data.xlsx")
 
 
-gk = tot_df[tot_df["position"]=="GK"].sort_values("total_ppints", ascending=False).reset_index(drop=True).head(5)
-defenders = tot_df[tot_df["position"]=="DEF"].sort_values("total_ppints", ascending=False).reset_index(drop=True).head(15)
-midfielders = tot_df[tot_df["position"]=="MID"].sort_values("total_ppints", ascending=False).reset_index(drop=True).head(15)
-forwards = tot_df[tot_df["position"]=="FWD"].sort_values("total_ppints", ascending=False).reset_index(drop=True).head(15)
+gk = tot_df[tot_df["position"]=="GK"].sort_values("total_points", ascending=False).reset_index(drop=True).head(5)
+defenders = tot_df[tot_df["position"]=="DEF"].sort_values("total_points", ascending=False).reset_index(drop=True).head(15)
+midfielders = tot_df[tot_df["position"]=="MID"].sort_values("total_points", ascending=False).reset_index(drop=True).head(15)
+forwards = tot_df[tot_df["position"]=="FWD"].sort_values("total_points", ascending=False).reset_index(drop=True).head(15)
 
 data = pd.concat([gk, defenders, midfielders, forwards], axis = 0).sort_values("position", ascending=False).reset_index(drop=True)
 
@@ -146,7 +146,7 @@ def plot_formation(line_up, line_up2):
     fwd_teams = line_up[line_up["position"]=="FWD"]["team"].to_list()
     
     ax.text(50, 97.5, "Guide = Points per game, Value", color="white", fontsize=7, fontweight="bold")
-    ax.text(50, 95, "Total Points per game for Starting line up: " + str(round(line_up["total_ppints"].sum(),2)) + "; " + "Total Squad Budget: " + str(round(line_up2['value'].sum(), 2)), color="white", fontsize=7, fontweight="bold")
+    ax.text(50, 95, "Total Points per game for Starting line up: " + str(round(line_up["total_points"].sum(),2)) + "; " + "Total Squad Budget: " + str(round(line_up2['value'].sum(), 2)), color="white", fontsize=7, fontweight="bold")
     
     ax.plot(15, 50, 'o', markersize=30, color="black", markeredgecolor="white")  # Player icon
     ax.text(15, 50 - 5, gk_names[0], ha="center", va="top", color="white", fontsize=7, fontweight="bold")  # Player name
@@ -209,7 +209,7 @@ def plot_bench(bench):
     fig, ax = draw_bench()
      
     names=bench["name"].tolist()
-    points=bench["total_ppints"].tolist()
+    points=bench["total_points"].tolist()
     values=bench["value"].tolist()
     teams=bench["team"].to_list()
             
@@ -289,20 +289,20 @@ else:
                             lineup_df = df_use.merge(lineup_df, on=['variable'])
                         
                             # Obtain starting line-up
-                            gk = lineup_df[lineup_df["position"] == "GK"].sort_values("total_ppints", ascending=False).head(1)
-                            defense_list = lineup_df[lineup_df["position"] == "DEF"].sort_values("total_ppints", ascending=False).head(defense)
-                            midfield_list = lineup_df[lineup_df["position"] == "MID"].sort_values("total_ppints", ascending=False).head(midfield)
-                            attack_list = lineup_df[lineup_df["position"] == "FWD"].sort_values("total_ppints", ascending=False).head(forward)
+                            gk = lineup_df[lineup_df["position"] == "GK"].sort_values("total_points", ascending=False).head(1)
+                            defense_list = lineup_df[lineup_df["position"] == "DEF"].sort_values("total_points", ascending=False).head(defense)
+                            midfield_list = lineup_df[lineup_df["position"] == "MID"].sort_values("total_points", ascending=False).head(midfield)
+                            attack_list = lineup_df[lineup_df["position"] == "FWD"].sort_values("total_points", ascending=False).head(forward)
                             start_lineup_df = pd.concat([gk, defense_list, midfield_list, attack_list], axis=0).reset_index(drop=True)
-                            start_lineup_df = start_lineup_df[["name", "position", "value", "total_points", "team", "total_ppints"]]
+                            start_lineup_df = start_lineup_df[["name", "position", "value", "total_points", "team", "total_points"]]
                         
                             # Obtain bench players
-                            gk = lineup_df[lineup_df["position"] == "GK"].sort_values("total_ppints", ascending=False).tail(1)
-                            defense_list = lineup_df[lineup_df["position"] == "DEF"].sort_values("total_ppints", ascending=False).tail(5-defense)
-                            midfield_list = lineup_df[lineup_df["position"] == "MID"].sort_values("total_ppints", ascending=False).tail(5-midfield)
-                            attack_list = lineup_df[lineup_df["position"] == "FWD"].sort_values("total_ppints", ascending=False).tail(3-forward)
+                            gk = lineup_df[lineup_df["position"] == "GK"].sort_values("total_points", ascending=False).tail(1)
+                            defense_list = lineup_df[lineup_df["position"] == "DEF"].sort_values("total_points", ascending=False).tail(5-defense)
+                            midfield_list = lineup_df[lineup_df["position"] == "MID"].sort_values("total_points", ascending=False).tail(5-midfield)
+                            attack_list = lineup_df[lineup_df["position"] == "FWD"].sort_values("total_points", ascending=False).tail(3-forward)
                             bench_lineup_df = pd.concat([gk, defense_list, midfield_list, attack_list], axis=0).reset_index(drop=True)
-                            bench_lineup_df = bench_lineup_df[["name", "position", "value", "total_points", "team", "total_ppints"]]
+                            bench_lineup_df = bench_lineup_df[["name", "position", "value", "total_points", "team", "total_points"]]
 
                                     
                             st.write("After game week ", gw, ", the optimal ", defense, "-", midfield, "-", forward, "starting line-up for the team of the season would look like:")
