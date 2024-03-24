@@ -130,10 +130,10 @@ def plot_formation(line_up, line_up2):
     mid_names = line_up[line_up["position"]=="MID"]["name"].to_list()
     fwd_names = line_up[line_up["position"]=="FWD"]["name"].to_list()\
 
-    gk_points = line_up[line_up["position"]=="GK"]["total_ppints"].to_list()
-    def_points = line_up[line_up["position"]=="DEF"]["total_ppints"].to_list()
-    mid_points = line_up[line_up["position"]=="MID"]["total_ppints"].to_list()
-    fwd_points = line_up[line_up["position"]=="FWD"]["total_ppints"].to_list()
+    gk_points = line_up[line_up["position"]=="GK"]["total_points"].to_list()
+    def_points = line_up[line_up["position"]=="DEF"]["total_points"].to_list()
+    mid_points = line_up[line_up["position"]=="MID"]["total_points"].to_list()
+    fwd_points = line_up[line_up["position"]=="FWD"]["total_points"].to_list()
 
     gk_values = line_up[line_up["position"]=="GK"]["value"].to_list()
     def_values = line_up[line_up["position"]=="DEF"]["value"].to_list()
