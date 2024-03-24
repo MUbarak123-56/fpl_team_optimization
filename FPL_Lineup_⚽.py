@@ -16,11 +16,12 @@ st.set_page_config(page_title = "FPL Squad Optimizer", page_icon="⚽")
 st.header("FPL Squad Optimizer ⚽")
 
 st.subheader("Welcome to the FPL Squad Optimizer App")
-st.write("""The purpose of this app is to assist FPL fans to select the optimal starting line-up according to data collected from Gameweek 1 to the most recent gameweek of the 2023/24 season. 
-            The data collected reflects the top 35 highest rated players (5 goalkeepers, 10 defenders, 10 midfielders and 10 forwards) so far this season in terms of FPL points accumulated over all the games. By leveraging D-Wave's LeapHybridSolver,
-            you will be able to view what the optimal starting line-up would be based on your desired formation. You can sign up for D-Wave Leap [here](https://cloud.dwavesys.com/leap/) and obtain your solver API token. 
-            Once you have obtained it, insert it into the D-Wave Solver API token in the sidebar.
-            This line-up also takes budget into account. The budget for an FPL Squad is expected to be 100. Hence, you will be constrained to a starting line-up whose total value will not exceed 100.
+st.write("""The purpose of this app is to assist FPL fans to select the optimal squad according to data collected from Gameweek 1 to the most recent gameweek of the current season. 
+            The data collected reflects the top 50 highest rated players (5 goalkeepers, 15 defenders, 15 midfielders and 15 forwards) so far this season in terms of FPL points per 90 minutes accumulated over season. 
+            For a player to be considered for selection, they must have also played for more than half of the games of the season. 
+            By leveraging D-Wave's LeapHybridSampler, you will be able to view what the optimal starting line-up would be based on your desired formation alongside the selected bench. You can sign up for D-Wave Leap [here](https://cloud.dwavesys.com/leap/) and obtain your solver API token. 
+            Once you have obtained it, insert it into the D-Wave Solver API token password bar below.
+            The optimization problem also takes budget into account. The budget for an FPL Squad is expected to be 100. Hence, you will be constrained to a squad whose total value will not exceed 100.
             """)
 # loading in the D-Wave Token
 #load_dotenv()
@@ -285,18 +286,18 @@ else:
                             lineup_df = df_use.merge(lineup_df, on=['variable'])
                         
                             # Obtain starting line-up
-                            gk = lineup_df[lineup_df["position"] == "GK"].sort_values("total_points", ascending=False).head(1)
-                            defense_list = lineup_df[lineup_df["position"] == "DEF"].sort_values("total_points", ascending=False).head(defense)
-                            midfield_list = lineup_df[lineup_df["position"] == "MID"].sort_values("total_points", ascending=False).head(midfield)
-                            attack_list = lineup_df[lineup_df["position"] == "FWD"].sort_values("total_points", ascending=False).head(forward)
+                            gk = lineup_df[lineup_df["position"] == "GK"].sort_values("points_per_game", ascending=False).head(1)
+                            defense_list = lineup_df[lineup_df["position"] == "DEF"].sort_values("points_per_game", ascending=False).head(defense)
+                            midfield_list = lineup_df[lineup_df["position"] == "MID"].sort_values("points_per_game", ascending=False).head(midfield)
+                            attack_list = lineup_df[lineup_df["position"] == "FWD"].sort_values("points_per_game", ascending=False).head(forward)
                             start_lineup_df = pd.concat([gk, defense_list, midfield_list, attack_list], axis=0).reset_index(drop=True)
                             start_lineup_df = start_lineup_df[["name", "position", "value", "total_points", "team", "points_per_game"]]
                         
                             # Obtain bench players
-                            gk = lineup_df[lineup_df["position"] == "GK"].sort_values("total_points", ascending=False).tail(1)
-                            defense_list = lineup_df[lineup_df["position"] == "DEF"].sort_values("total_points", ascending=False).tail(5-defense)
-                            midfield_list = lineup_df[lineup_df["position"] == "MID"].sort_values("total_points", ascending=False).tail(5-midfield)
-                            attack_list = lineup_df[lineup_df["position"] == "FWD"].sort_values("total_points", ascending=False).tail(3-forward)
+                            gk = lineup_df[lineup_df["position"] == "GK"].sort_values("points_per_game", ascending=False).tail(1)
+                            defense_list = lineup_df[lineup_df["position"] == "DEF"].sort_values("points_per_game", ascending=False).tail(5-defense)
+                            midfield_list = lineup_df[lineup_df["position"] == "MID"].sort_values("points_per_game", ascending=False).tail(5-midfield)
+                            attack_list = lineup_df[lineup_df["position"] == "FWD"].sort_values("points_per_game", ascending=False).tail(3-forward)
                             bench_lineup_df = pd.concat([gk, defense_list, midfield_list, attack_list], axis=0).reset_index(drop=True)
                             bench_lineup_df = bench_lineup_df[["name", "position", "value", "total_points", "team", "points_per_game"]]
 
