@@ -234,8 +234,8 @@ def plot_bench(bench):
     st.pyplot(fig)
 
 #st.write('**D-Wave Token Insertion**')
-st.markdown("<h4 style='text-align: left; color: white;'>D-Wave Token Insertion</h4>", unsafe_allow_html=True)
-st.write("Go to this [webpage](https://cloud.dwavesys.com/leap/) and sign up for D-Wave Leap to obtain your token.")
+#st.markdown("<h4 style='text-align: left; color: white;'>D-Wave Token Insertion</h4>", unsafe_allow_html=True)
+#st.write("Go to this [webpage](https://cloud.dwavesys.com/leap/) and sign up for D-Wave Leap to obtain your token.")
 
 #if 'API_TOKEN' in st.secrets:
  #           st.success('API key already provided!', icon='✅')
@@ -309,7 +309,7 @@ with st.spinner('Please wait..Squad is being selected'):
     bench_lineup_df = bench_lineup_df[["name", "position", "value", "total_points", "team"]]
     
                                         
-    st.write("After game week ", gw, ", the optimal ", defense, "-", midfield, "-", forward, "starting line-up for the team of the season would look like:")
+    st.write("After game week ", gw, ", the best", defense, "-", midfield, "-", forward, "starting line-up for the team of the season would look like:")
     plot_formation(start_lineup_df, lineup_df)
     st.write("And the bench would look like:")
     plot_bench(bench_lineup_df)
