@@ -247,8 +247,8 @@ st.write("Go to this [webpage](https://cloud.dwavesys.com/leap/) and sign up for
     #        else:
      #                   st.success('Your API token has been received. Now optimization will be conducted.', icon='👉')
 
-                        with st.spinner('Please wait..Squad is being selected'):
-                            time.sleep(5)
+                        #with st.spinner('Please wait..Squad is being selected'):
+                         #   time.sleep(5)
                             #x = Array.create('x', shape=num_var, vartype='BINARY')
                             #s = Array.create('s', shape=slack_num + len(df_use["team"].unique()), vartype='BINARY')
                             # objective function
@@ -287,31 +287,32 @@ st.write("Go to this [webpage](https://cloud.dwavesys.com/leap/) and sign up for
                             #lineup_df.columns = ['variable', 'selected']
                             #lineup_df = lineup_df[(lineup_df['variable'].str.startswith('x', na=False)) & (lineup_df['selected'] == 1)]
                             #lineup_df = df_use.merge(lineup_df, on=['variable'])
+
 with st.spinner('Please wait..Squad is being selected'):
     time.sleep(5)
-lineup_df = df_use
-                        
-# Obtain starting line-up
-gk = lineup_df[lineup_df["position"] == "GK"].sort_values("total_points", ascending=False).head(1)
-defense_list = lineup_df[lineup_df["position"] == "DEF"].sort_values("total_points", ascending=False).head(defense)
-midfield_list = lineup_df[lineup_df["position"] == "MID"].sort_values("total_points", ascending=False).head(midfield)
-attack_list = lineup_df[lineup_df["position"] == "FWD"].sort_values("total_points", ascending=False).head(forward)
-start_lineup_df = pd.concat([gk, defense_list, midfield_list, attack_list], axis=0).reset_index(drop=True)
-start_lineup_df = start_lineup_df[["name", "position", "value", "total_points", "team"]]
-                        
-# Obtain bench players
-gk = lineup_df[lineup_df["position"] == "GK"].sort_values("total_points", ascending=False).tail(1)
-defense_list = lineup_df[lineup_df["position"] == "DEF"].sort_values("total_points", ascending=False).tail(5-defense)
-midfield_list = lineup_df[lineup_df["position"] == "MID"].sort_values("total_points", ascending=False).tail(5-midfield)
-attack_list = lineup_df[lineup_df["position"] == "FWD"].sort_values("total_points", ascending=False).tail(3-forward)
-bench_lineup_df = pd.concat([gk, defense_list, midfield_list, attack_list], axis=0).reset_index(drop=True)
-bench_lineup_df = bench_lineup_df[["name", "position", "value", "total_points", "team"]]
-
-                                    
-st.write("After game week ", gw, ", the optimal ", defense, "-", midfield, "-", forward, "starting line-up for the team of the season would look like:")
-plot_formation(start_lineup_df, lineup_df)
-st.write("And the bench would look like:")
-plot_bench(bench_lineup_df)
-#st.dataframe(ordered_lineup_df)
-#st.write("Total sum of points: ", ordered_lineup_df['total_points'].sum())
-#st.write("Total budget: ", round(ordered_lineup_df['value'].sum(), 4))
+    lineup_df = df_use
+                            
+    # Obtain starting line-up
+    gk = lineup_df[lineup_df["position"] == "GK"].sort_values("total_points", ascending=False).head(1)
+    defense_list = lineup_df[lineup_df["position"] == "DEF"].sort_values("total_points", ascending=False).head(defense)
+    midfield_list = lineup_df[lineup_df["position"] == "MID"].sort_values("total_points", ascending=False).head(midfield)
+    attack_list = lineup_df[lineup_df["position"] == "FWD"].sort_values("total_points", ascending=False).head(forward)
+    start_lineup_df = pd.concat([gk, defense_list, midfield_list, attack_list], axis=0).reset_index(drop=True)
+    start_lineup_df = start_lineup_df[["name", "position", "value", "total_points", "team"]]
+                            
+    # Obtain bench players
+    gk = lineup_df[lineup_df["position"] == "GK"].sort_values("total_points", ascending=False).tail(1)
+    defense_list = lineup_df[lineup_df["position"] == "DEF"].sort_values("total_points", ascending=False).tail(5-defense)
+    midfield_list = lineup_df[lineup_df["position"] == "MID"].sort_values("total_points", ascending=False).tail(5-midfield)
+    attack_list = lineup_df[lineup_df["position"] == "FWD"].sort_values("total_points", ascending=False).tail(3-forward)
+    bench_lineup_df = pd.concat([gk, defense_list, midfield_list, attack_list], axis=0).reset_index(drop=True)
+    bench_lineup_df = bench_lineup_df[["name", "position", "value", "total_points", "team"]]
+    
+                                        
+    st.write("After game week ", gw, ", the optimal ", defense, "-", midfield, "-", forward, "starting line-up for the team of the season would look like:")
+    plot_formation(start_lineup_df, lineup_df)
+    st.write("And the bench would look like:")
+    plot_bench(bench_lineup_df)
+    #st.dataframe(ordered_lineup_df)
+    #st.write("Total sum of points: ", ordered_lineup_df['total_points'].sum())
+    #st.write("Total budget: ", round(ordered_lineup_df['value'].sum(), 4))
