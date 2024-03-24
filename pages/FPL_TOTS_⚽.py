@@ -26,10 +26,10 @@ st.write("""Toggle around with the formation widget to see the Team of the Seaso
 tot_df = pd.read_excel("total_data.xlsx")
 
 
-gk = tot_df[tot_df["position"]=="GK"].sort_values("total_points", ascending=False).reset_index(drop=True).head(5)
-defenders = tot_df[tot_df["position"]=="DEF"].sort_values("total_points", ascending=False).reset_index(drop=True).head(15)
-midfielders = tot_df[tot_df["position"]=="MID"].sort_values("total_points", ascending=False).reset_index(drop=True).head(15)
-forwards = tot_df[tot_df["position"]=="FWD"].sort_values("total_points", ascending=False).reset_index(drop=True).head(15)
+gk = tot_df[tot_df["position"]=="GK"].sort_values("total_points", ascending=False).reset_index(drop=True).head(3)
+defenders = tot_df[tot_df["position"]=="DEF"].sort_values("total_points", ascending=False).reset_index(drop=True).head(8)
+midfielders = tot_df[tot_df["position"]=="MID"].sort_values("total_points", ascending=False).reset_index(drop=True).head(8)
+forwards = tot_df[tot_df["position"]=="FWD"].sort_values("total_points", ascending=False).reset_index(drop=True).head(8)
 
 data = pd.concat([gk, defenders, midfielders, forwards], axis = 0).sort_values("position", ascending=False).reset_index(drop=True)
 
