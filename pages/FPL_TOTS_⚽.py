@@ -294,7 +294,7 @@ else:
                             midfield_list = lineup_df[lineup_df["position"] == "MID"].sort_values("total_points", ascending=False).head(midfield)
                             attack_list = lineup_df[lineup_df["position"] == "FWD"].sort_values("total_points", ascending=False).head(forward)
                             start_lineup_df = pd.concat([gk, defense_list, midfield_list, attack_list], axis=0).reset_index(drop=True)
-                            start_lineup_df = start_lineup_df[["name", "position", "value", "total_points", "team", "total_points"]]
+                            start_lineup_df = start_lineup_df[["name", "position", "value", "total_points", "team"]]
                         
                             # Obtain bench players
                             gk = lineup_df[lineup_df["position"] == "GK"].sort_values("total_points", ascending=False).tail(1)
@@ -302,7 +302,7 @@ else:
                             midfield_list = lineup_df[lineup_df["position"] == "MID"].sort_values("total_points", ascending=False).tail(5-midfield)
                             attack_list = lineup_df[lineup_df["position"] == "FWD"].sort_values("total_points", ascending=False).tail(3-forward)
                             bench_lineup_df = pd.concat([gk, defense_list, midfield_list, attack_list], axis=0).reset_index(drop=True)
-                            bench_lineup_df = bench_lineup_df[["name", "position", "value", "total_points", "team", "total_points"]]
+                            bench_lineup_df = bench_lineup_df[["name", "position", "value", "total_points", "team"]]
 
                                     
                             st.write("After game week ", gw, ", the optimal ", defense, "-", midfield, "-", forward, "starting line-up for the team of the season would look like:")
