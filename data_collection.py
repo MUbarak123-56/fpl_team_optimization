@@ -61,14 +61,42 @@ for combo in list(cumulative_df["name_team"].unique()):
     new_df = pd.concat([new_df, new_data_reindexed], axis = 0).reset_index(drop=True)
 
 latest_df = new_df[new_df["date"]==max(new_df["date"])][["name", "team", "total_points", "date", "position", "value", "GW", "minutes"]].reset_index(drop=True)
-latest_df["points_per_game"] = (latest_df["total_points"]/latest_df["minutes"])*90
-latest_df = latest_df[latest_df["minutes"]>= max(latest_df["GW"])*(0.5*90)]
+df2 = pd.read_csv("https://raw.githubusercontent.com/vaastav/Fantasy-Premier-League/master/data/2023-24/players_raw.csv")
+df2["name"] = df2["first_name"] + " " + df2["second_name"]
+df2 = df2[["name", "news_added", "news", "points_per_game", "team", "form",'chance_of_playing_next_round',
+       'chance_of_playing_this_round']]
+df3 = pd.read_csv("https://raw.githubusercontent.com/vaastav/Fantasy-Premier-League/master/data/2023-24/teams.csv")
+df_new = df2.merge(df3, left_on = "team", right_on="id")
+df_new = df_new.rename(columns={"name_x":"name", "team":"team_code","name_y":"team", "form_x":"form"})
+df_new=df_new[["name", "team", "news", "news_added", "points_per_game", "form",'chance_of_playing_next_round',
+       'chance_of_playing_this_round']]
+tot_df = df_new.merge(latest_df, on=["name","team"])
+tot_df["id"] = tot_df.index + 1
 
-gk = latest_df[latest_df["position"]=="GK"].sort_values("points_per_game", ascending=False).reset_index(drop=True).head(5)
-defenders = latest_df[latest_df["position"]=="DEF"].sort_values("points_per_game", ascending=False).reset_index(drop=True).head(15)
-midfielders = latest_df[latest_df["position"]=="MID"].sort_values("points_per_game", ascending=False).reset_index(drop=True).head(15)
-forwards = latest_df[latest_df["position"]=="FWD"].sort_values("points_per_game", ascending=False).reset_index(drop=True).head(15)
+df_value = pd.read_csv("https://raw.githubusercontent.com/vaastav/Fantasy-Premier-League/master/data/2023-24/cleaned_players.csv")
+df_value["name"] = df_value["first_name"] + " " + df_value["second_name"]
+df_value["id"] = df_value.index + 1
+df_value = df_value[["id", "name", "now_cost"]]
 
-total_df = pd.concat([gk, defenders, midfielders, forwards], axis = 0).sort_values("position", ascending=False).reset_index(drop=True)
-total_df.to_excel("data.xlsx", index=False)
+tot_df = tot_df.merge(df_value, on = "id")
 
+tot_df = tot_df[tot_df["news"].isna()].reset_index(drop=True)
+#tot_df = tot_df[~tot_df["chance_of_playing_this_round"].isin(["0", "None"])].reset_index(drop=True)
+
+tot_df = tot_df[(tot_df["points_per_game"] > 0)].reset_index(drop=True)
+tot_df = tot_df.drop(["value", "name_y"], axis = 1)
+tot_df = tot_df.rename(columns={"now_cost":"value", "name_x":"name"})
+tot_df = tot_df[["name", "team", "total_points", "date", "position", "value", "GW", "minutes", "points_per_game"]]
+
+tot_df = tot_df[tot_df["minutes"]>=400].reset_index(drop=True)
+
+tot_df.to_excel("total_data.xlsx")
+
+gk = tot_df[tot_df["position"]=="GK"].sort_values("points_per_game", ascending=False).reset_index(drop=True).head(10)
+defenders = tot_df[tot_df["position"]=="DEF"].sort_values("points_per_game", ascending=False).reset_index(drop=True).head(20)
+midfielders = tot_df[tot_df["position"]=="MID"].sort_values("points_per_game", ascending=False).reset_index(drop=True).head(20)
+forwards = tot_df[tot_df["position"]=="FWD"].sort_values("points_per_game", ascending=False).reset_index(drop=True).head(20)
+
+use_df = pd.concat([gk, defenders, midfielders, forwards], axis = 0).sort_values("position", ascending=False).reset_index(drop=True)
+
+use_df.to_excel("use_data.xlsx")

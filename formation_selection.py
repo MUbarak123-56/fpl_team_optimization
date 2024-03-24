@@ -12,7 +12,7 @@ warnings.filterwarnings('ignore')
 load_dotenv()
 token_use = os.getenv("API_TOKEN")
 
-data = pd.read_excel("data.xlsx")
+data = pd.read_excel("use_data.xlsx")
 gw = max(data["GW"])
 columns = ["name", "position", "value", "total_points", "team", "points_per_game"]
 data = data[columns]

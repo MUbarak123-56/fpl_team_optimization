@@ -11,7 +11,7 @@ warnings.filterwarnings('ignore')
 
 #extract_data = pd.read_csv("https://raw.githubusercontent.com/vaastav/Fantasy-Premier-League/master/data/2023-24/gws/merged_gw.csv")
 
-data = pd.read_excel("data.xlsx")
+data = pd.read_excel("use_data.xlsx")
 gw = max(data["GW"])
 columns = ["name", "position", "value", "total_points", "team"]
 data = data[columns]
