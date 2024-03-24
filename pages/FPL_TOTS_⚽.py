@@ -26,10 +26,10 @@ st.write("""Toggle around with the formation widget to see the Team of the Seaso
 tot_df = pd.read_excel("total_data.xlsx")
 
 
-gk = tot_df[tot_df["position"]=="GK"].sort_values("total_points", ascending=False).reset_index(drop=True).head(5)
-defenders = tot_df[tot_df["position"]=="DEF"].sort_values("total_points", ascending=False).reset_index(drop=True).head(15)
-midfielders = tot_df[tot_df["position"]=="MID"].sort_values("total_points", ascending=False).reset_index(drop=True).head(15)
-forwards = tot_df[tot_df["position"]=="FWD"].sort_values("total_points", ascending=False).reset_index(drop=True).head(15)
+gk = tot_df[tot_df["position"]=="GK"].sort_values("total_points", ascending=False).reset_index(drop=True).head(2)
+defenders = tot_df[tot_df["position"]=="DEF"].sort_values("total_points", ascending=False).reset_index(drop=True).head(5)
+midfielders = tot_df[tot_df["position"]=="MID"].sort_values("total_points", ascending=False).reset_index(drop=True).head(5)
+forwards = tot_df[tot_df["position"]=="FWD"].sort_values("total_points", ascending=False).reset_index(drop=True).head(3)
 
 data = pd.concat([gk, defenders, midfielders, forwards], axis = 0).sort_values("position", ascending=False).reset_index(drop=True)
 
@@ -145,8 +145,8 @@ def plot_formation(line_up, line_up2):
     mid_teams = line_up[line_up["position"]=="MID"]["team"].to_list()
     fwd_teams = line_up[line_up["position"]=="FWD"]["team"].to_list()
     
-    ax.text(50, 97.5, "Guide = Points per game, Value", color="white", fontsize=7, fontweight="bold")
-    ax.text(50, 95, "Total Points per game for Starting line up: " + str(round(line_up["total_points"].sum(),2)) + "; " + "Total Squad Budget: " + str(round(line_up2['value'].sum(), 2)), color="white", fontsize=7, fontweight="bold")
+    ax.text(50, 97.5, "Guide = Points, Value", color="white", fontsize=7, fontweight="bold")
+    ax.text(50, 95, "Total Points for Starting line up: " + str(round(line_up["total_points"].sum(),2)) + "; " + "Total Squad Budget: " + str(round(line_up2['value'].sum(), 2)), color="white", fontsize=7, fontweight="bold")
     
     ax.plot(15, 50, 'o', markersize=30, color="black", markeredgecolor="white")  # Player icon
     ax.text(15, 50 - 5, gk_names[0], ha="center", va="top", color="white", fontsize=7, fontweight="bold")  # Player name
@@ -234,81 +234,85 @@ def plot_bench(bench):
     st.pyplot(fig)
 
 #st.write('**D-Wave Token Insertion**')
-st.markdown("<h4 style='text-align: left; color: white;'>D-Wave Token Insertion</h4>", unsafe_allow_html=True)
-st.write("Go to this [webpage](https://cloud.dwavesys.com/leap/) and sign up for D-Wave Leap to obtain your token.")
+#st.markdown("<h4 style='text-align: left; color: white;'>D-Wave Token Insertion</h4>", unsafe_allow_html=True)
+#st.write("Go to this [webpage](https://cloud.dwavesys.com/leap/) and sign up for D-Wave Leap to obtain your token.")
 
-if 'API_TOKEN' in st.secrets:
-            st.success('API key already provided!', icon='✅')
-            api_key = st.secrets['API_TOKEN']
-else:
-            api_key = st.text_input('Enter D-Wave Solver API token:', type='password')
-            if not (api_key).startswith('DEV') or len(api_key) != 44:
-                        st.warning('Please enter your credentials!', icon='⚠️') 
-            else:
-                        st.success('Your API token has been received. Now optimization will be conducted.', icon='👉')
+#if 'API_TOKEN' in st.secrets:
+ #           st.success('API key already provided!', icon='✅')
+ #           api_key = st.secrets['API_TOKEN']
+#else:
+ #           api_key = st.text_input('Enter D-Wave Solver API token:', type='password')
+  #          if not (api_key).startswith('DEV') or len(api_key) != 44:
+   #                     st.warning('Please enter your credentials!', icon='⚠️') 
+    #        else:
+     #                   st.success('Your API token has been received. Now optimization will be conducted.', icon='👉')
 
-                        with st.spinner('Please wait..Squad is being selected'):
-                            time.sleep(5)
-                            x = Array.create('x', shape=num_var, vartype='BINARY')
-                            s = Array.create('s', shape=slack_num + len(df_use["team"].unique()), vartype='BINARY')
+                        #with st.spinner('Please wait..Squad is being selected'):
+                         #   time.sleep(5)
+                            #x = Array.create('x', shape=num_var, vartype='BINARY')
+                            #s = Array.create('s', shape=slack_num + len(df_use["team"].unique()), vartype='BINARY')
                             # objective function
-                            h = sum(n * x for x, n in zip(x, total_points))
+                            #h = sum(n * x for x, n in zip(x, total_points))
                         
                             # constraints
-                            c1 = lagrange * Constraint((sum(x[n] for n in range(0, num_var)) - 15)**2, label='15 players squad')
-                            c2 = lagrange * Constraint((sum(x[n] for n in range(min(defense_list_index), max(defense_list_index)+1))-5)**2, label=str(5) + " defenders")
-                            c3 = lagrange * Constraint((sum(x[n] for n in range(min(forward_list_index), max(forward_list_index)+1))-3)**2, label=str(3) + " forwards")
-                            c4 = lagrange * Constraint((sum(x[n] for n in range(min(gk_list_index), max(gk_list_index)+1))-2)**2, label= "2 keepers")
-                            c5 = lagrange * Constraint((sum(x[n] for n in range(min(midfield_list_index), max(midfield_list_index)+1))-5)**2, label=str(5) + " midfielders")
+                            #c1 = lagrange * Constraint((sum(x[n] for n in range(0, num_var)) - 15)**2, label='15 players squad')
+                            #c2 = lagrange * Constraint((sum(x[n] for n in range(min(defense_list_index), max(defense_list_index)+1))-5)**2, label=str(5) + " defenders")
+                            #c3 = lagrange * Constraint((sum(x[n] for n in range(min(forward_list_index), max(forward_list_index)+1))-3)**2, label=str(3) + " forwards")
+                            #c4 = lagrange * Constraint((sum(x[n] for n in range(min(gk_list_index), max(gk_list_index)+1))-2)**2, label= "2 keepers")
+                            #c5 = lagrange * Constraint((sum(x[n] for n in range(min(midfield_list_index), max(midfield_list_index)+1))-5)**2, label=str(5) + " midfielders")
                             #c6 = lagrange_budget * Constraint((sum(n * x for x, n in zip(x, value)) + s[0] -100)**2,label="budget")
                             #c7 = 0
                             #for i in range(len(team_list)):
                              #           use_index =list(df_use[df_use["team"]==team_list[i]].index)
                               #          c7 += lagrange_team * Constraint((sum(x[n] for n in use_index) + s[i+1] - 3)**2, label = str(team_list[i]) + " selection")
-                            H = -1 * h + c1 + c2 + c3 + c4 + c5
+                            #H = -1 * h + c1 + c2 + c3 + c4 + c5
                         
-                            model = H.compile()
+                            #model = H.compile()
                             #qubo, offset = model.to_qubo()
-                            bqm = model.to_bqm()
+                            #bqm = model.to_bqm()
                             
-                            sampler = LeapHybridSampler(token= api_key)
-                            sampleset = sampler.sample(bqm,
-                                                        label="FPL Squad optimization")
+                            #sampler = LeapHybridSampler(token= api_key)
+                            #sampleset = sampler.sample(bqm,
+                             #                           label="FPL Squad optimization")
                             
-                            decoded_samples = model.decode_sampleset(sampleset)
-                            best_sample = min(decoded_samples, key=lambda x: x.energy)
+                            #decoded_samples = model.decode_sampleset(sampleset)
+                            #best_sample = min(decoded_samples, key=lambda x: x.energy)
                             
                             
                             #print(best_sample.constraints())
                             
                             # Obtain best squad 
                         
-                            lineup_df = pd.DataFrame(best_sample.sample.items())
-                            lineup_df.columns = ['variable', 'selected']
-                            lineup_df = lineup_df[(lineup_df['variable'].str.startswith('x', na=False)) & (lineup_df['selected'] == 1)]
-                            lineup_df = df_use.merge(lineup_df, on=['variable'])
-                        
-                            # Obtain starting line-up
-                            gk = lineup_df[lineup_df["position"] == "GK"].sort_values("total_points", ascending=False).head(1)
-                            defense_list = lineup_df[lineup_df["position"] == "DEF"].sort_values("total_points", ascending=False).head(defense)
-                            midfield_list = lineup_df[lineup_df["position"] == "MID"].sort_values("total_points", ascending=False).head(midfield)
-                            attack_list = lineup_df[lineup_df["position"] == "FWD"].sort_values("total_points", ascending=False).head(forward)
-                            start_lineup_df = pd.concat([gk, defense_list, midfield_list, attack_list], axis=0).reset_index(drop=True)
-                            start_lineup_df = start_lineup_df[["name", "position", "value", "total_points", "team"]]
-                        
-                            # Obtain bench players
-                            gk = lineup_df[lineup_df["position"] == "GK"].sort_values("total_points", ascending=False).tail(1)
-                            defense_list = lineup_df[lineup_df["position"] == "DEF"].sort_values("total_points", ascending=False).tail(5-defense)
-                            midfield_list = lineup_df[lineup_df["position"] == "MID"].sort_values("total_points", ascending=False).tail(5-midfield)
-                            attack_list = lineup_df[lineup_df["position"] == "FWD"].sort_values("total_points", ascending=False).tail(3-forward)
-                            bench_lineup_df = pd.concat([gk, defense_list, midfield_list, attack_list], axis=0).reset_index(drop=True)
-                            bench_lineup_df = bench_lineup_df[["name", "position", "value", "total_points", "team"]]
+                            #lineup_df = pd.DataFrame(best_sample.sample.items())
+                            #lineup_df.columns = ['variable', 'selected']
+                            #lineup_df = lineup_df[(lineup_df['variable'].str.startswith('x', na=False)) & (lineup_df['selected'] == 1)]
+                            #lineup_df = df_use.merge(lineup_df, on=['variable'])
 
-                                    
-                            st.write("After game week ", gw, ", the optimal ", defense, "-", midfield, "-", forward, "starting line-up for the team of the season would look like:")
-                            plot_formation(start_lineup_df, lineup_df)
-                            st.write("And the bench would look like:")
-                            plot_bench(bench_lineup_df)
-                            #st.dataframe(ordered_lineup_df)
-                            #st.write("Total sum of points: ", ordered_lineup_df['total_points'].sum())
-                            #st.write("Total budget: ", round(ordered_lineup_df['value'].sum(), 4))
+with st.spinner('Please wait..Squad is being selected'):
+    time.sleep(5)
+    lineup_df = df_use
+                            
+    # Obtain starting line-up
+    gk = lineup_df[lineup_df["position"] == "GK"].sort_values("total_points", ascending=False).head(1)
+    defense_list = lineup_df[lineup_df["position"] == "DEF"].sort_values("total_points", ascending=False).head(defense)
+    midfield_list = lineup_df[lineup_df["position"] == "MID"].sort_values("total_points", ascending=False).head(midfield)
+    attack_list = lineup_df[lineup_df["position"] == "FWD"].sort_values("total_points", ascending=False).head(forward)
+    start_lineup_df = pd.concat([gk, defense_list, midfield_list, attack_list], axis=0).reset_index(drop=True)
+    start_lineup_df = start_lineup_df[["name", "position", "value", "total_points", "team"]]
+                            
+    # Obtain bench players
+    gk = lineup_df[lineup_df["position"] == "GK"].sort_values("total_points", ascending=False).tail(1)
+    defense_list = lineup_df[lineup_df["position"] == "DEF"].sort_values("total_points", ascending=False).tail(5-defense)
+    midfield_list = lineup_df[lineup_df["position"] == "MID"].sort_values("total_points", ascending=False).tail(5-midfield)
+    attack_list = lineup_df[lineup_df["position"] == "FWD"].sort_values("total_points", ascending=False).tail(3-forward)
+    bench_lineup_df = pd.concat([gk, defense_list, midfield_list, attack_list], axis=0).reset_index(drop=True)
+    bench_lineup_df = bench_lineup_df[["name", "position", "value", "total_points", "team"]]
+    
+                                        
+    st.write("After game week ", gw, ", the best", defense, "-", midfield, "-", forward, "starting line-up for the team of the season would look like:")
+    plot_formation(start_lineup_df, lineup_df)
+    st.write("And the bench would look like:")
+    plot_bench(bench_lineup_df)
+    #st.dataframe(ordered_lineup_df)
+    #st.write("Total sum of points: ", ordered_lineup_df['total_points'].sum())
+    #st.write("Total budget: ", round(ordered_lineup_df['value'].sum(), 4))
