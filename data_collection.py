@@ -90,7 +90,7 @@ tot_df = tot_df[["name", "team", "total_points", "date", "position", "value", "G
 
 tot_df = tot_df[tot_df["minutes"]>=400].reset_index(drop=True)
 
-tot_df.to_excel("total_data.xlsx")
+tot_df.to_excel("total_data.xlsx", index=False)
 
 gk = tot_df[tot_df["position"]=="GK"].sort_values("points_per_game", ascending=False).reset_index(drop=True).head(5)
 defenders = tot_df[tot_df["position"]=="DEF"].sort_values("points_per_game", ascending=False).reset_index(drop=True).head(15)
@@ -99,4 +99,4 @@ forwards = tot_df[tot_df["position"]=="FWD"].sort_values("points_per_game", asce
 
 use_df = pd.concat([gk, defenders, midfielders, forwards], axis = 0).sort_values("position", ascending=False).reset_index(drop=True)
 
-use_df.to_excel("use_data.xlsx")
+use_df.to_excel("use_data.xlsx", index=False)
