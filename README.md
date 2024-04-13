@@ -41,6 +41,6 @@ The scripts will output the optimal team composition for each formation you inpu
 ## Inspiration
 - 
 ## References
-- Vaastav Anand, "Fantasy Premier League," GitHub. Available: https://github.com/vaastav/Fantasy-Premier-League. [Accessed: April 13, 2024].
-- D-Wave Systems Inc., "D-Wave Documentation Handbook," D-Wave Systems. Available: https://docs.dwavesys.com/docs/latest/doc_handbook.html. [Accessed: April 13, 2024].
-- Spdtek, "Line-up Optimization," GitHub. Available: https://github.com/spdtek/Line-up-optimization. [Accessed: April 13, 2024].
+- Vaastav Anand, "Fantasy Premier League," GitHub. Available: https://github.com/vaastav/Fantasy-Premier-League. Accessed: April 13, 2024.
+- D-Wave Systems Inc., "D-Wave Documentation Handbook," D-Wave Systems. Available: https://docs.dwavesys.com/docs/latest/doc_handbook.html. Accessed: April 13, 2024.
+- Spdtek, "Line-up Optimization," GitHub. Available: https://github.com/spdtek/Line-up-optimization. Accessed: April 13, 2024.
