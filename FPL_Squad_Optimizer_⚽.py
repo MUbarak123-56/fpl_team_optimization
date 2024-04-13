@@ -265,7 +265,6 @@ else:
                             H = -1 * h + c1 + c2 + c3 + c4 + c5 + c6 + c7
                         
                             model = H.compile()
-                            #qubo, offset = model.to_qubo()
                             bqm = model.to_bqm()
                             
                             sampler = LeapHybridSampler(token= api_key)
@@ -274,9 +273,6 @@ else:
                             
                             decoded_samples = model.decode_sampleset(sampleset)
                             best_sample = min(decoded_samples, key=lambda x: x.energy)
-                            
-                            
-                            #print(best_sample.constraints())
                             
                             # Obtain best squad 
                         
