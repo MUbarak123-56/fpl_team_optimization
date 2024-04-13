@@ -38,5 +38,6 @@ python formation_selection.py
 ## Results
 The scripts will output the optimal team composition for each formation you inputed, showing the selected players and the total points achieved within the value constraint.
 
-## Contributing
-Contributions to improve the optimization model or explore additional formations are welcome. Please feel free to fork the repository, make your changes, and submit a pull request.
+## Inspiration
+
+## References
