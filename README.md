@@ -9,7 +9,7 @@ There three datasets being used for this project are obtained in their rawest fo
 
 ## Usage 
 
-## Prerequisites
+### Prerequisites
 - Python
 - D-Wave Ocean SDK
 - Pandas (for data manipulation)
