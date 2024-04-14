@@ -38,7 +38,7 @@ If you are going to run the code on your local machine, make sure to adhere to t
 - Install all the required packages for making the code functional by running the command below:
 
       pip install -r requirements.txt
-- Open the squad_selection.py file and uncomment the two lines of code below in the file while replacing the [INSERT API TOKEN] with your D-Wave API token which can be obtained [here](https://cloud.dwavesys.com/leap/):
+- Open the squad_selection.py file and uncomment the two lines of code below in the file while replacing the [INSERT TOKEN HERE] with your D-Wave API token which can be obtained [here](https://cloud.dwavesys.com/leap/):
 
         #api_token = [INSERT TOKEN HERE]
         #sampler = LeapHybridSampler(token= api_token)
@@ -46,20 +46,11 @@ If you are going to run the code on your local machine, make sure to adhere to t
 - Use the command below to run the python code for generating an FPL team:
   
       python squad_selection_local.py
-  
-#### Running the Optimization
-To run the optimization script:
 
-Ensure you have set up your D-Wave Leap account and configured your API token.
-
-If you are running on LEAP directly, run the code below
-python formation_selection_no_token.py
-
-If you are running the code locally, run the code below
-python formation_selection.py
+**Note:** Upon running either squad_selection.py or squad_selection_local.py, you will be prompted to insert the number of defenders, midfielders and forwards you would like to see in your starting line up for your squad. Make sure all the numbers you input are within the range if not, you will be prompted to re-insert them.
 
 #### Results
-The scripts will output the optimal team composition for each formation you inputed, showing the selected players and the total points achieved within the value constraint.
+The scripts will output the optimal team composition for each formation you inputed, 
 
 ### App
 
