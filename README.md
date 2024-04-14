@@ -26,7 +26,7 @@ If you are going to run the code on your local machine, make sure to adhere to t
   
       cd fpl_team_optimization
 
-- Use the next command to run the python code for generating an FPL team (make sure the summation of all your defenders, midfielders and forwards sum up to 10; this is the standard for a soccer team):
+- Use the command below to run the python code for generating an FPL team:
   
       python squad_selection_local.py
 
