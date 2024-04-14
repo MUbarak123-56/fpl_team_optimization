@@ -10,16 +10,25 @@ There three datasets being used for this project are obtained in their rawest fo
 ## Usage 
 
 ## Prerequisites
-- Python 3.x
+- Python
 - D-Wave Ocean SDK
 - Pandas (for data manipulation)
 - Environment Setup
 
 ### Terminal
-Copy code
-git clone https://github.com/your-username/fpl_lineup_optimization.git
-cd fpl_lineup_optimization
-Install the required Python packages:
+If you are going to run the code on your local machine, make sure to adhere to the following steps:
+- Fork this repository
+- Use the following command in your local terminal to clone the repo:
+
+      git clone https://github.com/your-github-username/fpl_team_optimization.git
+  
+- Use the next command to navigate to the folder where the code is stored:
+  
+      cd fpl_team_optimization
+
+- Use the next command to run the python code for generating an FPL team (make sure the summation of all your defenders, midfielders and forwards sum up to 10; this is the standard for a soccer team):
+  
+      python squad_selection_local.py
 
 ### bash
 Copy code
