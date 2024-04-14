@@ -10,11 +10,10 @@ There three datasets being used for this project are obtained in their rawest fo
 ## Usage 
 
 ## Prerequisites
-Python 3.x
-D-Wave Ocean SDK
-Pandas (for data manipulation)
-Environment Setup
-Clone the repository to your local machine:
+- Python 3.x
+- D-Wave Ocean SDK
+- Pandas (for data manipulation)
+- Environment Setup
 
 ## bash
 Copy code
