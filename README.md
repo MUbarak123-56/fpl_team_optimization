@@ -16,6 +16,15 @@ There three datasets being used for this project are obtained in their rawest fo
 - Environment Setup
 
 ### Terminal
+
+#### D-Wave's GitHub Codespace
+
+If you are going to run the code on D-Wave's GitHub Codespace, just type in the following command below:
+
+      python squad_selection.py
+
+#### Local Machine
+
 If you are going to run the code on your local machine, make sure to adhere to the following steps:
 - Fork this repository
 - Use the following command in your local terminal to clone the repo:
@@ -25,16 +34,15 @@ If you are going to run the code on your local machine, make sure to adhere to t
 - Use the next command to navigate to the folder where the code is stored:
   
       cd fpl_team_optimization
+  
+- Install all the required packages for making the code functional by running the command below:
+
+      pip install -r requirements.txt
 
 - Use the command below to run the python code for generating an FPL team:
   
       python squad_selection_local.py
-
-### bash
-Copy code
-pip install -r requirements.txt
-This will install D-Wave's Ocean SDK and other necessary libraries.
-
+  
 #### Running the Optimization
 To run the optimization script:
 
