@@ -99,7 +99,7 @@ bqm = model.to_bqm()
 #api_token = [INSERT TOKEN HERE]
 #sampler = LeapHybridSampler(token= api_token)
 sampleset = sampler.sample(bqm,
-                            label="FPL Squad optimization")
+                            label="FPL Team optimization")
 
 # Decode samples and select the best one
 decoded_samples = model.decode_sampleset(sampleset)
@@ -120,7 +120,7 @@ defense_list = lineup_df[lineup_df["position"] == "DEF"].sort_values("total_poin
 midfield_list = lineup_df[lineup_df["position"] == "MID"].sort_values("total_points", ascending=False).head(midfield)
 attack_list = lineup_df[lineup_df["position"] == "FWD"].sort_values("total_points", ascending=False).head(forward)
 start_lineup_df = pd.concat([gk, defense_list, midfield_list, attack_list], axis=0).reset_index(drop=True)
-start_lineup_df = start_lineup_df[["name", "position", "value", "total_points", "team", "points_per_game"]]
+start_lineup_df = start_lineup_df[["name", "team", "position", "value", "total_points", "points_per_game"]]
 
 # Obtain bench players
 gk = lineup_df[lineup_df["position"] == "GK"].sort_values("total_points", ascending=False).tail(1)
@@ -128,7 +128,7 @@ defense_list = lineup_df[lineup_df["position"] == "DEF"].sort_values("total_poin
 midfield_list = lineup_df[lineup_df["position"] == "MID"].sort_values("total_points", ascending=False).tail(5-midfield)
 attack_list = lineup_df[lineup_df["position"] == "FWD"].sort_values("total_points", ascending=False).tail(3-forward)
 bench_lineup_df = pd.concat([gk, defense_list, midfield_list, attack_list], axis=0).reset_index(drop=True)
-bench_lineup_df = bench_lineup_df[["name", "position", "value", "total_points", "team", "points_per_game"]]
+bench_lineup_df = bench_lineup_df[["name", "team", "position", "value", "total_points", "points_per_game"]]
 
 print("At Gameweek ", gw, ", the optimal squad would look like:\n")
 print("Starting Lineup")
@@ -137,6 +137,6 @@ print("\n\n")
 print("Bench")
 print(bench_lineup_df)
 
-print("Total starting line up sum of points: ", start_lineup_df['points_per_game'].sum())
+print("Total starting line up sum of FPL points per game: ", start_lineup_df['points_per_game'].sum())
 print("Total Squad budget: ", lineup_df['value'].sum())
 
