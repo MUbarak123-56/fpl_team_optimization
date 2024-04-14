@@ -15,7 +15,7 @@ st.set_page_config(page_title = "FPL Team Optimization", page_icon="⚽")
 
 st.header("FPL Team Optimization ⚽")
 
-st.subheader("Welcome to the FPL Squad Optimizer App")
+st.subheader("Welcome to the FPL Team Optimization App")
 st.write("""The purpose of this app is to assist FPL fans to select the optimal squad according to data collected from Gameweek 1 to the most recent gameweek of the current season. 
             The data collected reflects the top 50 highest rated players (5 goalkeepers, 15 defenders, 15 midfielders and 15 forwards) so far this season in terms of their most recent FPL points per game over season.
             For a player to be considered for selection, they must be available for the next gameweek (i.e. no injured or suspended or loaned players). 
