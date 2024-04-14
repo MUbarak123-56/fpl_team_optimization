@@ -9,11 +9,12 @@ import numpy as np
 import warnings
 warnings.filterwarnings('ignore')
 
-#extract_data = pd.read_csv("https://raw.githubusercontent.com/vaastav/Fantasy-Premier-League/master/data/2023-24/gws/merged_gw.csv")
+load_dotenv()
+token_use = os.getenv("API_TOKEN")
 
 data = pd.read_excel("use_data.xlsx")
 gw = max(data["GW"])
-columns = ["name", "position", "value", "total_points", "team"]
+columns = ["name", "position", "value", "total_points", "team", "points_per_game"]
 data = data[columns]
 data["value"] = data["value"]/10
 df_use = data.sort_values("position").reset_index(drop=True)
@@ -26,15 +27,15 @@ midfield_list_index = list(df_use[df_use["position"]=="MID"].index)
 for i in range(len(df_use)):
     df_use.loc[i, "variable"] = "x[" + str(i) + "]"
     
-columns = ["variable","name", "position", "value", "total_points", "team"]
+columns = ["variable","name", "position", "value", "total_points", "team", "points_per_game"]
 team_list = list(df_use["team"].unique())
-total_points = df_use["total_points"].to_list()
+total_points = df_use["points_per_game"].to_list()
 value = df_use["value"].to_list()
 df_use = df_use[columns]
 
-lagrange = max(df_use["total_points"])*15
+lagrange = max(df_use["points_per_game"])*15
 lagrange_budget = max(df_use["value"])*15
-lagrange_team = max(df_use["total_points"])*3
+lagrange_team = max(df_use["points_per_game"])*3
 num_var = len(df_use)
 slack_num = 1
 
@@ -84,7 +85,7 @@ c4 = lagrange * Constraint((sum(x[n] for n in range(min(gk_list_index), max(gk_l
 c5 = lagrange * Constraint((sum(x[n] for n in range(min(midfield_list_index), max(midfield_list_index)+1))-5)**2,
                                                 label=str(5) + " midfielders")
 c6 = lagrange_budget * Constraint((sum(n * x for x, n in zip(x, value)) + s[0] -100)**2,
-                                                              label="budget")
+                                                              label="Budget")
 
 c7 = 0
 
@@ -95,14 +96,17 @@ for i in range(len(team_list)):
 H = -1 * h + c1 + c2 + c3 + c4 + c5 + c6 + c7
 
 model = H.compile()
-qubo, offset = model.to_qubo()
 bqm = model.to_bqm()
 
 # Solve problem with QPU
-#api_token = token_use
-sampler = LeapHybridSampler()
+#api_token = [INSERT TOKEN HERE]
+#sampler = LeapHybridSampler(token= api_token)
+api_token = token_use
+sampler = LeapHybridSampler(token= api_token)
+#api_token = [INSERT TOKEN HERE]
+#sampler = LeapHybridSampler(token= api_token)
 sampleset = sampler.sample(bqm,
-                            label="FPL line-up optimization")
+                            label="FPL Squad optimization")
 
 # Decode samples and select the best one
 decoded_samples = model.decode_sampleset(sampleset)
@@ -123,7 +127,7 @@ defense_list = lineup_df[lineup_df["position"] == "DEF"].sort_values("total_poin
 midfield_list = lineup_df[lineup_df["position"] == "MID"].sort_values("total_points", ascending=False).head(midfield)
 attack_list = lineup_df[lineup_df["position"] == "FWD"].sort_values("total_points", ascending=False).head(forward)
 start_lineup_df = pd.concat([gk, defense_list, midfield_list, attack_list], axis=0).reset_index(drop=True)
-start_lineup_df = start_lineup_df[["name", "position", "value", "total_points", "team"]]
+start_lineup_df = start_lineup_df[["name", "position", "value", "total_points", "team", "points_per_game"]]
 
 # Obtain bench players
 gk = lineup_df[lineup_df["position"] == "GK"].sort_values("total_points", ascending=False).tail(1)
@@ -131,7 +135,7 @@ defense_list = lineup_df[lineup_df["position"] == "DEF"].sort_values("total_poin
 midfield_list = lineup_df[lineup_df["position"] == "MID"].sort_values("total_points", ascending=False).tail(5-midfield)
 attack_list = lineup_df[lineup_df["position"] == "FWD"].sort_values("total_points", ascending=False).tail(3-forward)
 bench_lineup_df = pd.concat([gk, defense_list, midfield_list, attack_list], axis=0).reset_index(drop=True)
-bench_lineup_df = bench_lineup_df[["name", "position", "value", "total_points", "team"]]
+bench_lineup_df = bench_lineup_df[["name", "position", "value", "total_points", "team", "points_per_game"]]
 
 print("At Gameweek ", gw, ", the optimal squad would look like:\n")
 print("Starting Lineup")
@@ -139,5 +143,7 @@ print(start_lineup_df)
 print("\n\n")
 print("Bench")
 print(bench_lineup_df)
-print("Total sum of points: ", lineup_df['total_points'].sum())
-print("Total budget: ", lineup_df['value'].sum())
+
+print("Total starting line up sum of points: ", start_lineup_df['points_per_game'].sum())
+print("Total Squad budget: ", lineup_df['value'].sum())
+
