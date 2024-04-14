@@ -101,10 +101,6 @@ bqm = model.to_bqm()
 # Solve problem with QPU
 #api_token = [INSERT TOKEN HERE]
 #sampler = LeapHybridSampler(token= api_token)
-api_token = token_use
-sampler = LeapHybridSampler(token= api_token)
-#api_token = [INSERT TOKEN HERE]
-#sampler = LeapHybridSampler(token= api_token)
 sampleset = sampler.sample(bqm,
                             label="FPL Squad optimization")
 
