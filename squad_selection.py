@@ -108,7 +108,7 @@ sampleset = sampler.sample(bqm,
 decoded_samples = model.decode_sampleset(sampleset)
 best_sample = min(decoded_samples, key=lambda x: x.energy)
 
-print(best_sample.constraints())
+#print(best_sample.constraints())
 
 # Print results for best line-up
 lineup_df = pd.DataFrame(best_sample.sample.items())
