@@ -52,7 +52,7 @@ If you are going to run the code on your local machine, make sure to adhere to t
 #### Results
 After running the code and specifying the number of defenders, midfielders and forwards you want, you will receive an output like the one below:
 
-[!Sample Output](images/sample_output.png)
+![Sample Output](images/sample_output.png)
 
 ### App
 
