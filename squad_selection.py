@@ -9,7 +9,8 @@ import numpy as np
 import warnings
 warnings.filterwarnings('ignore')
 
-#extract_data = pd.read_csv("https://raw.githubusercontent.com/vaastav/Fantasy-Premier-League/master/data/2023-24/gws/merged_gw.csv")
+load_dotenv()
+token_use = os.getenv("API_TOKEN")
 
 data = pd.read_excel("use_data.xlsx")
 gw = max(data["GW"])
@@ -99,7 +100,7 @@ qubo, offset = model.to_qubo()
 bqm = model.to_bqm()
 
 # Solve problem with QPU
-#api_token = token_use
+api_token = token_use
 sampler = LeapHybridSampler()
 sampleset = sampler.sample(bqm,
                             label="FPL line-up optimization")
