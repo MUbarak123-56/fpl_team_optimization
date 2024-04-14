@@ -1,4 +1,4 @@
-# FPL Team Optimization
+# FPL Squad Optimization
 
 ## Project Overview
 The FPL Team Optimization project leverages .
