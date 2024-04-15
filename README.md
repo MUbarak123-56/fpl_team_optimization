@@ -47,12 +47,14 @@ If you are going to run the code on your local machine, make sure to adhere to t
   
       python squad_selection_local.py
 
-**Note:** Upon running either squad_selection.py or squad_selection_local.py, you will be prompted to insert the number of defenders, midfielders and forwards you would like to see in your starting line up for your squad. Make sure all the numbers you input are within the range if not, you will be prompted to re-insert them. The starting line up would comprise of the players with the highest ratings in the optimized squad while the bench would include the remaining players that made it to the optimized squad but aren't as good.
+**Note:** Upon running either squad_selection.py or squad_selection_local.py, you will be prompted to insert the number of defenders, midfielders and forwards you would like to see in your starting line up for your squad. Make sure all the numbers you input are within the range if not, you will be prompted to re-insert them. 
 
 #### Results
 After running the code and specifying the number of defenders, midfielders and forwards you want, you will receive an output like the one below:
 
 ![Sample Output](images/sample_output.png)
+
+The starting line up would comprise of the players with the highest ratings in the optimized squad solution that the D-Wave LeapHybridSampler provides us with while the bench would include the remaining players that made it to the optimized squad but aren't as good.
 
 ### Web Application
 
@@ -114,7 +116,8 @@ $$h = \sum_{i=1}^{50} x_i \cdot n_i$$
 
 #### 15 player squad creation
 
-      c1 = lagrange * Constraint((sum(x[n] for n in range(0, num_var)) - 15)**2, label='15 players squad')
+      c1 = lagrange * Constraint((sum(x[n] for n in range(0, num_var)) - 15)**2, 
+                                  label='15 players squad')
 
 $$c1 = \lambda*\sum_{i=1}^{50} (x_i - 15)^2$$
 
@@ -122,31 +125,36 @@ The dataset is ordered according to the position of the players, so the first 15
 
 #### 5 defenders' selection
 
-      c2 = lagrange * Constraint((sum(x[n] for n in range(min(defense_list_index), max(defense_list_index)+1))-5)**2, label=str(5) + " defenders")
+      c2 = lagrange * Constraint((sum(x[n] for n in range(min(defense_list_index), max(defense_list_index)+1))-5)**2, 
+                                  label=str(5) + " defenders")
 
 $$c2 = \lambda*\sum_{i=1}^{15} (x_i - 5)^2$$
 
 #### 3 forwards' selection
 
-      c3 = lagrange * Constraint((sum(x[n] for n in range(min(forward_list_index), max(forward_list_index)+1))-3)**2, label=str(3) + " forwards")
+      c3 = lagrange * Constraint((sum(x[n] for n in range(min(forward_list_index), max(forward_list_index)+1))-3)**2,
+                                  label=str(3) + " forwards")
 
 $$c3 = \lambda*\sum_{i=16}^{30} (x_i - 3)^2$$
 
 #### 2 goalkeepers' selection
 
-      c4 = lagrange * Constraint((sum(x[n] for n in range(min(gk_list_index), max(gk_list_index)+1))-2)**2, label= "2 keepers")
+      c4 = lagrange * Constraint((sum(x[n] for n in range(min(gk_list_index), max(gk_list_index)+1))-2)**2, 
+                                  label= "2 keepers")
 
 $$c4 = \lambda*\sum_{i=31}^{35} (x_i - 2)^2$$
 
 #### 5 midfielders' selection
 
-      c5 = lagrange * Constraint((sum(x[n] for n in range(min(midfield_list_index), max(midfield_list_index)+1))-5)**2, label=str(5) + " midfielders")
+      c5 = lagrange * Constraint((sum(x[n] for n in range(min(midfield_list_index), max(midfield_list_index)+1))-5)**2, 
+                                  label=str(5) + " midfielders")
 
 $$c5 = \lambda*\sum_{i=36}^{50} (x_i - 5)^2$$
 
 #### Budgetary Constraint
 
-      c6 = lagrange_budget * Constraint((sum(n * x for x, n in zip(x, value)) + s[0] -100)**2, label="budget")
+      c6 = lagrange_budget * Constraint((sum(n * x for x, n in zip(x, value)) + s[0] -100)**2, 
+                                         label="budget")
 
 $$c6 = \lambda_{budget} * \left(\sum_{i=1}^{50} x_i*n_i + s_1 - 100\right)^2$$
 
@@ -156,13 +164,30 @@ $$c6 = \lambda_{budget} * \left(\sum_{i=1}^{50} x_i*n_i + s_1 - 100\right)^2$$
 
       for i in range(len(team_list)):
           use_index =list(df_use[df_use["team"]==team_list[i]].index)
-          c7 += lagrange_team * Constraint((sum(x[n] for n in use_index) + s[i+1] - 3)**2, label = str(team_list[i]) + " selection")
+          c7 += lagrange_team * Constraint((sum(x[n] for n in use_index) + s[i+1] - 3)**2, 
+                                            label = str(team_list[i]) + " selection")
 
 The team representation constraint involved going through the list of the 50 players and extracting all the players from the same team in order to develop a constraint where each team's maximum representation would be 3 players. It can be formulated mathematically as follows:
 
 $$c7 = \sum_{t=1}^{T} \lambda_{team} * \left(\sum_{i=1}^{t_s} x_i + s_{t+1} - 3 \right)^2$$
 
 The formulation is designed to iterate through each team up until the final team. $T$ here represents the total number of teams and the $t_s$ symbol represents the size of the team when computing the representation for each team. We use $s_{t+1}$ to denote the fact that we are starting from the second slack variable and beyond. We already used the first slack variable for budgetary constraint. 
+
+#### Putting it all together
+
+After developing the objective function and the constraints, they were combined together to create the problem hamiltonian.
+
+      H = -1 * h + c1 + c2 + c3 + c4 + c5 + c6 + c7
+      
+$$H = -1*h + c1 + c2 + c3 + c4 + c5 + c6 + c7$$
+
+Then, the problem hamiltonian was compiled and converted into a Binary Quadratic Model which the D-Wave's LeapHybridSampler used to obtain a solution.
+
+      model = H.compile()
+      bqm = model.to_bqm()
+      sampler = LeapHybridSampler()
+      sampleset = sampler.sample(bqm,
+                          label="FPL Team optimization")
 
 ## References
 <a name="1">[1]</a> Vaastav Anand, "Fantasy Premier League," GitHub. Available: https://github.com/vaastav/Fantasy-Premier-League. Accessed: April 13, 2024.
