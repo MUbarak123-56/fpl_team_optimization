@@ -58,7 +58,7 @@ The starting line up would comprise of the players with the highest ratings in t
 
 ### Web Application
 
-Users can also navigate to the app [here](https://fpl-team-optimization.streamlit.app/) and follow instructions to generate an output that looks like the one below:
+Users can also navigate to the app [here](https://fpl-team-optimization.streamlit.app/) and follow instructions on the web app to generate an output that looks like the one below:
 
 ![Sample Output App](images/sample_output_app.png)
 
