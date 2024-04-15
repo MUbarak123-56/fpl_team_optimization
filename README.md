@@ -38,10 +38,9 @@ If you are going to run the code on your local machine, make sure to adhere to t
 - Install all the required packages for making the code functional by running the command below:
 
       pip install -r requirements.txt
-- Open the squad_selection.py file and uncomment the two lines of code below in the file while replacing the [INSERT TOKEN HERE] with your D-Wave API token which can be obtained [here](https://cloud.dwavesys.com/leap/):
+- Open the squad_selection.py file and uncomment the line of code below in the file while replacing the *INSERT API TOKEN* with your D-Wave API token which can be obtained [here](https://cloud.dwavesys.com/leap/):
 
-        #api_token = [INSERT TOKEN HERE]
-        #sampler = LeapHybridSampler(token= api_token)
+        #api_token = "INSERT API TOKEN"
   
 - Use the command below to run the python code for generating an FPL team:
   
