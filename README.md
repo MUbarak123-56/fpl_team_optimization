@@ -92,7 +92,7 @@ The code for each objective/constraint alongside other variables and constants i
       x = Array.create('x', shape=num_var, vartype='BINARY')
       s = Array.create('s', shape=slack_num + len(df_use["team"].unique()), vartype='BINARY')
       
-The x variable object is storing each individual player as a variable from x[1] to x[50]. We have 50 of them because we are selecting the optimal squad from 50 players. The s variable object is stores all slack variable for for the budget and team representation constraints. The number of slack variables is dictated by how many teams are represented in the top 50 highest rated players.
+The x variable object is storing each individual player as a variable from $x_1$ to $x_{50}$. We have 50 of them because we are selecting the optimal squad from 50 players. The s variable object is stores all slack variable for for the budget and team representation constraints. The number of slack variables is dictated by how many teams are represented in the top 50 highest rated players.
 
 #### Lagrange Multipliers
 
