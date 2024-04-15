@@ -23,9 +23,6 @@ st.write("""The purpose of this app is to assist FPL fans to select the optimal 
             Once you have obtained it, insert it into the D-Wave Solver API token password bar below.
             The optimization problem also takes budget into account. The budget for an FPL Squad is expected to be 100. Hence, you will be constrained to a squad whose total value will not exceed 100.
             """)
-# loading in the D-Wave Token
-#load_dotenv()
-#token_use = os.getenv("API_TOKEN")
 
 # Loading in the FPL data set
 
@@ -248,6 +245,7 @@ else:
                             time.sleep(5)
                             x = Array.create('x', shape=num_var, vartype='BINARY')
                             s = Array.create('s', shape=slack_num + len(df_use["team"].unique()), vartype='BINARY')
+                                    
                             # objective function
                             h = sum(n * x for x, n in zip(x, total_points))
                         
