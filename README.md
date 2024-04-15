@@ -47,7 +47,7 @@ If you are going to run the code on your local machine, make sure to adhere to t
   
       python squad_selection_local.py
 
-**Note:** Upon running either squad_selection.py or squad_selection_local.py, you will be prompted to insert the number of defenders, midfielders and forwards you would like to see in your starting line up for your squad. Make sure all the numbers you input are within the range if not, you will be prompted to re-insert them. 
+**Note:** Upon running either squad_selection.py or squad_selection_local.py, you will be prompted to insert the number of defenders, midfielders and forwards you would like to see in your starting line up for your squad. Make sure all the numbers you input are within the range and they sum up to 10. Or else, you will be prompted to re-insert them. 
 
 #### Results
 After running the code and specifying the number of defenders, midfielders and forwards you want, you will receive an output like the one below:
