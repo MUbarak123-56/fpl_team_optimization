@@ -96,8 +96,8 @@ model = H.compile()
 bqm = model.to_bqm()
 
 # Solve problem with QPU
-#api_token = [INSERT TOKEN HERE]
-#sampler = LeapHybridSampler(token= api_token)
+#api_token = "INSERT API TOKEN"
+sampler = LeapHybridSampler(token= api_token)
 sampleset = sampler.sample(bqm,
                             label="FPL Team optimization")
 
