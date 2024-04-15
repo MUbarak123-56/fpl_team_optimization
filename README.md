@@ -203,6 +203,8 @@ Then, the problem hamiltonian was compiled and converted into a Binary Quadratic
       sampleset = sampler.sample(bqm,
                           label="FPL Team optimization")
 
+**Note**: One great characteristic of our optimization algorithm is that it will provide a new squad everytime you run the algorithm. This ensures that different users will obtain different teams.
+
 ## References
 <a name="1">[1]</a> Vaastav Anand, "Fantasy Premier League," GitHub. Available: https://github.com/vaastav/Fantasy-Premier-League. Accessed: April 13, 2024.
 
