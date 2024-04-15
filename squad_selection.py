@@ -96,7 +96,6 @@ for i in range(len(team_list)):
 H = -1 * h + c1 + c2 + c3 + c4 + c5 + c6 + c7
 
 model = H.compile()
-qubo, offset = model.to_qubo()
 bqm = model.to_bqm()
 
 # Solve problem with QPU
