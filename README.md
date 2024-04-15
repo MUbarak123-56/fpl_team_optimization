@@ -93,13 +93,15 @@ The x variable object is storing each individual player as a variable from x[1] 
 
 #### Objective
 
-The objective function is formulated below:
+The objective function is formulated as code below:
 
       h = sum(n * x for x, n in zip(x, total_points))
 
+In the code above, n represents the FPL points per game for and x represents each players' binary variable. If a player is selected, x will be 1 for that player else it is 0. 
+
 Mathematically, it can be expressed as:
 
-$$h = \Sigma$$
+$$h = \sum_{i=1}^{50} x_i \cdot n_i$$
 
 
 ## References
