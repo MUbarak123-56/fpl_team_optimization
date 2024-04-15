@@ -118,7 +118,8 @@ Below is the code for creating a 15 player squad alongside its mathematical form
 
       c1 = lagrange * Constraint((sum(x[n] for n in range(0, num_var)) - 15)**2, label='15 players squad')
 
-$$c1 = \lambda*\sum_{i=1}^{t} (x_i - 15)**2
+$$c1 = \lambda*\sum_{i=1}^{50} (x_i - 15)**2$$
+
 
 ## References
 <a name="1">[1]</a> Vaastav Anand, "Fantasy Premier League," GitHub. Available: https://github.com/vaastav/Fantasy-Premier-League. Accessed: April 13, 2024.
