@@ -148,7 +148,19 @@ $$c5 = \lambda*\sum_{i=36}^{50} (x_i - 5)^2$$
 
       c6 = lagrange_budget * Constraint((sum(n * x for x, n in zip(x, value)) + s[0] -100)**2, label="budget")
 
-$$c6 = \lambda*\left(\sum_{i=1}^{50} x_i*n_i + s_0 - 100\right)^2$$
+$$c6 = \lambda_budget*\left(\sum_{i=1}^{50} x_i*n_i + s_0 - 100\right)^2$$
+
+#### Team Representation Constraint
+
+      c7 = 0
+
+      for i in range(len(team_list)):
+          use_index =list(df_use[df_use["team"]==team_list[i]].index)
+          c7 += lagrange_team * Constraint((sum(x[n] for n in use_index) + s[i+1] - 3)**2, label = str(team_list[i]) + " selection")
+
+The team representation constraint involved going through the list of the 50 players and extracting all the players from the same team in order to develop a constraint where each team's maximum representation would be 3 players. It can be formulated mathematically as follows:
+
+$$c7 = \sum_{t=1}^{T} \lambda_team * \left(\sum{i=1}^{t_l} x_i + s_{i+1} - 3 \right)**2$$
 
 ## References
 <a name="1">[1]</a> Vaastav Anand, "Fantasy Premier League," GitHub. Available: https://github.com/vaastav/Fantasy-Premier-League. Accessed: April 13, 2024.
