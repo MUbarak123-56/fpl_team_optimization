@@ -56,6 +56,12 @@ After running the code and specifying the number of defenders, midfielders and f
 
 ### App
 
+Users can also navigate to the app [here](https://fpl-team-optimization.streamlit.app/) and follow instructions to generate an output that looks like the one below:
+
+![Sample Output App](images/sample_output_app.png)
+
+The app was built via Streamlit, a data science Python package for developing apps suitable for data visualization and other data science related projects.
+
 ## Model Overview
 
 ## References
