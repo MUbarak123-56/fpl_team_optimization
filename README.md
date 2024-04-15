@@ -99,7 +99,7 @@ The objective function is formulated below:
 
 Mathematically, it can be expressed as:
 
-$$\sigma$$
+$$h = \Sigma$$
 
 
 ## References
