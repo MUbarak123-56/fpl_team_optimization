@@ -181,7 +181,7 @@ After developing the objective function and the constraints, they were combined 
       
 $$H = -1*h + c1 + c2 + c3 + c4 + c5 + c6 + c7$$
 
-Then, the problem hamiltonian was compiled and converted into a Binary Quadratic Model which the D-Wave's LeapHybridSampler used to obtain a solution.
+Then, the problem hamiltonian was compiled and converted into a Binary Quadratic Model which the D-Wave's LeapHybridSampler used to obtain a solution for creating an optimized squad.
 
       model = H.compile()
       bqm = model.to_bqm()
