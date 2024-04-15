@@ -116,6 +116,8 @@ $$h = \sum_{i=1}^{50} x_i \cdot n_i$$
 
 #### 15 player squad creation
 
+The constraint below ensures that we select exactly 15 players.
+
       c1 = lagrange * Constraint((sum(x[n] for n in range(0, num_var)) - 15)**2, 
                                   label='15 players squad')
 
@@ -125,12 +127,16 @@ The dataset is ordered according to the position of the players, so the first 15
 
 #### 5 defenders' selection
 
+The constraint below ensures that we pick exactly 5 defenders.
+
       c2 = lagrange * Constraint((sum(x[n] for n in range(min(defense_list_index), max(defense_list_index)+1))-5)**2, 
                                   label=str(5) + " defenders")
 
 $$c2 = \lambda*\sum_{i=1}^{15} (x_i - 5)^2$$
 
 #### 3 forwards' selection
+
+The constraint below ensures that we pick exactly 3 forwards.
 
       c3 = lagrange * Constraint((sum(x[n] for n in range(min(forward_list_index), max(forward_list_index)+1))-3)**2,
                                   label=str(3) + " forwards")
@@ -139,12 +145,16 @@ $$c3 = \lambda*\sum_{i=16}^{30} (x_i - 3)^2$$
 
 #### 2 goalkeepers' selection
 
+The constraint below ensures that we pick exactly 2 goalkeepers.
+
       c4 = lagrange * Constraint((sum(x[n] for n in range(min(gk_list_index), max(gk_list_index)+1))-2)**2, 
                                   label= "2 keepers")
 
 $$c4 = \lambda*\sum_{i=31}^{35} (x_i - 2)^2$$
 
 #### 5 midfielders' selection
+
+The constraint below ensures that we pick exactly 5 midfielders.
 
       c5 = lagrange * Constraint((sum(x[n] for n in range(min(midfield_list_index), max(midfield_list_index)+1))-5)**2, 
                                   label=str(5) + " midfielders")
@@ -153,12 +163,16 @@ $$c5 = \lambda*\sum_{i=36}^{50} (x_i - 5)^2$$
 
 #### Budgetary Constraint
 
+The constraint below ensures that the total squad budget does not exceed 100.
+
       c6 = lagrange_budget * Constraint((sum(n * x for x, n in zip(x, value)) + s[0] -100)**2, 
                                          label="budget")
 
 $$c6 = \lambda_{budget} * \left(\sum_{i=1}^{50} x_i*n_i + s_1 - 100\right)^2$$
 
 #### Team Representation Constraint
+
+The constraint below ensures that the squad does not have more than 3 players from any team.
 
       c7 = 0
 
