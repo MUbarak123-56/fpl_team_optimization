@@ -160,7 +160,7 @@ $$c6 = \lambda_{budget} * \left(\sum_{i=1}^{50} x_i*n_i + s_1 - 100\right)^2$$
 
 The team representation constraint involved going through the list of the 50 players and extracting all the players from the same team in order to develop a constraint where each team's maximum representation would be 3 players. It can be formulated mathematically as follows:
 
-$$c7 = \sum_{t=1}^{T} \lambda_{team} * \left(\sum_{i=1}^{t_s} x_i + s_{i+1} - 3 \right)**2$$
+$$c7 = \sum_{t=1}^{T} \lambda_{team} * \left(\sum_{i=1}^{t_s} x_i + s_{i+1} - 3 \right)^2$$
 
 The formulation is designed to iterate through each team up until the final team. $T$ here represents the total number of teams and the $t_s$ symbol represents the size of the team when computing the representation for each team.
 
