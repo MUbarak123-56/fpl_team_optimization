@@ -7,9 +7,6 @@
 ## Project Overview
 The Fantasy Premier League [[5]](#5) is one of the most competitive fan-based online sporting events in the world. It attracts people from all nations as they compete to see who can rack up the most FPL points through the Premier League season. FPL points are points awarded to Premier League players over the course of the season. When someone signs up to play FPL, they are often prompted to build a squad that comprises of football players in the Premier League. Squad selection comes with certain constraints. You must select exactly 2 goalkeepers, 5 defenders, 5 midfielders and 3 forwards. Your squad budget must not exceed 100 million pounds. No team should have more than 3 players represented in your squad. Given all these information about the FPL and its constraints, we thought it would be great to leverage the power of quantum optimization to assist newcomers with selecting the most optimal squad (i.e. a squad that maximizes its total FPL points per game) while meeting the constraints. Thus, the FPL Team Optimization project commenced. By gaining inspiration from a similar project [[2]](#2) conducted by SPDtek [[4]](#4), we were able to build an optimization algorithm that would assist FPL users with selecting the optimal squad when beginning their FPL journey for the season. 
 
-## Data
-There three datasets being used for this project are obtained in their rawest format from Vaastav's Fantasy Premier League GitHub repo [[1]](#1). The first dataset reflects all the gameweek information for all the players from the first gameweek to the most recent gameweek. The gameweek dataset focuses on metrics such as the position, the game week info and the name of the player. The second dataset reflects all the team information about various players with regards to their form, injuries and chances of playing next round. The third dataset is used to extract information about the players' most recent value. By combining all three datasets and wrangling them, it was possible to build a condensed dataset that focused on important variables such as name, team, total_points, date, position, gameweek, minutes played and FPL points per game. This condensed dataset reflects the top 50 highest rated players (5 goalkeepers, 15 defenders, 15 midfielders and 15 forwards) so far this season in terms of their most recent FPL points per game over season. For a player to be considered for selection, they must be available for the next gameweek (i.e. no injured or suspended or loaned players). 
-
 ## Usage 
 
 ### Prerequisites
@@ -57,15 +54,33 @@ After running the code and specifying the number of defenders, midfielders and f
 
 ![Sample Output](images/sample_output.png)
 
-### App
+### Web Application
 
 Users can also navigate to the app [here](https://fpl-team-optimization.streamlit.app/) and follow instructions to generate an output that looks like the one below:
 
 ![Sample Output App](images/sample_output_app.png)
 
-The app was built via Streamlit, a data science Python package for developing apps suitable for data visualization and other data science related projects.
+The app was built via Streamlit, a data science Python package for developing apps suitable for data visualization and other data science related projects.4
 
-## Model Overview
+## Data
+
+There three datasets being used for this project are obtained in their rawest format from Vaastav's Fantasy Premier League GitHub repo [[1]](#1). The first dataset reflects all the gameweek information for all the players from the first gameweek to the most recent gameweek. The gameweek dataset focuses on metrics such as the position, the game week info and the name of the player. The second dataset reflects all the team information about various players with regards to their form, injuries and chances of playing next round. The third dataset is used to extract information about the players' most recent value. By combining all three datasets and wrangling them, it was possible to build a condensed dataset that focused on important variables such as name, team, total_points, date, position, gameweek, minutes played and FPL points per game. This condensed dataset reflects the top 50 highest rated players (5 goalkeepers, 15 defenders, 15 midfielders and 15 forwards) so far this season in terms of their most recent FPL points per game over season. For a player to be considered for selection, they must be available for the next gameweek (i.e. no injured or suspended or loaned players). Using GitHub Actions, the condensed dataset is updated everyday to reflect Premier League players' most recent performance, so that new users can get the up-to-date optimized FPL team when they use the project's website [here](https://fpl-team-optimization.streamlit.app/) or they can do a git pull for the repo on their local machine prior to running the squad_selection_local.py file. 
+
+
+## Problem Formulation
+
+The problem was formulated to maximize the total FPL points per game of the squad while meeting various FPL constraints. Below are the objective and constraints in plain english:
+**Objective**
+- Maximize the FPL points per game
+**Constraints**
+- The selection of 2 goalkeepers
+- The selection of 5 defenders
+- The selection of 5 midfielders
+- The selection of 3 forwards
+- A maximum budget of 100 million pounds
+- A team representation of 3 players at maximum.
+
+
 
 ## References
 <a name="1">[1]</a> Vaastav Anand, "Fantasy Premier League," GitHub. Available: https://github.com/vaastav/Fantasy-Premier-League. Accessed: April 13, 2024.
