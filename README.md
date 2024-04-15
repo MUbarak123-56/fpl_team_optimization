@@ -70,8 +70,10 @@ There three datasets being used for this project are obtained in their rawest fo
 ## Problem Formulation
 
 The problem was formulated to maximize the total FPL points per game of the squad while meeting various FPL constraints. Below are the objective and constraints in plain english:
+
 **Objective**
 - Maximize the FPL points per game
+
 **Constraints**
 - The selection of 2 goalkeepers
 - The selection of 5 defenders
