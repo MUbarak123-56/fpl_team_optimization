@@ -130,25 +130,25 @@ $$c2 = \lambda*\sum_{i=1}^{15} (x_i - 5)^2$$
 
       c3 = lagrange * Constraint((sum(x[n] for n in range(min(forward_list_index), max(forward_list_index)+1))-3)**2, label=str(3) + " forwards")
 
-$$c1 = \lambda*\sum_{i=16}^{30} (x_i - 3)^2$$
+$$c3 = \lambda*\sum_{i=16}^{30} (x_i - 3)^2$$
 
 #### 2 goalkeepers' selection
 
       c4 = lagrange * Constraint((sum(x[n] for n in range(min(gk_list_index), max(gk_list_index)+1))-2)**2, label= "2 keepers")
 
-$$c1 = \lambda*\sum_{i=31}^{35} (x_i - 2)^2$$
+$$c4 = \lambda*\sum_{i=31}^{35} (x_i - 2)^2$$
 
 #### 5 midfielders' selection
 
       c5 = lagrange * Constraint((sum(x[n] for n in range(min(midfield_list_index), max(midfield_list_index)+1))-5)**2, label=str(5) + " midfielders")
 
-$$c1 = \lambda*\sum_{i=36}^{50} (x_i - 5)^2$$
+$$c5 = \lambda*\sum_{i=36}^{50} (x_i - 5)^2$$
 
 #### Budgetary Constraint
 
       c6 = lagrange_budget * Constraint((sum(n * x for x, n in zip(x, value)) + s[0] -100)**2, label="budget")
 
-$$c1 = \lambda*\sum_{i=1}^{50} (x_i*n_i + s_0 - 100)^2$$
+$$c6 = \lambda*\sum_{i=1}^{50} (x_i*n_i + s_0 - 100)^2$$
 
 ## References
 <a name="1">[1]</a> Vaastav Anand, "Fantasy Premier League," GitHub. Available: https://github.com/vaastav/Fantasy-Premier-League. Accessed: April 13, 2024.
