@@ -84,6 +84,7 @@ The problem was formulated to maximize the total FPL points per game of the squa
 
 The mathematical formulation alongside the code for each objective/constraint is provided below:
 
+Variables
 
 
 
