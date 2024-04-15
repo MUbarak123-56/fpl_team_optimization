@@ -95,17 +95,13 @@ H = -1 * h + c1 + c2 + c3 + c4 + c5 + c6 + c7
 model = H.compile()
 bqm = model.to_bqm()
 
-# Solve problem with QPU
 #api_token = "INSERT API TOKEN"
 sampler = LeapHybridSampler(token= api_token)
-sampleset = sampler.sample(bqm,
-                            label="FPL Team optimization")
+sampleset = sampler.sample(bqm, label="FPL Team optimization")
 
-# Decode samples and select the best one
 decoded_samples = model.decode_sampleset(sampleset)
 best_sample = min(decoded_samples, key=lambda x: x.energy)
 
-#print(best_sample.constraints())
 
 # Print results for best line-up
 team_df = pd.DataFrame(best_sample.sample.items())
