@@ -148,7 +148,7 @@ $$c5 = \lambda*\sum_{i=36}^{50} (x_i - 5)^2$$
 
       c6 = lagrange_budget * Constraint((sum(n * x for x, n in zip(x, value)) + s[0] -100)**2, label="budget")
 
-$$c6 = \lambda*(\sum_{i=1}^{50} x_i*n_i + s_0 - 100)^2$$
+$$c6 = \lambda*(\left\sum_{i=1}^{50} x_i*n_i + s_0 - 100\right)^2$$
 
 ## References
 <a name="1">[1]</a> Vaastav Anand, "Fantasy Premier League," GitHub. Available: https://github.com/vaastav/Fantasy-Premier-League. Accessed: April 13, 2024.
