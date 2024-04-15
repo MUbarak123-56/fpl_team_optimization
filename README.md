@@ -82,6 +82,10 @@ The problem was formulated to maximize the total FPL points per game of the squa
 - A maximum budget of 100 million pounds
 - A team representation of 3 players at maximum.
 
+The mathematical formulation alongside the code for each objective/constraint is provided below:
+
+
+
 
 
 ## References
