@@ -201,3 +201,7 @@ Then, the problem hamiltonian was compiled and converted into a Binary Quadratic
 <a name="5">[5]</a> Premier League, "Fantasy Premier League," Premier League. Available: https://fantasy.premierleague.com/. Accessed: April 14, 2024.
 
 <a name="6">[6]</a> D-Wave Systems Inc., "D-Wave Documentation Handbook," D-Wave Systems. Available: https://docs.dwavesys.com/docs/latest/doc_handbook.html. Accessed: April 13, 2024.
+
+## License
+
+Released under the Apache License 2.0. See [LICENSE](LICENSE) file.
