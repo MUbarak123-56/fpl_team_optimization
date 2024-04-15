@@ -47,7 +47,7 @@ If you are going to run the code on your local machine, make sure to adhere to t
   
       python squad_selection_local.py
 
-**Note:** Upon running either squad_selection.py or squad_selection_local.py, you will be prompted to insert the number of defenders, midfielders and forwards you would like to see in your starting line up for your squad. Make sure all the numbers you input are within the range if not, you will be prompted to re-insert them.
+**Note:** Upon running either squad_selection.py or squad_selection_local.py, you will be prompted to insert the number of defenders, midfielders and forwards you would like to see in your starting line up for your squad. Make sure all the numbers you input are within the range if not, you will be prompted to re-insert them. The starting line up would comprise of the players with the highest ratings in the optimized squad while the bench would include the remaining players that made it to the optimized squad but aren't as good.
 
 #### Results
 After running the code and specifying the number of defenders, midfielders and forwards you want, you will receive an output like the one below:
@@ -75,6 +75,7 @@ The problem was formulated to maximize the total FPL points per game of the squa
 - Maximize the FPL points per game
 
 **Constraints**
+- The creation of a 15 player squad
 - The selection of 2 goalkeepers
 - The selection of 5 defenders
 - The selection of 5 midfielders
@@ -91,6 +92,14 @@ The code for each objective/constraint is provided below:
       
 The x variable object is storing each individual player as a variable from x[1] to x[50]. We have 50 of them because we are selecting the optimal squad from 50 players. The s variable object is stores all slack variable for for the budget and team representation constraints. The number of slack variables is dictated by how many teams are represented in the top 50 highest rated players.
 
+#### Lagrange Multipliers
+
+      lagrange = max(df_use["points_per_game"])*15
+      lagrange_budget = max(df_use["value"])*15
+      lagrange_team = max(df_use["points_per_game"])*3
+
+Three different lagrange multipliers were used. The first lagrange multiplier is for the squad. The second one is for the budget constraint. And the last one is for the team representation constraint.
+
 #### Objective
 
 The objective function is formulated as code below:
@@ -103,6 +112,13 @@ Mathematically, it can be expressed as:
 
 $$h = \sum_{i=1}^{50} x_i \cdot n_i$$
 
+#### 15 player squad creation
+
+Below is the code for creating a 15 player squad alongside its mathematical formulation:
+
+      c1 = lagrange * Constraint((sum(x[n] for n in range(0, num_var)) - 15)**2, label='15 players squad')
+
+$$c1 = \lambda*\sum_{i=1}^{t} (x_i - 15)**2
 
 ## References
 <a name="1">[1]</a> Vaastav Anand, "Fantasy Premier League," GitHub. Available: https://github.com/vaastav/Fantasy-Premier-League. Accessed: April 13, 2024.
