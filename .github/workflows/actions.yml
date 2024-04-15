@@ -27,8 +27,8 @@ jobs:
         
       - name: commit files
         run: |
-          git config --local user.email "ganiyubaraq@gmail.com"
-          git config --local user.name "MUbarak123-56"
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
           git add -A
           git diff-index --quiet HEAD || (git commit -a -m "updated logs" --allow-empty)
           
