@@ -9,8 +9,8 @@ import numpy as np
 import warnings
 warnings.filterwarnings('ignore')
 
-load_dotenv()
-token_use = os.getenv("API_TOKEN")
+#load_dotenv()
+#token_use = os.getenv("API_TOKEN")
 
 data = pd.read_excel("use_data.xlsx")
 gw = max(data["GW"])
@@ -99,8 +99,8 @@ model = H.compile()
 bqm = model.to_bqm()
 
 # Solve problem with QPU
-api_token = token_use
-sampler = LeapHybridSampler(token= api_token)
+#api_token = token_use
+sampler = LeapHybridSampler()
 sampleset = sampler.sample(bqm,
                             label="FPL Team optimization")
 
