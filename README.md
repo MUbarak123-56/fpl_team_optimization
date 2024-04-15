@@ -54,7 +54,7 @@ After running the code and specifying the number of defenders, midfielders and f
 
 ![Sample Output](images/sample_output.png)
 
-The starting line up would comprise of the players with the highest ratings in the optimized squad solution that the D-Wave LeapHybridSampler provides us with while the bench would include the remaining players that made it to the optimized squad but aren't as good.
+The starting line up would comprise of the players with the highest ratings in the optimized squad solution that the D-Wave LeapHybridSampler provides us with while the bench would include the remaining players that made it to the optimized squad.
 
 ### Web Application
 
