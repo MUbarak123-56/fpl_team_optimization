@@ -123,7 +123,7 @@ The constraint below ensures that we select exactly 15 players.
 
 $$c1 = \lambda*\sum_{i=1}^{50} (x_i - 15)^2$$
 
-The dataset is ordered according to the position of the players, so the first 15 observations belong to defenders, the next 15 forwards, the next 5 goalkeepers and the final 15 midfielders.
+The dataset is ordered according to the position of the players, so the first 15 observations belong to defenders, the next 15 to forwards, the next 5 to goalkeepers and the final 15 to midfielders.
 
 #### 5 defenders' selection
 
