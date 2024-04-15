@@ -82,11 +82,14 @@ The problem was formulated to maximize the total FPL points per game of the squa
 - A maximum budget of 100 million pounds
 - A team representation of 3 players at maximum.
 
-The mathematical formulation alongside the code for each objective/constraint is provided below:
+The code for each objective/constraint is provided below:
 
-Variables
+#### Variables
 
-
+      x = Array.create('x', shape=num_var, vartype='BINARY')
+      s = Array.create('s', shape=slack_num + len(df_use["team"].unique()), vartype='BINARY')
+      
+The x variable object is storing each individual player as a variable from x[1] to x[50]. We have 50 of them because we are selecting the optimal squad from 50 players. The s variable is acting as a slack variable for for the budget and team representation constraints.
 
 
 ## References
