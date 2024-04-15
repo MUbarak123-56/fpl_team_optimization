@@ -276,30 +276,30 @@ else:
                             
                             # Obtain best squad 
                         
-                            lineup_df = pd.DataFrame(best_sample.sample.items())
-                            lineup_df.columns = ['variable', 'selected']
-                            lineup_df = lineup_df[(lineup_df['variable'].str.startswith('x', na=False)) & (lineup_df['selected'] == 1)]
-                            lineup_df = df_use.merge(lineup_df, on=['variable'])
+                            team_df = pd.DataFrame(best_sample.sample.items())
+                            team_df.columns = ['variable', 'selected']
+                            team_df = team_df[(team_df['variable'].str.startswith('x', na=False)) & (team_df['selected'] == 1)]
+                            team_df = df_use.merge(team_df, on=['variable'])
                         
                             # Obtain starting line-up
-                            gk = lineup_df[lineup_df["position"] == "GK"].sort_values("points_per_game", ascending=False).head(1)
-                            defense_list = lineup_df[lineup_df["position"] == "DEF"].sort_values("points_per_game", ascending=False).head(defense)
-                            midfield_list = lineup_df[lineup_df["position"] == "MID"].sort_values("points_per_game", ascending=False).head(midfield)
-                            attack_list = lineup_df[lineup_df["position"] == "FWD"].sort_values("points_per_game", ascending=False).head(forward)
+                            gk = team_df[team_df["position"] == "GK"].sort_values("points_per_game", ascending=False).head(1)
+                            defense_list = team_df[team_df["position"] == "DEF"].sort_values("points_per_game", ascending=False).head(defense)
+                            midfield_list = team_df[team_df["position"] == "MID"].sort_values("points_per_game", ascending=False).head(midfield)
+                            attack_list = team_df[team_df["position"] == "FWD"].sort_values("points_per_game", ascending=False).head(forward)
                             start_lineup_df = pd.concat([gk, defense_list, midfield_list, attack_list], axis=0).reset_index(drop=True)
                             start_lineup_df = start_lineup_df[["name", "position", "value", "total_points", "team", "points_per_game"]]
                         
                             # Obtain bench players
-                            gk = lineup_df[lineup_df["position"] == "GK"].sort_values("points_per_game", ascending=False).tail(1)
-                            defense_list = lineup_df[lineup_df["position"] == "DEF"].sort_values("points_per_game", ascending=False).tail(5-defense)
-                            midfield_list = lineup_df[lineup_df["position"] == "MID"].sort_values("points_per_game", ascending=False).tail(5-midfield)
-                            attack_list = lineup_df[lineup_df["position"] == "FWD"].sort_values("points_per_game", ascending=False).tail(3-forward)
+                            gk = team_df[team_df["position"] == "GK"].sort_values("points_per_game", ascending=False).tail(1)
+                            defense_list = team_df[team_df["position"] == "DEF"].sort_values("points_per_game", ascending=False).tail(5-defense)
+                            midfield_list = team_df[team_df["position"] == "MID"].sort_values("points_per_game", ascending=False).tail(5-midfield)
+                            attack_list = team_df[team_df["position"] == "FWD"].sort_values("points_per_game", ascending=False).tail(3-forward)
                             bench_lineup_df = pd.concat([gk, defense_list, midfield_list, attack_list], axis=0).reset_index(drop=True)
                             bench_lineup_df = bench_lineup_df[["name", "position", "value", "total_points", "team", "points_per_game"]]
 
                                     
                             st.write("After game week ", gw, ", the optimal ", defense, "-", midfield, "-", forward, "starting line-up would look like:")
-                            plot_formation(start_lineup_df, lineup_df)
+                            plot_formation(start_lineup_df, team_df)
                             st.write("And the bench would look like:")
                             plot_bench(bench_lineup_df)
                             #st.dataframe(ordered_lineup_df)
