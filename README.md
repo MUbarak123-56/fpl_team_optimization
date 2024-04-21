@@ -96,10 +96,14 @@ The x variable object is storing each individual player as a variable from $x_1$
 #### Lagrange Multipliers
 
       lagrange = max(df_use["points_per_game"])*15
+      lagrange_def = max(df_use["points_per_game"])*5
+      lagrange_mid = max(df_use["points_per_game"])*5
+      lagrange_fwd = max(df_use["points_per_game"])*3
+      lagrange_gk = max(df_use["points_per_game"])*2
       lagrange_budget = max(df_use["value"])*15
       lagrange_team = max(df_use["points_per_game"])*3
 
-Three different lagrange multipliers were used. The first lagrange multiplier is for the squad. The second one is for the budget constraint. And the last one is for the team representation constraint.
+Three different lagrange multipliers were used. The first lagrange multiplier is for the squad. The middle four are for the positional constraints. The second to the last one is for the budget constraint. And the last one is for the team representation constraint.
 
 #### Objective
 
@@ -128,37 +132,37 @@ The dataset is ordered according to the position of the players, so the first 15
 
 The constraint below ensures that we pick exactly 5 defenders.
 
-      c2 = lagrange * Constraint((sum(x[n] for n in range(min(defense_list_index), max(defense_list_index)+1))-5)**2, 
+      c2 = lagrange_def * Constraint((sum(x[n] for n in range(min(defense_list_index), max(defense_list_index)+1))-5)**2, 
                                   label=str(5) + " defenders")
 
-$$c2 = \lambda*\sum_{i=1}^{15} (x_i - 5)^2$$
+$$c2 = \lambda_{def}*\sum_{i=1}^{15} (x_i - 5)^2$$
 
 #### 3 forwards' selection
 
 The constraint below ensures that we pick exactly 3 forwards.
 
-      c3 = lagrange * Constraint((sum(x[n] for n in range(min(forward_list_index), max(forward_list_index)+1))-3)**2,
+      c3 = lagrange_fwd * Constraint((sum(x[n] for n in range(min(forward_list_index), max(forward_list_index)+1))-3)**2,
                                   label=str(3) + " forwards")
 
-$$c3 = \lambda*\sum_{i=16}^{30} (x_i - 3)^2$$
+$$c3 = \lambda_{fwd}*\sum_{i=16}^{30} (x_i - 3)^2$$
 
 #### 2 goalkeepers' selection
 
 The constraint below ensures that we pick exactly 2 goalkeepers.
 
-      c4 = lagrange * Constraint((sum(x[n] for n in range(min(gk_list_index), max(gk_list_index)+1))-2)**2, 
+      c4 = lagrange_gk * Constraint((sum(x[n] for n in range(min(gk_list_index), max(gk_list_index)+1))-2)**2, 
                                   label= "2 keepers")
 
-$$c4 = \lambda*\sum_{i=31}^{35} (x_i - 2)^2$$
+$$c4 = \lambda_{gk}*\sum_{i=31}^{35} (x_i - 2)^2$$
 
 #### 5 midfielders' selection
 
 The constraint below ensures that we pick exactly 5 midfielders.
 
-      c5 = lagrange * Constraint((sum(x[n] for n in range(min(midfield_list_index), max(midfield_list_index)+1))-5)**2, 
+      c5 = lagrange_mid * Constraint((sum(x[n] for n in range(min(midfield_list_index), max(midfield_list_index)+1))-5)**2, 
                                   label=str(5) + " midfielders")
 
-$$c5 = \lambda*\sum_{i=36}^{50} (x_i - 5)^2$$
+$$c5 = \lambda_{mid}*\sum_{i=36}^{50} (x_i - 5)^2$$
 
 #### Budgetary Constraint
 
