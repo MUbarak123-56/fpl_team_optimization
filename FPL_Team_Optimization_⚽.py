@@ -47,6 +47,10 @@ value = df_use["value"].to_list()
 df_use = df_use[columns]
 
 lagrange = max(df_use["points_per_game"])*15
+lagrange_def = max(df_use["points_per_game"])*5
+lagrange_mid = max(df_use["points_per_game"])*5
+lagrange_fwd = max(df_use["points_per_game"])*3
+lagrange_gk = max(df_use["points_per_game"])*2
 lagrange_budget = max(df_use["value"])*15
 lagrange_team = max(df_use["points_per_game"])*3
 num_var = len(df_use)
@@ -251,10 +255,10 @@ else:
                         
                             # constraints
                             c1 = lagrange * Constraint((sum(x[n] for n in range(0, num_var)) - 15)**2, label='15 players squad')
-                            c2 = lagrange * Constraint((sum(x[n] for n in range(min(defense_list_index), max(defense_list_index)+1))-5)**2, label=str(5) + " defenders")
-                            c3 = lagrange * Constraint((sum(x[n] for n in range(min(forward_list_index), max(forward_list_index)+1))-3)**2, label=str(3) + " forwards")
-                            c4 = lagrange * Constraint((sum(x[n] for n in range(min(gk_list_index), max(gk_list_index)+1))-2)**2, label= "2 keepers")
-                            c5 = lagrange * Constraint((sum(x[n] for n in range(min(midfield_list_index), max(midfield_list_index)+1))-5)**2, label=str(5) + " midfielders")
+                            c2 = lagrange_def * Constraint((sum(x[n] for n in range(min(defense_list_index), max(defense_list_index)+1))-5)**2, label=str(5) + " defenders")
+                            c3 = lagrange_fwd * Constraint((sum(x[n] for n in range(min(forward_list_index), max(forward_list_index)+1))-3)**2, label=str(3) + " forwards")
+                            c4 = lagrange_gk * Constraint((sum(x[n] for n in range(min(gk_list_index), max(gk_list_index)+1))-2)**2, label= "2 keepers")
+                            c5 = lagrange_mid * Constraint((sum(x[n] for n in range(min(midfield_list_index), max(midfield_list_index)+1))-5)**2, label=str(5) + " midfielders")
                             c6 = lagrange_budget * Constraint((sum(n * x for x, n in zip(x, value)) + s[0] -100)**2,label="budget")
                             c7 = 0
                             for i in range(len(team_list)):
