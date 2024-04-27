@@ -26,7 +26,7 @@ st.write("""The purpose of this app is to assist FPL fans to select the optimal 
 
 # Loading in the FPL data set
 
-data = pd.read_excel("total_data.xlsx")
+data = pd.read_excel("use_data.xlsx")
 gw = max(data["GW"])
 columns = ["name", "position", "value", "total_points", "team", "points_per_game"]
 data = data[columns]
