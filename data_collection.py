@@ -88,7 +88,7 @@ tot_df = tot_df.drop(["value", "name_y"], axis = 1)
 tot_df = tot_df.rename(columns={"now_cost":"value", "name_x":"name"})
 tot_df = tot_df[["name", "team", "total_points", "date", "position", "value", "GW", "minutes", "points_per_game"]]
 
-tot_df = tot_df[tot_df["minutes"]>=600].reset_index(drop=True)
+tot_df = tot_df[tot_df["minutes"]>=750].reset_index(drop=True)
 
 tot_df.to_excel("total_data.xlsx", index=False)
 
