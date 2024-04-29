@@ -12,7 +12,7 @@ warnings.filterwarnings('ignore')
 #load_dotenv()
 #token_use = os.getenv("API_TOKEN")
 
-data = pd.read_excel("use_data.xlsx")
+data = pd.read_excel("../use_data.xlsx")
 gw = max(data["GW"])
 columns = ["name", "position", "value", "total_points", "team", "points_per_game"]
 data = data[columns]
@@ -99,45 +99,55 @@ for i in range(len(team_list)):
     
 H = -1 * h + c1 + c2 + c3 + c4 + c5 + c6 + c7
 
-model = H.compile()
-bqm = model.to_bqm()
+import time
 
-#api_token = token_use
-sa = neal.SimulatedAnnealingSampler()
-sampleset = sa.sample(bqm, num_reads=1000)
-#sampler = LeapHybridSampler()
-#sampleset = sampler.sample(bqm, label="FPL Team optimization")
+for i in range(50):
+    model = H.compile()
+    bqm = model.to_bqm()
 
-decoded_samples = model.decode_sampleset(sampleset)
-best_sample = min(decoded_samples, key=lambda x: x.energy)
+    #api_token = token_use
+    start = time.time()
+    sa = neal.SimulatedAnnealingSampler()
+    sampleset = sa.sample(bqm, num_reads=100)
+    end = time.time()
+    #sampler = LeapHybridSampler()
+    #sampleset = sampler.sample(bqm, label="FPL Team optimization")
 
-team_df = pd.DataFrame(best_sample.sample.items())
-team_df.columns = ['variable', 'selected']
-team_df = team_df[(team_df['variable'].str.startswith(
-    'x', na=False)) & (team_df['selected'] == 1)]
-team_df = df_use.merge(team_df, on=['variable'])
+    elapsed = end - start
+    decoded_samples = model.decode_sampleset(sampleset)
+    best_sample = min(decoded_samples, key=lambda x: x.energy)
 
-# Obtain starting line-up
-gk = team_df[team_df["position"] == "GK"].sort_values("points_per_game", ascending=False).head(1)
-defense_list = team_df[team_df["position"] == "DEF"].sort_values("points_per_game", ascending=False).head(defense)
-midfield_list = team_df[team_df["position"] == "MID"].sort_values("points_per_game", ascending=False).head(midfield)
-attack_list = team_df[team_df["position"] == "FWD"].sort_values("points_per_game", ascending=False).head(forward)
-start_lineup_df = pd.concat([gk, defense_list, midfield_list, attack_list], axis=0).reset_index(drop=True)
-start_lineup_df = start_lineup_df[["name", "team", "position", "value", "total_points", "points_per_game"]]
+    team_df = pd.DataFrame(best_sample.sample.items())
+    team_df.columns = ['variable', 'selected']
+    team_df = team_df[(team_df['variable'].str.startswith(
+        'x', na=False)) & (team_df['selected'] == 1)]
+    team_df = df_use.merge(team_df, on=['variable'])
+
+    # Obtain starting line-up
+    gk = team_df[team_df["position"] == "GK"].sort_values("points_per_game", ascending=False).head(1)
+    defense_list = team_df[team_df["position"] == "DEF"].sort_values("points_per_game", ascending=False).head(defense)
+    midfield_list = team_df[team_df["position"] == "MID"].sort_values("points_per_game", ascending=False).head(midfield)
+    attack_list = team_df[team_df["position"] == "FWD"].sort_values("points_per_game", ascending=False).head(forward)
+    start_lineup_df = pd.concat([gk, defense_list, midfield_list, attack_list], axis=0).reset_index(drop=True)
+    start_lineup_df = start_lineup_df[["name", "team", "position", "value", "total_points", "points_per_game"]]
+    start_lineup_df["elapsed"] = elapsed
+    print(elapsed, "seconds")
+    
+    start_lineup_df.to_csv("gw35_exp_classical/data_" + str(i) + ".csv", index=False)
 
 # Obtain bench players
-gk = team_df[team_df["position"] == "GK"].sort_values("points_per_game", ascending=False).tail(1)
-defense_list = team_df[team_df["position"] == "DEF"].sort_values("points_per_game", ascending=False).tail(5-defense)
-midfield_list = team_df[team_df["position"] == "MID"].sort_values("points_per_game", ascending=False).tail(5-midfield)
-attack_list = team_df[team_df["position"] == "FWD"].sort_values("points_per_game", ascending=False).tail(3-forward)
-bench_lineup_df = pd.concat([gk, defense_list, midfield_list, attack_list], axis=0).reset_index(drop=True)
-bench_lineup_df = bench_lineup_df[["name", "team", "position", "value", "total_points", "points_per_game"]]
+# gk = team_df[team_df["position"] == "GK"].sort_values("points_per_game", ascending=False).tail(1)
+# defense_list = team_df[team_df["position"] == "DEF"].sort_values("points_per_game", ascending=False).tail(5-defense)
+# midfield_list = team_df[team_df["position"] == "MID"].sort_values("points_per_game", ascending=False).tail(5-midfield)
+# attack_list = team_df[team_df["position"] == "FWD"].sort_values("points_per_game", ascending=False).tail(3-forward)
+# bench_lineup_df = pd.concat([gk, defense_list, midfield_list, attack_list], axis=0).reset_index(drop=True)
+# bench_lineup_df = bench_lineup_df[["name", "team", "position", "value", "total_points", "points_per_game"]]
 
-print("At Gameweek ", gw, ", the optimal squad would look like:\n")
-print("Starting Lineup")
-print(start_lineup_df)
-print("\n\n")
-print("Bench")
-print(bench_lineup_df)
-print("Total starting line up sum of FPL points per game: ", start_lineup_df["points_per_game"].sum())
-print("Total budget: ", team_df['value'].sum())
+# print("At Gameweek ", gw, ", the optimal squad would look like:\n")
+# print("Starting Lineup")
+# print(start_lineup_df)
+# print("\n\n")
+# print("Bench")
+# print(bench_lineup_df)
+# print("Total starting line up sum of FPL points per game: ", start_lineup_df["points_per_game"].sum())
+# print("Total budget: ", team_df['value'].sum())

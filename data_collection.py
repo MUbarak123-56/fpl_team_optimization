@@ -92,6 +92,8 @@ tot_df = tot_df[tot_df["minutes"]>=750].reset_index(drop=True)
 
 tot_df.to_excel("total_data.xlsx", index=False)
 
+
+
 gk = tot_df[tot_df["position"]=="GK"].sort_values("points_per_game", ascending=False).reset_index(drop=True).head(5)
 defenders = tot_df[tot_df["position"]=="DEF"].sort_values("points_per_game", ascending=False).reset_index(drop=True).head(15)
 midfielders = tot_df[tot_df["position"]=="MID"].sort_values("points_per_game", ascending=False).reset_index(drop=True).head(15)
