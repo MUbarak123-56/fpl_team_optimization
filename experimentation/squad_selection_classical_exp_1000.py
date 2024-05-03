@@ -133,7 +133,7 @@ for i in range(50):
     start_lineup_df["elapsed"] = elapsed
     print(elapsed, "seconds")
     
-    start_lineup_df.to_csv("gw35_exp_classical_1000/data_" + str(i) + ".csv", index=False)
+    start_lineup_df.to_csv("gw36_exp_classical_1000/data_" + str(i) + ".csv", index=False)
 
 # Obtain bench players
 # gk = team_df[team_df["position"] == "GK"].sort_values("points_per_game", ascending=False).tail(1)
