@@ -101,7 +101,7 @@ for i in range(50):
     model = H.compile()
     bqm = model.to_bqm()
 
-    api_token = "DEV-257ed80ce0a221025ddaa4b7acb440d9978e1f42"
+    api_token = "INSERT API TOKEN"
     start = time.time()
     sampler = LeapHybridSampler(token= api_token)
     sampleset = sampler.sample(bqm, label="FPL Team optimization")

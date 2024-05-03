@@ -100,7 +100,7 @@ model = H.compile()
 bqm = model.to_bqm()
 
 #api_token = "INSERT API TOKEN"
-sampler = LeapHybridSampler(token= "DEV-257ed80ce0a221025ddaa4b7acb440d9978e1f42")
+sampler = LeapHybridSampler(token= api_token)
 sampleset = sampler.sample(bqm, label="FPL Team optimization")
 
 decoded_samples = model.decode_sampleset(sampleset)
