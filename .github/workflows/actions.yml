@@ -3,7 +3,19 @@ name: run data_collection.py
 on:
   schedule:
     - cron: '0 */12 * * *'
-
+    
+  workflow_dispatch:
+    # Inputs the workflow accepts.
+    inputs:
+      logLevel:
+        description: 'Log level'
+        required: true
+        default: 'warning'
+        type: choice
+        options:
+        - info
+        - warning
+        - debug
 jobs:
   build:
     runs-on: ubuntu-latest
