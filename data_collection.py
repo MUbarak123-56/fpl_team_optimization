@@ -3,7 +3,7 @@ import os
 import warnings
 warnings.filterwarnings('ignore')
 
-data = pd.read_csv("https://raw.githubusercontent.com/vaastav/Fantasy-Premier-League/master/data/2024-25/gws/merged_gw.csv")
+data = pd.read_csv("https://raw.githubusercontent.com/vaastav/Fantasy-Premier-League/master/data/2024-25/gws/merged_gw.csv", on_bad_lines='skip')
 
 def accumulated(df):
     # Add a column 'n' with all values set to 1
