@@ -240,7 +240,8 @@ if 'API_TOKEN' in st.secrets:
             api_key = st.secrets['API_TOKEN']
 else:
             api_key = st.text_input('Enter D-Wave Solver API token:', type='password')
-            if not (api_key).startswith('cSXm') or len(api_key) != 45:
+            if not (api_key).startswith('cSXm'): 
+            #or len(api_key) != 45:
                         st.warning('Please enter your credentials!', icon='⚠️') 
             else:
                         st.success('Your API token has been received. Now optimization will be conducted.', icon='👉')
